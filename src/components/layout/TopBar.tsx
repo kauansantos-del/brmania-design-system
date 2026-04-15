@@ -4,6 +4,7 @@ import { cn } from '@/lib/cn'
 import { Badge } from '@/components/ui/Badge'
 import { Tooltip } from '@/components/ui/Tooltip'
 import { sections, sectionOrder, type SectionKey } from '@/data/navigation'
+import { PROJECT } from '@/data/project'
 
 export function TopBar({
   section,
@@ -47,8 +48,16 @@ export function TopBar({
                 Design System
               </p>
             </div>
-            <Tooltip content="v1.0.0 — Abril 2026" side="bottom">
-              <Badge tone="brand" size="sm">v1.0</Badge>
+            <Tooltip content={`v${PROJECT.version} — ${PROJECT.release} · ver release no GitHub`} side="bottom">
+              <a
+                href={`${PROJECT.githubUrl}/releases/tag/v${PROJECT.version}`}
+                target="_blank"
+                rel="noreferrer"
+                className="transition hover:brightness-110"
+                aria-label={`Versão ${PROJECT.version}`}
+              >
+                <Badge tone="brand" size="sm">v{PROJECT.version.split('.').slice(0, 2).join('.')}</Badge>
+              </a>
             </Tooltip>
           </div>
         </div>
@@ -120,14 +129,17 @@ export function TopBar({
               <span className="text-[11.5px] font-medium text-ink-200">Ativo</span>
             </div>
           </Tooltip>
-          <Tooltip content="Repositório (em breve)" side="bottom">
-            <button
-              type="button"
-              className="rounded-lg border border-surface-border bg-surface-raised/60 p-1.5 text-ink-300 hover:text-ink-100 hover:bg-surface-elevated transition"
-              aria-label="Repositório"
+          <Tooltip content="Abrir repositório no GitHub" side="bottom">
+            <a
+              href={PROJECT.githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/60 px-2.5 text-[12px] font-medium text-ink-200 hover:text-ink-50 hover:bg-surface-elevated transition"
+              aria-label="Repositório no GitHub"
             >
               <Github size={14} />
-            </button>
+              <span className="hidden sm:inline">GitHub</span>
+            </a>
           </Tooltip>
         </div>
       </div>

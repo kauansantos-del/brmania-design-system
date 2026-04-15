@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/Badge'
 import { Tooltip } from '@/components/ui/Tooltip'
 import { sections, type SectionKey } from '@/data/navigation'
 import { downloadResource } from '@/lib/downloads'
+import { PROJECT } from '@/data/project'
 
 export function Sidebar({
   section,
@@ -173,15 +174,26 @@ export function Sidebar({
 
       {/* Footer */}
       <div className="border-t border-surface-border p-4">
-        <div className="rounded-lg border border-surface-border bg-surface/60 p-3">
+        <a
+          href={PROJECT.deployUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="block rounded-lg border border-surface-border bg-surface/60 p-3 transition hover:border-brand-500/40 hover:bg-surface/80"
+        >
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <p className="text-[11.5px] font-medium text-ink-200">Sistema sincronizado</p>
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            </span>
+            <p className="text-[11.5px] font-medium text-ink-200">Deploy live</p>
+            <span className="ml-auto rounded-md bg-brand-500/15 px-1.5 py-0.5 font-mono text-[10px] text-brand-300">
+              v{PROJECT.version}
+            </span>
           </div>
-          <p className="mt-1 text-[11px] leading-relaxed text-ink-400">
-            Última atualização com <span className="text-ink-200">Figma</span> em hoje.
+          <p className="mt-1 truncate font-mono text-[10.5px] leading-relaxed text-ink-400">
+            {PROJECT.deployUrl.replace('https://', '')}
           </p>
-        </div>
+        </a>
       </div>
     </aside>
   )
