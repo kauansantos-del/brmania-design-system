@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { MoonStar, Sun, Info } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { DSIcon } from '@/components/brmania'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Badge } from '@/components/ui/Badge'
 import { CopyButton } from '@/components/ui/CopyButton'
@@ -110,7 +110,7 @@ function ColorsDoc({ query }: { query: string }) {
                     theme === 'dark' ? 'bg-surface-elevated text-ink-50' : 'text-ink-400 hover:text-ink-200',
                   )}
                 >
-                  <MoonStar size={13} /> Dark
+                  <DSIcon name="half-moon" size={13} /> Dark
                 </button>
               </Tooltip>
               <Tooltip content="Tema claro">
@@ -121,7 +121,7 @@ function ColorsDoc({ query }: { query: string }) {
                     theme === 'light' ? 'bg-surface-elevated text-ink-50' : 'text-ink-400 hover:text-ink-200',
                   )}
                 >
-                  <Sun size={13} /> Light
+                  <DSIcon name="sun" size={13} /> Light
                 </button>
               </Tooltip>
             </div>
@@ -242,7 +242,7 @@ function RadixLegend() {
   return (
     <div className="mb-5 rounded-xl border border-surface-border bg-surface-raised/40 p-3">
       <div className="flex items-center gap-2 text-[11px] text-ink-400">
-        <Info size={12} className="text-ink-300" />
+        <DSIcon name="information-circle" size={12} className="text-ink-300" />
         <span>
           Escala inspirada em{' '}
           <a

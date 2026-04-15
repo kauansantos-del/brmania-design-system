@@ -1,12 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import {
-  Search, Command as CmdIcon, CornerDownLeft, ArrowUp, ArrowDown,
-  Blocks, BookOpen, Images, Palette, Type, Ruler, Shapes, Package,
-  Sparkles, Hash, ExternalLink, Github, Figma,
-  type LucideIcon,
-} from 'lucide-react'
+import { Github, Figma } from 'lucide-react'
+import { DSIcon } from '@/components/brmania'
 import { cn } from '@/lib/cn'
 import { sections, type SectionKey } from '@/data/navigation'
 import { PROJECT } from '@/data/project'
@@ -19,7 +15,8 @@ export type PaletteResult = {
   subtitle?: string
   section: SectionKey | 'external' | 'token'
   sub?: string
-  icon: LucideIcon
+  /** Renderiza o glifo do resultado. Recebe o tamanho em px. */
+  icon: (size: number) => ReactNode
   category: string
   keywords: string
   kind: 'navigate' | 'external' | 'token'
@@ -34,20 +31,21 @@ function buildStaticIndex(): PaletteResult[] {
   const out: PaletteResult[] = []
 
   // Seções + subseções
-  const secIcons: Record<SectionKey, LucideIcon> = {
-    componentes: Blocks,
-    documentacao: BookOpen,
-    galeria: Images,
+  const secIconSlugs: Record<SectionKey, string> = {
+    componentes: 'grid-01',
+    documentacao: 'file-01',
+    galeria: 'view',
   }
 
   for (const [key, cfg] of Object.entries(sections)) {
     const sk = key as SectionKey
+    const secSlug = secIconSlugs[sk]
     out.push({
       id: `nav:${key}`,
       title: cfg.label,
       subtitle: cfg.description,
       section: sk,
-      icon: secIcons[sk],
+      icon: (size) => <DSIcon name={secSlug} size={size} />,
       category: 'Seções',
       kind: 'navigate',
       keywords: `${cfg.label} ${cfg.description} ${cfg.shortLabel}`,
@@ -57,13 +55,14 @@ function buildStaticIndex(): PaletteResult[] {
       for (const item of group.items) {
         // Download actions viram externos ou handoff
         if ((item as any).download) continue
+        const itemSlug = item.icon
         if (item.href) {
           out.push({
             id: `ext:${key}:${item.key}`,
             title: item.label,
             subtitle: item.description,
             section: 'external',
-            icon: item.icon as LucideIcon,
+            icon: (size) => <DSIcon name={itemSlug} size={size} />,
             category: `${cfg.label} · ${group.title}`,
             kind: 'external',
             href: item.href,
@@ -77,7 +76,7 @@ function buildStaticIndex(): PaletteResult[] {
           subtitle: item.description ?? cfg.label,
           section: sk,
           sub: item.key,
-          icon: item.icon as LucideIcon,
+          icon: (size) => <DSIcon name={itemSlug} size={size} />,
           category: `${cfg.label} · ${group.title}`,
           kind: 'navigate',
           keywords: `${item.label} ${item.description ?? ''} ${group.title} ${cfg.label}`,
@@ -94,7 +93,7 @@ function buildStaticIndex(): PaletteResult[] {
       subtitle: `${t.font} · ${t.size}px · ${t.weight}`,
       section: 'documentacao',
       sub: 'tipografia',
-      icon: Type,
+      icon: (size) => <DSIcon name="font-size" size={size} />,
       category: 'Tipografia',
       kind: 'navigate',
       keywords: `${t.name} ${t.font} ${t.size} ${t.weight} tipografia`,
@@ -109,7 +108,7 @@ function buildStaticIndex(): PaletteResult[] {
       subtitle: `${s.px}px · ${s.rem}rem`,
       section: 'documentacao',
       sub: 'espacamento',
-      icon: Ruler,
+      icon: (size) => <DSIcon name="ruler" size={size} />,
       category: 'Espaçamento',
       kind: 'navigate',
       keywords: `space-${s.name} ${s.px}px ${s.rem}rem espacamento padding gap`,
@@ -123,7 +122,7 @@ function buildStaticIndex(): PaletteResult[] {
       title: 'Abrir no GitHub',
       subtitle: 'kauansantos-del/brmania-design-system',
       section: 'external',
-      icon: Github,
+      icon: (size) => <Github size={size} />,
       category: 'Recursos',
       kind: 'external',
       href: PROJECT.githubUrl,
@@ -134,7 +133,7 @@ function buildStaticIndex(): PaletteResult[] {
       title: 'Abrir no Figma',
       subtitle: 'API externa · Vibra',
       section: 'external',
-      icon: Figma,
+      icon: (size) => <Figma size={size} />,
       category: 'Recursos',
       kind: 'external',
       href: PROJECT.figmaUrl,
@@ -145,7 +144,7 @@ function buildStaticIndex(): PaletteResult[] {
       title: `Release v${PROJECT.version}`,
       subtitle: 'Changelog no GitHub',
       section: 'external',
-      icon: Sparkles,
+      icon: (size) => <DSIcon name="star" size={size} />,
       category: 'Recursos',
       kind: 'external',
       href: `${PROJECT.githubUrl}/releases/tag/v${PROJECT.version}`,
@@ -183,7 +182,7 @@ async function loadDynamicIndex(): Promise<DynamicIndex> {
               subtitle: `${groupName} · ${hexUp}`,
               section: 'documentacao',
               sub: 'cores',
-              icon: Palette,
+              icon: (size) => <DSIcon name="paint-board" size={size} />,
               category: 'Cores',
               kind: 'navigate',
               keywords: `${groupName} ${scaleName} ${stepName} ${hexUp} cor color radix`,
@@ -207,7 +206,7 @@ async function loadDynamicIndex(): Promise<DynamicIndex> {
           subtitle: `${it.style} · ${it.group}`,
           section: 'galeria',
           sub: 'icones',
-          icon: Shapes,
+          icon: (size) => <DSIcon name="grid-01" size={size} />,
           category: 'Ícones',
           kind: 'navigate',
           keywords: `${it.name} ${it.slug} ${it.style} ${it.group} ${(it.tags || []).join(' ')}`,
@@ -388,7 +387,7 @@ export function CommandPalette({
           >
             {/* Input */}
             <div className="relative flex items-center gap-3 border-b border-surface-border/80 px-4">
-              <Search size={16} className="text-ink-300" />
+              <DSIcon name="search-01" size={16} className="text-ink-300" />
               <input
                 ref={inputRef}
                 value={query}
@@ -445,10 +444,10 @@ export function CommandPalette({
                                 )}
                               </div>
                               <div className="flex items-center gap-1">
-                                {r.kind === 'external' && <ExternalLink size={12} className="text-ink-500" />}
+                                {r.kind === 'external' && <DSIcon name="link" size={12} className="text-ink-500" />}
                                 {active && (
                                   <span className="inline-flex items-center gap-1 rounded-md border border-brand-500/30 bg-brand-500/10 px-1.5 py-0.5 font-mono text-[10px] text-brand-300">
-                                    <CornerDownLeft size={10} /> Enter
+                                    <DSIcon name="arrow-left" size={10} /> Enter
                                   </span>
                                 )}
                               </div>
@@ -465,12 +464,12 @@ export function CommandPalette({
             {/* Footer / legend */}
             <div className="flex items-center justify-between gap-3 border-t border-surface-border/80 px-4 py-2 text-[11px] text-ink-400">
               <div className="flex items-center gap-3">
-                <Legend icon={<ArrowUp size={10} />} label="navegar" />
-                <Legend icon={<ArrowDown size={10} />} label="navegar" />
-                <Legend icon={<CornerDownLeft size={10} />} label="abrir" />
+                <Legend icon={<DSIcon name="arrow-up" size={10} />} label="navegar" />
+                <Legend icon={<DSIcon name="arrow-down" size={10} />} label="navegar" />
+                <Legend icon={<DSIcon name="arrow-left" size={10} />} label="abrir" />
               </div>
               <div className="flex items-center gap-1.5 text-ink-500">
-                <CmdIcon size={11} /> <span>K para abrir de qualquer lugar</span>
+                <DSIcon name="smart-key" size={11} /> <span>K para abrir de qualquer lugar</span>
               </div>
             </div>
           </motion.div>
@@ -489,17 +488,16 @@ function ResultGlyph({ r, active }: { r: PaletteResult; active: boolean }) {
         style={{ background: r.hex }}
         aria-hidden
       >
-        <Hash size={12} className="text-white/60" />
+        <DSIcon name="paint-board" size={12} className="text-white/60" />
       </span>
     )
   }
-  const Icon = r.icon
   return (
     <span className={cn(
       'grid h-9 w-9 shrink-0 place-items-center rounded-md ring-1',
       active ? 'bg-brand-500/15 text-brand-200 ring-brand-500/30' : 'bg-surface-raised/70 text-ink-300 ring-surface-border',
     )}>
-      <Icon size={14} />
+      {r.icon(14)}
     </span>
   )
 }
@@ -519,7 +517,7 @@ function EmptyState({ query }: { query: string }) {
   return (
     <div className="px-4 py-10 text-center">
       <div className="mx-auto mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-surface-raised/70 ring-1 ring-surface-border">
-        <Package size={18} className="text-ink-400" />
+        <DSIcon name="package-01" size={18} className="text-ink-400" />
       </div>
       <p className="text-[13px] font-semibold text-ink-100">Nada encontrado</p>
       <p className="mt-1 text-[12px] text-ink-400">

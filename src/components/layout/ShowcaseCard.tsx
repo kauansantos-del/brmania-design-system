@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react'
-import { Code2, Eye, Info } from 'lucide-react'
+import { DSIcon } from '@/components/brmania'
 import { cn } from '@/lib/cn'
 import { Badge } from '@/components/ui/Badge'
 import { Tooltip } from '@/components/ui/Tooltip'
@@ -42,7 +42,7 @@ export function ShowcaseCard({
         {imports && (
           <Tooltip content="Caminho de import do componente" side="left">
             <code className="hidden md:inline-flex items-center gap-1.5 rounded-md border border-surface-border bg-surface-raised px-2.5 py-1.5 font-mono text-[11.5px] text-ink-300">
-              <Info size={12} />
+              <DSIcon name="information-circle" size={12} />
               {imports}
             </code>
           </Tooltip>
@@ -53,10 +53,10 @@ export function ShowcaseCard({
         {/* Tabs header */}
         <div className="flex items-center justify-between border-b border-surface-border bg-surface/50 px-3 py-2">
           <div className="flex items-center gap-1">
-            <TabButton active={tab === 'preview'} onClick={() => setTab('preview')} icon={<Eye size={13} />}>
+            <TabButton active={tab === 'preview'} onClick={() => setTab('preview')} icon={<DSIcon name="view" size={13} />}>
               Preview
             </TabButton>
-            <TabButton active={tab === 'code'} onClick={() => setTab('code')} icon={<Code2 size={13} />}>
+            <TabButton active={tab === 'code'} onClick={() => setTab('code')} icon={<DSIcon name="file-01" size={13} />}>
               Código
             </TabButton>
           </div>

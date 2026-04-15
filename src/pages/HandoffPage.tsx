@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Palette, Type, Ruler, Package, Download, Check, Loader2, FileJson, ClipboardCheck, Figma, GitBranch } from 'lucide-react'
+import { Figma } from 'lucide-react'
+import { DSIcon } from '@/components/brmania'
 import { toast } from 'sonner'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Badge } from '@/components/ui/Badge'
@@ -18,7 +19,7 @@ type ResourceMeta = {
   title: string
   subtitle: string
   filename: string
-  icon: typeof Palette
+  iconSlug: string
   gradient: string
   ring: string
   accent: string
@@ -31,7 +32,7 @@ const RESOURCES: ResourceMeta[] = [
     title: 'Cores',
     subtitle: 'Escala Radix 1–12 · Dark + Light',
     filename: 'brmania-cores.tokens.json',
-    icon: Palette,
+    iconSlug: 'paint-board',
     gradient: 'from-brand-400/80 via-brand-500/50 to-transparent',
     ring: 'shadow-[0_12px_32px_-16px_rgba(70,167,104,.55)]',
     accent: 'text-brand-300',
@@ -42,7 +43,7 @@ const RESOURCES: ResourceMeta[] = [
     title: 'Tipografia',
     subtitle: 'Sora · Inter · JetBrains Mono',
     filename: 'brmania-tipografia.tokens.json',
-    icon: Type,
+    iconSlug: 'font-size',
     gradient: 'from-indigo-400/80 via-indigo-500/40 to-transparent',
     ring: 'shadow-[0_12px_32px_-16px_rgba(99,102,241,.55)]',
     accent: 'text-indigo-300',
@@ -53,7 +54,7 @@ const RESOURCES: ResourceMeta[] = [
     title: 'Espaçamento',
     subtitle: 'Escala 4pt · xs → 4xl',
     filename: 'brmania-espacamento.tokens.json',
-    icon: Ruler,
+    iconSlug: 'ruler',
     gradient: 'from-amber-300/80 via-amber-400/40 to-transparent',
     ring: 'shadow-[0_12px_32px_-16px_rgba(251,191,36,.55)]',
     accent: 'text-amber-300',
@@ -155,7 +156,7 @@ export function HandoffPage() {
           <div className="relative grid gap-8 p-8 md:grid-cols-[1fr_320px] md:items-center">
             <div>
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-300">
-                <Package size={12} />
+                <DSIcon name="package-01" size={12} />
                 Bundle completo
               </div>
               <h2 className="font-display text-3xl font-extrabold leading-tight text-ink-50">
@@ -176,11 +177,11 @@ export function HandoffPage() {
                   className="group inline-flex h-11 items-center gap-2 rounded-lg bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 px-5 text-[13px] font-bold text-white shadow-[0_12px_32px_-14px_rgba(70,167,104,.7)] transition hover:brightness-110"
                 >
                   {busy === 'all' ? (
-                    <Loader2 size={16} className="animate-spin" />
+                    <DSIcon name="loading-01" size={16} className="animate-spin" />
                   ) : done === 'all' ? (
-                    <Check size={16} />
+                    <DSIcon name="check-mark-circle" size={16} />
                   ) : (
-                    <Download size={16} />
+                    <DSIcon name="download-01" size={16} />
                   )}
                   design-system.json
                   <span className="rounded-md bg-black/15 px-1.5 py-0.5 font-mono text-[10.5px] tabular-nums">
@@ -193,18 +194,18 @@ export function HandoffPage() {
                   onClick={() => handleCopyJson('all')}
                   className="inline-flex h-11 items-center gap-2 rounded-lg border border-surface-border bg-surface-raised/70 px-4 text-[12.5px] font-semibold text-ink-200 transition hover:bg-surface-elevated"
                 >
-                  {copied === 'all' ? <Check size={14} className="text-brand-300" /> : <ClipboardCheck size={14} />}
+                  {copied === 'all' ? <DSIcon name="check-mark-circle" size={14} className="text-brand-300" /> : <DSIcon name="task-check" size={14} />}
                   Copiar JSON
                 </motion.button>
               </div>
 
               <div className="mt-6 flex flex-wrap items-center gap-4 text-[11.5px] text-ink-400">
                 <span className="inline-flex items-center gap-1.5">
-                  <FileJson size={12} className="text-ink-300" />
+                  <DSIcon name="file-01" size={12} className="text-ink-300" />
                   Formato JSON (DTCG-ready)
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <GitBranch size={12} className="text-ink-300" />
+                  <DSIcon name="link" size={12} className="text-ink-300" />
                   v1.0.0
                 </span>
                 <span className="inline-flex items-center gap-1.5">
@@ -247,7 +248,6 @@ export function HandoffPage() {
 
         <div className="grid gap-4 md:grid-cols-3">
           {RESOURCES.map((r, i) => {
-            const Icon = r.icon
             const size = sizes[r.resource] ?? null
             const isBusy = busy === r.resource
             const isDone = done === r.resource
@@ -274,7 +274,7 @@ export function HandoffPage() {
                       transition={{ duration: 4 + i, repeat: Infinity, ease: 'easeInOut' }}
                       className="absolute left-5 top-5 flex h-12 w-12 items-center justify-center rounded-xl bg-ink-900/70 ring-1 ring-white/10 backdrop-blur-md"
                     >
-                      <Icon size={22} className={r.accent} />
+                      <DSIcon name={r.iconSlug} size={22} className={r.accent} />
                     </motion.div>
                     <span className="absolute right-4 top-4 rounded-md bg-black/35 px-2 py-0.5 font-mono text-[10px] text-ink-100 backdrop-blur">
                       {fmtSize(size)}
@@ -305,11 +305,11 @@ export function HandoffPage() {
                         )}
                       >
                         {isBusy ? (
-                          <Loader2 size={13} className="animate-spin" />
+                          <DSIcon name="loading-01" size={13} className="animate-spin" />
                         ) : isDone ? (
-                          <Check size={13} className="text-brand-300" />
+                          <DSIcon name="check-mark-circle" size={13} className="text-brand-300" />
                         ) : (
-                          <Download size={13} />
+                          <DSIcon name="download-01" size={13} />
                         )}
                         Baixar
                       </motion.button>
@@ -324,7 +324,7 @@ export function HandoffPage() {
                         className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/70 px-3 text-[12px] font-medium text-ink-300 transition hover:bg-surface-elevated hover:text-ink-100"
                         aria-label={`Copiar JSON de ${r.title}`}
                       >
-                        {isCopied ? <Check size={13} className="text-brand-300" /> : <ClipboardCheck size={13} />}
+                        {isCopied ? <DSIcon name="check-mark-circle" size={13} className="text-brand-300" /> : <DSIcon name="task-check" size={13} />}
                         Copiar
                       </button>
                     </div>

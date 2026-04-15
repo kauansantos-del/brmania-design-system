@@ -1,10 +1,7 @@
 import { useEffect, useMemo, useState, useDeferredValue, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  Search, Download, Copy, Check, Sparkles, X, Package, Loader2,
-  FileArchive, FileJson, ChevronRight, LayoutGrid,
-} from 'lucide-react'
 import { toast } from 'sonner'
+import { DSIcon } from '@/components/brmania'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Badge } from '@/components/ui/Badge'
 import { cn } from '@/lib/cn'
@@ -206,7 +203,7 @@ export function IconsGalleryPage({ query }: { query: string }) {
                 {/* Barra de busca */}
                 <div className="sticky top-16 z-20 -mx-1 mb-4 rounded-xl border border-surface-border bg-surface/80 px-3 py-2 backdrop-blur-xl">
                   <label className="group flex h-10 items-center gap-2 rounded-lg bg-surface-raised/60 px-3 transition focus-within:bg-surface-elevated">
-                    <Search size={14} className="text-ink-400 group-focus-within:text-ink-200" />
+                    <DSIcon name="search-01" size={14} className="text-ink-400 group-focus-within:text-ink-200" />
                     <input
                       value={localQuery}
                       onChange={(e) => {
@@ -224,7 +221,7 @@ export function IconsGalleryPage({ query }: { query: string }) {
                         className="rounded-md p-1 text-ink-400 hover:bg-surface-elevated hover:text-ink-100"
                         aria-label="Limpar busca"
                       >
-                        <X size={12} />
+                        <DSIcon name="multiply-circle" size={12} />
                       </button>
                     )}
                     <kbd className="hidden sm:inline-flex items-center rounded border border-surface-border bg-surface/60 px-1.5 py-0.5 font-mono text-[10px] text-ink-400">
@@ -234,7 +231,7 @@ export function IconsGalleryPage({ query }: { query: string }) {
 
                   {(localQuery || group !== 'all') && (
                     <div className="mt-2 flex items-center gap-2 px-1 text-[11.5px] text-ink-400">
-                      <Sparkles size={12} className="text-brand-300" />
+                      <DSIcon name="star" size={12} className="text-brand-300" />
                       <span>
                         {filtered.length.toLocaleString('pt-BR')} resultado{filtered.length === 1 ? '' : 's'}
                         {group !== 'all' && <> em <span className="font-semibold text-ink-200">{group}</span></>}
@@ -311,7 +308,7 @@ export function IconsGalleryPage({ query }: { query: string }) {
             exit={{ opacity: 0, y: 12 }}
             className="fixed bottom-6 right-6 z-50 flex w-80 items-center gap-3 rounded-xl border border-surface-border bg-surface-raised/95 p-4 shadow-2xl backdrop-blur"
           >
-            <Loader2 size={18} className="animate-spin text-brand-300" />
+            <DSIcon name="loading-01" size={18} className="animate-spin text-brand-300" />
             <div className="flex-1 min-w-0">
               <p className="text-[12.5px] font-semibold text-ink-100">
                 Gerando {downloading.kind === 'zip' ? 'ZIP' : 'JSON'}…
@@ -361,7 +358,7 @@ function CategorySidebar({
         <ul className="max-h-[calc(100vh-220px)] overflow-y-auto p-1.5">
           <CategoryItem
             label="Todas"
-            icon={<LayoutGrid size={13} />}
+            icon={<DSIcon name="grid-01" size={13} />}
             count={totalStyle}
             active={current === 'all'}
             onClick={() => onChange('all')}
@@ -446,9 +443,9 @@ function DownloadMenu({
           busy && 'opacity-70',
         )}
       >
-        {busy ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
+        {busy ? <DSIcon name="loading-01" size={14} className="animate-spin" /> : <DSIcon name="download-01" size={14} />}
         Baixar ícones
-        <ChevronRight size={14} className={cn('transition', open && 'rotate-90')} />
+        <DSIcon name="direction-right" size={14} className={cn('transition', open && 'rotate-90')} />
       </motion.button>
 
       <AnimatePresence>
@@ -478,14 +475,14 @@ function DownloadMenu({
                   Bundle completo ({totalCount.toLocaleString('pt-BR')})
                 </p>
                 <DownloadRow
-                  icon={<FileArchive size={14} />}
+                  icon={<DSIcon name="package-01" size={14} />}
                   title="ZIP categorizado"
                   subtitle={`/<estilo>/<categoria>/<slug>.svg + manifest.json`}
                   highlight
                   onClick={() => onPick('zip', 'all')}
                 />
                 <DownloadRow
-                  icon={<FileJson size={14} />}
+                  icon={<DSIcon name="file-01" size={14} />}
                   title="JSON inline"
                   subtitle="Todos SVGs inline, agrupados por estilo e categoria"
                   onClick={() => onPick('json', 'all')}
@@ -495,13 +492,13 @@ function DownloadMenu({
                   Só estilo atual — {STYLE_LABEL[style]} ({styleCount.toLocaleString('pt-BR')})
                 </p>
                 <DownloadRow
-                  icon={<FileArchive size={14} />}
+                  icon={<DSIcon name="package-01" size={14} />}
                   title={`ZIP · ${STYLE_LABEL[style]}`}
                   subtitle={`/<categoria>/<slug>.svg`}
                   onClick={() => onPick('zip', style)}
                 />
                 <DownloadRow
-                  icon={<FileJson size={14} />}
+                  icon={<DSIcon name="file-01" size={14} />}
                   title={`JSON · ${STYLE_LABEL[style]}`}
                   subtitle="SVGs inline do estilo selecionado"
                   onClick={() => onPick('json', style)}
@@ -545,7 +542,7 @@ function DownloadRow({
         </p>
         <p className="font-mono text-[10.5px] text-ink-500 truncate">{subtitle}</p>
       </div>
-      <Download size={12} className="mt-1 text-ink-500 group-hover:text-ink-200" />
+      <DSIcon name="download-01" size={12} className="mt-1 text-ink-500 group-hover:text-ink-200" />
     </button>
   )
 }
@@ -672,7 +669,7 @@ function IconModal({ item, onClose }: { item: IconItem; onClose: () => void }) {
             className="rounded-md p-1.5 text-ink-400 hover:bg-surface-elevated hover:text-ink-100"
             aria-label="Fechar"
           >
-            <X size={16} />
+            <DSIcon name="multiply-circle" size={16} />
           </button>
         </div>
 
@@ -706,20 +703,20 @@ function IconModal({ item, onClose }: { item: IconItem; onClose: () => void }) {
                 onClick={download}
                 className="inline-flex h-9 items-center gap-2 rounded-lg bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 px-3 text-[12.5px] font-bold text-white shadow-[0_10px_28px_-12px_rgba(70,167,104,.7)] transition hover:brightness-110"
               >
-                <Download size={13} /> Baixar SVG
+                <DSIcon name="download-01" size={13} /> Baixar SVG
               </motion.button>
               <button
                 onClick={copySvg}
                 className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/70 px-3 text-[12px] text-ink-200 hover:bg-surface-elevated"
               >
-                {copied === 'svg' ? <Check size={13} className="text-brand-300" /> : <Copy size={13} />}
+                {copied === 'svg' ? <DSIcon name="check-mark-circle" size={13} className="text-brand-300" /> : <DSIcon name="copy" size={13} />}
                 Copiar SVG
               </button>
               <button
                 onClick={copyJsx}
                 className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/70 px-3 text-[12px] text-ink-200 hover:bg-surface-elevated"
               >
-                {copied === 'jsx' ? <Check size={13} className="text-brand-300" /> : <Copy size={13} />}
+                {copied === 'jsx' ? <DSIcon name="check-mark-circle" size={13} className="text-brand-300" /> : <DSIcon name="copy" size={13} />}
                 Copiar JSX
               </button>
             </div>
@@ -746,7 +743,7 @@ function ShimmerGrid() {
 function EmptyState() {
   return (
     <div className="rounded-xl border border-dashed border-surface-border p-12 text-center">
-      <Package size={28} className="mx-auto mb-3 text-ink-500" />
+      <DSIcon name="package-01" size={28} className="mx-auto mb-3 text-ink-500" />
       <p className="text-sm text-ink-300">Nenhum ícone encontrado.</p>
       <p className="text-[12px] text-ink-500">Tente outro termo ou limpe os filtros.</p>
     </div>

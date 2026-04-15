@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Check, Copy } from 'lucide-react'
+import { DSIcon } from '@/components/brmania'
 import { cn } from '@/lib/cn'
 import { copyToClipboard } from '@/lib/clipboard'
 import { Tooltip } from './Tooltip'
@@ -48,7 +48,7 @@ export function CopyButton({
           className,
         )}
       >
-        {copied ? <Check size={icon} /> : <Copy size={icon} />}
+        {copied ? <DSIcon name="check-mark-circle" size={icon} /> : <DSIcon name="copy" size={icon} />}
       </button>
     </Tooltip>
   )

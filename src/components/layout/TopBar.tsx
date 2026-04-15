@@ -1,4 +1,5 @@
-import { Command, Search, Github, Figma } from 'lucide-react'
+import { Github, Figma } from 'lucide-react'
+import { DSIcon } from '@/components/brmania'
 import { cn } from '@/lib/cn'
 import { Badge } from '@/components/ui/Badge'
 import { Tooltip } from '@/components/ui/Tooltip'
@@ -52,7 +53,7 @@ export function TopBar({
         <nav className="flex items-center gap-1 rounded-xl border border-surface-border bg-surface-raised/60 p-1 shrink-0">
           {sectionOrder.map((k) => {
             const cfg = sections[k]
-            const Icon = cfg.icon
+            const iconSlug = cfg.icon
             const active = section === k
             return (
               <Tooltip key={k} content={cfg.description} side="bottom" delay={400}>
@@ -78,7 +79,7 @@ export function TopBar({
                     />
                   )}
                   <span className="relative flex items-center gap-1.5">
-                    <Icon size={14} className={active ? 'text-white' : ''} />
+                    <DSIcon name={iconSlug} size={14} className={active ? 'text-white' : ''} />
                     <span className={active ? 'text-white' : ''}>{cfg.shortLabel}</span>
                   </span>
                 </button>
@@ -95,12 +96,12 @@ export function TopBar({
             className="group flex h-10 w-full items-center gap-2.5 rounded-lg border border-surface-border bg-surface-raised/70 px-3.5 text-left transition hover:border-brand-500/40 hover:bg-surface-elevated focus:outline-none focus:border-brand-500/60 focus:shadow-[0_0_0_3px_rgba(70,167,104,.14)]"
             aria-label="Abrir busca global"
           >
-            <Search size={14} className="text-ink-400 group-hover:text-ink-200" />
+            <DSIcon name="search-01" size={14} className="text-ink-400 group-hover:text-ink-200" />
             <span className="flex-1 text-[13px] text-ink-400 group-hover:text-ink-300">
               Buscar componentes, tokens, ícones, docs…
             </span>
             <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded border border-surface-border bg-surface/60 px-1.5 py-0.5 font-mono text-[10px] text-ink-400">
-              <Command size={10} /> K
+              <DSIcon name="smart-key" size={10} /> K
             </kbd>
           </button>
         </div>

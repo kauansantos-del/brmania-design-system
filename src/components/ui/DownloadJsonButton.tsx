@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Download, Check, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
+import { DSIcon } from '@/components/brmania'
 import { cn } from '@/lib/cn'
 import { downloadResource, type DSResource } from '@/lib/downloads'
 
@@ -61,11 +61,11 @@ export function DownloadJsonButton({
       aria-label={`Baixar ${LABELS[resource]}`}
     >
       {status === 'loading' ? (
-        <Loader2 size={14} className="animate-spin" />
+        <DSIcon name="loading-01" size={14} className="animate-spin" />
       ) : status === 'done' ? (
-        <Check size={14} />
+        <DSIcon name="check-mark-circle" size={14} />
       ) : (
-        <Download size={14} />
+        <DSIcon name="download-01" size={14} />
       )}
       <span className="font-mono text-[11.5px] tabular-nums">{LABELS[resource]}</span>
     </motion.button>

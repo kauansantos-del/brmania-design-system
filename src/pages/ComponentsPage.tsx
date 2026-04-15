@@ -1,19 +1,56 @@
-import { Figma, Blocks, ArrowRight } from 'lucide-react'
+import { Figma } from 'lucide-react'
+import { DSIcon } from '@/components/brmania'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { SpotlightCard } from '@/components/ui/effects/SpotlightCard'
 import { Meteors } from '@/components/ui/effects/Meteors'
 import { AnimatedBorder } from '@/components/ui/effects/AnimatedBorder'
-import { sections } from '@/data/navigation'
+import { sections, type NavLeaf } from '@/data/navigation'
+import { ButtonPage } from './showcases/ButtonPage'
+import { ButtonTextPage } from './showcases/ButtonTextPage'
+import { IconButtonPage } from './showcases/IconButtonPage'
+import { InputPage } from './showcases/InputPage'
+import { CheckboxPage } from './showcases/CheckboxPage'
+import { MenuItemPage } from './showcases/MenuItemPage'
+import { IconPage } from './showcases/IconPage'
+import { AcoesShowcase } from './showcases/AcoesShowcase'
+import { FormulariosShowcase } from './showcases/FormulariosShowcase'
+import { NavegacaoShowcase } from './showcases/NavegacaoShowcase'
+import { LayoutShowcase } from './showcases/LayoutShowcase'
+
+function findItem(items: NavLeaf[], key: string): NavLeaf | undefined {
+  for (const it of items) {
+    if (it.key === key) return it
+    if (it.children) {
+      const found = findItem(it.children, key)
+      if (found) return found
+    }
+  }
+  return undefined
+}
 
 export function ComponentsPage({ sub, query: _query }: { sub: string; query: string }) {
   const cfg = sections.componentes
-  const current = cfg.groups.flatMap((g) => g.items).find((it) => it.key === sub)
+  const allItems = cfg.groups.flatMap((g) => g.items)
+  const current = findItem(allItems, sub)
 
-  if (sub === 'visao-geral' || !current) {
-    return <Overview />
-  }
+  if (sub === 'visao-geral' || !current) return <Overview />
+
+  // Páginas individuais (uma por componente)
+  if (sub === 'button')       return <ButtonPage />
+  if (sub === 'button-text')  return <ButtonTextPage />
+  if (sub === 'icon-button')  return <IconButtonPage />
+  if (sub === 'input')        return <InputPage />
+  if (sub === 'checkbox')     return <CheckboxPage />
+  if (sub === 'menu-item')    return <MenuItemPage />
+  if (sub === 'icon')         return <IconPage />
+
+  // Páginas de categoria (lista todos os componentes da categoria)
+  if (sub === 'acoes')       return <AcoesShowcase />
+  if (sub === 'formularios') return <FormulariosShowcase />
+  if (sub === 'navegacao')   return <NavegacaoShowcase />
+  if (sub === 'layout')      return <LayoutShowcase />
 
   return <CategoryEmpty title={current.label} description={current.description || ''} />
 }
@@ -36,7 +73,7 @@ function Overview() {
             <Button variant="secondary" leftIcon={<Figma size={14} />}>
               Abrir Figma
             </Button>
-            <Button variant="primary" rightIcon={<ArrowRight size={14} />}>
+            <Button variant="primary" rightIcon={<DSIcon name="arrow-right" size={14} />}>
               Começar
             </Button>
           </>
@@ -79,7 +116,7 @@ function Overview() {
               <div className="p-5">
                 <div className="mb-3 flex items-center justify-between">
                   <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-surface-border bg-surface-raised">
-                    <cat.icon size={18} className="text-brand-400" />
+                    <DSIcon name={cat.icon} size={18} className="text-brand-400" />
                   </div>
                   <Badge size="sm" tone="neutral">{cat.count} itens</Badge>
                 </div>
@@ -88,7 +125,7 @@ function Overview() {
                   {cat.description}
                 </p>
                 <div className="mt-4 flex items-center gap-1 text-[12px] text-brand-400">
-                  Explorar <ArrowRight size={12} />
+                  Explorar <DSIcon name="arrow-right" size={12} />
                 </div>
               </div>
             </SpotlightCard>
@@ -118,7 +155,7 @@ function CategoryEmpty({ title, description }: { title: string; description: str
           <Meteors number={14} />
           <div className="relative p-10 sm:p-16 text-center">
             <div className="mx-auto mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 shadow-glow">
-              <Blocks size={22} className="text-white" />
+              <DSIcon name="grid-01" size={22} className="text-white" />
             </div>
             <h3 className="font-display text-2xl font-extrabold text-ink-50">
               Nenhum componente em <span className="text-brand-400">{title}</span> ainda.
@@ -131,7 +168,7 @@ function CategoryEmpty({ title, description }: { title: string; description: str
               <Button variant="secondary" leftIcon={<Figma size={14} />}>
                 Ver no Figma
               </Button>
-              <Button variant="ghost" rightIcon={<ArrowRight size={14} />}>
+              <Button variant="ghost" rightIcon={<DSIcon name="arrow-right" size={14} />}>
                 Voltar ao início
               </Button>
             </div>

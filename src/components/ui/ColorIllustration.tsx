@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { MousePointer2 } from 'lucide-react'
+import { DSIcon } from '@/components/brmania'
 import { contrastOn } from '@/lib/tokens'
 
 /**
@@ -132,7 +132,7 @@ function IllHoveredUI({ hex, fg }: { hex: string; fg: string }) {
             transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
             className="absolute -bottom-2 -right-2"
           >
-            <MousePointer2 size={12} className="text-white/90 drop-shadow" />
+            <DSIcon name="input-cursor-move" size={12} className="text-white/90 drop-shadow" />
           </motion.span>
         </motion.div>
       </div>
@@ -276,7 +276,7 @@ function IllSolidHover({ hex, fg }: { hex: string; fg: string }) {
         >
           Hovered CTA
           <span>→</span>
-          <MousePointer2 size={12} className="absolute -bottom-2 -right-2 text-white/90 drop-shadow" />
+          <DSIcon name="input-cursor-move" size={12} className="absolute -bottom-2 -right-2 text-white/90 drop-shadow" />
         </motion.button>
       </div>
     </Frame>

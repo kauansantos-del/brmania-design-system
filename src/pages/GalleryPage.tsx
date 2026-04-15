@@ -1,8 +1,5 @@
 import { useEffect, useMemo, useState, useCallback } from 'react'
-import {
-  Download, Copy, X, ChevronLeft, ChevronRight, Maximize2,
-  Link2, ImageIcon, Tag,
-} from 'lucide-react'
+import { DSIcon } from '@/components/brmania'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
@@ -54,7 +51,7 @@ function GalleryImagesPage({ sub, query }: { sub: string; query: string }) {
       <div className="mx-auto max-w-6xl px-8 py-10">
         {filtered.length === 0 ? (
           <div className="rounded-xl border border-dashed border-surface-border p-12 text-center">
-            <ImageIcon size={32} className="mx-auto mb-3 text-ink-500" />
+            <DSIcon name="image-01" size={32} className="mx-auto mb-3 text-ink-500" />
             <p className="text-sm text-ink-300">Nenhuma imagem encontrada.</p>
             <p className="text-[12px] text-ink-500">Tente outro termo.</p>
           </div>
@@ -108,7 +105,7 @@ function GalleryCard({
           </div>
           <div className="pointer-events-none absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition">
             <span className="inline-flex items-center gap-1 rounded-md border border-white/10 bg-black/50 backdrop-blur px-2 py-1 text-[11px] font-medium text-white">
-              <Maximize2 size={11} /> Expandir
+              <DSIcon name="maximize-01" size={11} /> Expandir
             </span>
           </div>
         </div>
@@ -134,7 +131,7 @@ function GalleryCard({
                 key={t}
                 className="inline-flex items-center gap-1 rounded-md border border-surface-border bg-surface/60 px-1.5 py-0.5 font-mono text-[10px] text-ink-400"
               >
-                <Tag size={9} /> {t}
+                <DSIcon name="tag-01" size={9} /> {t}
               </span>
             ))}
           </div>
@@ -145,7 +142,7 @@ function GalleryCard({
                 className="rounded-md p-1.5 text-ink-400 hover:bg-surface-elevated hover:text-ink-100 transition"
                 aria-label="Copiar imagem"
               >
-                <Copy size={13} />
+                <DSIcon name="copy" size={13} />
               </button>
             </Tooltip>
             <Tooltip content="Baixar arquivo">
@@ -154,7 +151,7 @@ function GalleryCard({
                 className="rounded-md p-1.5 text-ink-400 hover:bg-surface-elevated hover:text-ink-100 transition"
                 aria-label="Baixar imagem"
               >
-                <Download size={13} />
+                <DSIcon name="download-01" size={13} />
               </button>
             </Tooltip>
           </div>
@@ -214,23 +211,23 @@ function GalleryModal({
         </div>
         <div className="flex items-center gap-2">
           <Tooltip content="Copiar URL pública">
-            <Button size="sm" variant="ghost" leftIcon={<Link2 size={14} />} onClick={() => copyToClipboard(window.location.origin + item.src, 'URL copiada')}>
+            <Button size="sm" variant="ghost" leftIcon={<DSIcon name="link" size={14} />} onClick={() => copyToClipboard(window.location.origin + item.src, 'URL copiada')}>
               URL
             </Button>
           </Tooltip>
           <Tooltip content="Copiar imagem para o clipboard">
-            <Button size="sm" variant="secondary" leftIcon={<Copy size={14} />} onClick={() => copyImageAsBlob(item.src)}>
+            <Button size="sm" variant="secondary" leftIcon={<DSIcon name="copy" size={14} />} onClick={() => copyImageAsBlob(item.src)}>
               Copiar
             </Button>
           </Tooltip>
           <Tooltip content="Baixar arquivo">
-            <Button size="sm" variant="primary" leftIcon={<Download size={14} />} onClick={() => downloadFile(item.src, item.src.split('/').pop())}>
+            <Button size="sm" variant="primary" leftIcon={<DSIcon name="download-01" size={14} />} onClick={() => downloadFile(item.src, item.src.split('/').pop())}>
               Baixar
             </Button>
           </Tooltip>
           <Tooltip content="Fechar (Esc)">
             <Button size="icon" variant="ghost" onClick={onClose} aria-label="Fechar">
-              <X size={16} />
+              <DSIcon name="multiply-circle" size={16} />
             </Button>
           </Tooltip>
         </div>
@@ -245,7 +242,7 @@ function GalleryModal({
               className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full border border-surface-border bg-surface-raised/80 backdrop-blur text-ink-100 hover:bg-surface-elevated transition flex items-center justify-center"
               aria-label="Imagem anterior"
             >
-              <ChevronLeft size={22} />
+              <DSIcon name="direction-left" size={22} />
             </button>
           </Tooltip>
           <Tooltip content="Próxima (→)" side="left">
@@ -254,7 +251,7 @@ function GalleryModal({
               className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full border border-surface-border bg-surface-raised/80 backdrop-blur text-ink-100 hover:bg-surface-elevated transition flex items-center justify-center"
               aria-label="Próxima imagem"
             >
-              <ChevronRight size={22} />
+              <DSIcon name="direction-right" size={22} />
             </button>
           </Tooltip>
         </>
