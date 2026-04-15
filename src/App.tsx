@@ -6,6 +6,7 @@ import { Sidebar } from '@/components/layout/Sidebar'
 import { ComponentsPage } from '@/pages/ComponentsPage'
 import { DocumentationPage } from '@/pages/DocumentationPage'
 import { GalleryPage } from '@/pages/GalleryPage'
+import { CommandPalette } from '@/components/ui/CommandPalette'
 import { sections, type SectionKey } from '@/data/navigation'
 
 const STORAGE_KEY = 'brmania-ds-nav'
@@ -46,12 +47,31 @@ export default function App() {
 
   const [nav, setNav] = useState<NavState>(initial)
   const [query, setQuery] = useState('')
+  const [paletteOpen, setPaletteOpen] = useState(false)
+  const [paletteSeed, setPaletteSeed] = useState('')
 
   const setSection = (s: SectionKey) => {
     setNav({ section: s, sub: sections[s].defaultSub })
     setQuery('')
   }
   const setSub = (sub: string) => setNav((n) => ({ ...n, sub }))
+
+  const openPalette = (seed = '') => {
+    setPaletteSeed(seed)
+    setPaletteOpen(true)
+  }
+
+  // Atalho global ⌘/Ctrl + K
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        openPalette('')
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(nav))
@@ -69,6 +89,7 @@ export default function App() {
         onSectionChange={setSection}
         query={query}
         onQueryChange={setQuery}
+        onOpenPalette={openPalette}
       />
 
       <div className="flex flex-1 overflow-hidden">
@@ -95,6 +116,16 @@ export default function App() {
           </AnimatePresence>
         </main>
       </div>
+
+      <CommandPalette
+        open={paletteOpen}
+        onClose={() => setPaletteOpen(false)}
+        initialQuery={paletteSeed}
+        onNavigate={(section, sub) => {
+          if (sub) setNav({ section, sub })
+          else setSection(section)
+        }}
+      />
 
       <Toaster
         theme="dark"
