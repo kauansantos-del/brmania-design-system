@@ -10,3 +10,4 @@ dist-ssr
 .vercel
 tmp-*.json
 *.log
+*.tsbuildinfo
