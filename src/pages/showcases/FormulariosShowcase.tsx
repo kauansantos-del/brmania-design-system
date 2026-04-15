@@ -42,7 +42,7 @@ function InputPreview() {
   const [value, setValue] = useState('')
   return (
     <div className="grid w-full max-w-[880px] gap-6 sm:grid-cols-2">
-      <Input label="Nome" placeholder="Fulano da Silva" value={value} onChange={(e) => setValue(e.currentTarget.value)} />
+      <Input label="Nome" placeholder="Fulano da Silva" value={value} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)} />
       <Input label="E-mail" placeholder="voce@brmania.com.br" iconLeft={<DSIcon name="mail" size={16} />} />
       <Input label="Senha" type="password" iconLeft={<DSIcon name="lock" size={16} />} helperText="Mínimo 8 caracteres" />
       <Input label="CPF" placeholder="000.000.000-00" error="CPF inválido" />
