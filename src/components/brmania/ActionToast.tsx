@@ -22,7 +22,7 @@ const TONE_STYLES: Record<ToastTone, { icon: string; iconStyle: 'outline' | 'sol
   pending:  { icon: 'notification',       iconStyle: 'outline', iconWrap: 'bg-[#e6e9e7] text-[#60655f]', action: 'text-[#e5484d]' },
 }
 
-export interface ActionToastProps extends HTMLAttributes<HTMLDivElement> {
+export interface ActionToastProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   tone?: ToastTone
   title: ReactNode
   description?: ReactNode

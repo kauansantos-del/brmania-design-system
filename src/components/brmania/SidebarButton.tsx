@@ -22,7 +22,7 @@ export const SIDEBAR_BUTTON_PRESETS = {
 
 export type SidebarButtonType = keyof typeof SIDEBAR_BUTTON_PRESETS
 
-export interface SidebarButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface SidebarButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
   type: SidebarButtonType
   label?: string
   customIcon?: ReactNode

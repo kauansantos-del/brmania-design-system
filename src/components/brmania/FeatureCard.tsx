@@ -60,7 +60,7 @@ const PRESETS: Record<FeatureCardPreset, {
   },
 }
 
-export interface FeatureCardProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface FeatureCardProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'title'> {
   /** Pré-configuração rápida — sobrescrita por title/description/icon se fornecidos. */
   preset?: FeatureCardPreset
   title?: ReactNode
