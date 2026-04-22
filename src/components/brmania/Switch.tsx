@@ -31,7 +31,7 @@ const THUMB =
   'pointer-events-none absolute left-0.5 top-1/2 -translate-y-1/2 ' +
   'h-5 w-5 rounded-full bg-white shadow-[0_1px_2px_rgba(0,0,0,0.15)] ' +
   'transition-transform duration-200 ease-out ' +
-  'peer-checked:translate-x-[26px]'
+  'group-has-[:checked]:translate-x-[26px]'
 
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
   function Switch(
@@ -41,7 +41,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     const reactId = useId()
     const autoId = id ?? reactId
     const trackNode = (
-      <span className="relative inline-flex">
+      <span className="group relative inline-flex">
         <input
           ref={ref}
           id={autoId}
