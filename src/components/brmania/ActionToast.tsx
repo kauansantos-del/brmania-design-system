@@ -1,4 +1,4 @@
-import { forwardRef, type ReactNode, type HTMLAttributes } from 'react'
+import { forwardRef, type HTMLAttributes, type ReactNode } from 'react'
 import { cn } from '@/lib/cn'
 import { DSIcon } from './DSIcon'
 
@@ -6,20 +6,18 @@ import { DSIcon } from './DSIcon'
  * ActionToast · BRMania Design System
  * Figma: nó 176:51949
  *
- * Notificação com ícone + título + subtítulo + botão de ação (ex. "Desfazer").
- * 5 tons: success, danger, info, download, pending (loading).
- *
- * Renderiza estático — para dispatch/fila use um Toaster por fora.
+ * Layout: ícone 28px + título (Sora 16 SemiBold) + subtítulo (Inter 14) + ação (Raleway 14 SemiBold).
+ * 5 tons: success, danger, info, download, pending.
  */
 
 export type ToastTone = 'success' | 'danger' | 'info' | 'download' | 'pending'
 
-const TONE_STYLES: Record<ToastTone, { icon: string; iconStyle: 'outline' | 'solid'; iconWrap: string; action: string }> = {
-  success:  { icon: 'tick',               iconStyle: 'solid',   iconWrap: 'bg-[#daf1db] text-[#2a7e40]', action: 'text-[#e5484d]' },
-  danger:   { icon: 'warning',            iconStyle: 'solid',   iconWrap: 'bg-[#feebec] text-[#e5484d]', action: 'text-[#e5484d]' },
-  info:     { icon: 'information',        iconStyle: 'outline', iconWrap: 'bg-[#fef2a4] text-[#946800]', action: 'text-[#e5484d]' },
-  download: { icon: 'download',           iconStyle: 'outline', iconWrap: 'bg-[#caf1f6] text-[#107d98]', action: 'text-[#e5484d]' },
-  pending:  { icon: 'notification',       iconStyle: 'outline', iconWrap: 'bg-[#e6e9e7] text-[#60655f]', action: 'text-[#e5484d]' },
+const TONE: Record<ToastTone, { icon: string; iconStyle: 'outline' | 'solid'; iconClass: string }> = {
+  success:  { icon: 'tick',        iconStyle: 'solid',   iconClass: 'text-[#2a7e40]' },
+  danger:   { icon: 'warning',     iconStyle: 'solid',   iconClass: 'text-[#e5484d]' },
+  info:     { icon: 'information', iconStyle: 'solid',   iconClass: 'text-[#c08c00]' },
+  download: { icon: 'download',    iconStyle: 'solid',   iconClass: 'text-[#0891b2]' },
+  pending:  { icon: 'loading',     iconStyle: 'outline', iconClass: 'text-[#60655f]' },
 }
 
 export interface ActionToastProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
@@ -36,32 +34,33 @@ export const ActionToast = forwardRef<HTMLDivElement, ActionToastProps>(
     { tone = 'success', title, description, actionLabel = 'Desfazer', onAction, customIcon, className, ...rest },
     ref,
   ) {
-    const t = TONE_STYLES[tone]
+    const t = TONE[tone]
     return (
       <div
         ref={ref}
         role="status"
         aria-live="polite"
         className={cn(
-          'flex w-full max-w-md items-center gap-3 rounded-xl bg-white p-3 ' +
-            "font-['Inter'] shadow-[0_8px_24px_-8px_rgba(32,32,32,0.20)] border border-[#e6e9e7]",
+          'flex w-full max-w-md items-center gap-8 rounded-lg p-4 ' +
+          "bg-[#fcfcfc] shadow-[0px_2px_12px_0px_rgba(0,0,0,0.15)]",
           className,
         )}
         {...rest}
       >
+        {/* Ícone 28px direto, sem círculo de fundo */}
         <span
           aria-hidden
-          className={cn('inline-flex size-9 shrink-0 items-center justify-center rounded-full', t.iconWrap)}
+          className={cn('inline-flex size-7 shrink-0 items-center justify-center', t.iconClass)}
         >
-          {customIcon ?? <DSIcon name={t.icon} style={t.iconStyle} size={18} />}
+          {customIcon ?? <DSIcon name={t.icon} style={t.iconStyle} size={28} />}
         </span>
 
-        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-          <span className="truncate text-[14px] font-semibold leading-[1.3] text-[#1a211c]">
+        <span className="flex min-w-0 flex-1 flex-col gap-2">
+          <span className="text-[16px] font-semibold font-['Sora'] leading-[1.1] text-[#1a211c]">
             {title}
           </span>
           {description && (
-            <span className="truncate text-[13px] leading-[1.3] text-[#60655f]">
+            <span className="text-[14px] font-['Inter'] leading-[1.3] text-[#60655f]">
               {description}
             </span>
           )}
@@ -71,11 +70,7 @@ export const ActionToast = forwardRef<HTMLDivElement, ActionToastProps>(
           <button
             type="button"
             onClick={onAction}
-            className={cn(
-              'shrink-0 rounded-md px-2 py-1 text-[14px] font-semibold leading-[1.3] transition-colors duration-150',
-              'hover:bg-[#feebec] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e5484d]/30',
-              t.action,
-            )}
+            className="shrink-0 font-['Raleway'] text-[14px] font-semibold leading-[1.3] text-[#ce2c31] transition-opacity duration-150 hover:opacity-70 focus:outline-none focus-visible:underline"
           >
             {actionLabel}
           </button>
