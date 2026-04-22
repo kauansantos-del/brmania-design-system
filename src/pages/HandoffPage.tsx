@@ -34,7 +34,7 @@ const RESOURCES: ResourceMeta[] = [
     filename: 'brmania-cores.tokens.json',
     iconSlug: 'paint-board',
     gradient: 'from-brand-400/80 via-brand-500/50 to-transparent',
-    ring: 'shadow-[0_12px_32px_-16px_rgba(70,167,104,.55)]',
+    ring: 'shadow-[0_12px_32px_-16px_rgba(34,197,94,.55)]',
     accent: 'text-brand-300',
     bullets: ['2 temas (dark/light)', 'Grupos semânticos', 'HEX + alpha por step'],
   },
@@ -151,12 +151,12 @@ export function HandoffPage() {
       <div className="mx-auto max-w-6xl px-8 py-10">
         {/* Bundle card – destaque */}
         <SpotlightCard className="relative mb-10 overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(1200px_400px_at_80%_-20%,rgba(70,167,104,0.18),transparent_50%)]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(1200px_400px_at_80%_-20%,rgba(34,197,94,0.18),transparent_50%)]" />
           <Meteors number={14} />
           <div className="relative grid gap-8 p-8 md:grid-cols-[1fr_320px] md:items-center">
             <div>
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-300">
-                <DSIcon name="package-01" size={12} />
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3 py-1 text-[14px] font-semibold uppercase tracking-[0.16em] text-brand-300">
+                <DSIcon name="package-01" size={14} />
                 Bundle completo
               </div>
               <h2 className="font-display text-3xl font-extrabold leading-tight text-ink-50">
@@ -174,7 +174,7 @@ export function HandoffPage() {
                   whileHover={{ y: -1 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => handleDownload('all')}
-                  className="group inline-flex h-11 items-center gap-2 rounded-lg bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 px-5 text-[13px] font-bold text-white shadow-[0_12px_32px_-14px_rgba(70,167,104,.7)] transition hover:brightness-110"
+                  className="group inline-flex h-11 items-center gap-2 rounded-lg bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 px-5 text-[14px] font-bold text-white shadow-[0_12px_32px_-14px_rgba(34,197,94,.7)] transition hover:brightness-110"
                 >
                   {busy === 'all' ? (
                     <DSIcon name="loading-01" size={16} className="animate-spin" />
@@ -184,7 +184,7 @@ export function HandoffPage() {
                     <DSIcon name="download-01" size={16} />
                   )}
                   design-system.json
-                  <span className="rounded-md bg-black/15 px-1.5 py-0.5 font-mono text-[10.5px] tabular-nums">
+                  <span className="rounded-md bg-black/15 px-1.5 py-0.5 font-mono text-[14px] tabular-nums">
                     {fmtSize(sizes.all)}
                   </span>
                 </motion.button>
@@ -192,24 +192,24 @@ export function HandoffPage() {
                   whileHover={{ y: -1 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => handleCopyJson('all')}
-                  className="inline-flex h-11 items-center gap-2 rounded-lg border border-surface-border bg-surface-raised/70 px-4 text-[12.5px] font-semibold text-ink-200 transition hover:bg-surface-elevated"
+                  className="inline-flex h-11 items-center gap-2 rounded-lg border border-surface-border bg-surface-raised/70 px-4 text-[14px] font-semibold text-ink-200 transition hover:bg-surface-elevated"
                 >
                   {copied === 'all' ? <DSIcon name="check-mark-circle" size={14} className="text-brand-300" /> : <DSIcon name="task-check" size={14} />}
                   Copiar JSON
                 </motion.button>
               </div>
 
-              <div className="mt-6 flex flex-wrap items-center gap-4 text-[11.5px] text-ink-400">
+              <div className="mt-6 flex flex-wrap items-center gap-4 text-[14px] text-ink-300">
                 <span className="inline-flex items-center gap-1.5">
-                  <DSIcon name="file-01" size={12} className="text-ink-300" />
+                  <DSIcon name="file-01" size={14} className="text-ink-300" />
                   Formato JSON (DTCG-ready)
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <DSIcon name="link" size={12} className="text-ink-300" />
+                  <DSIcon name="link" size={14} className="text-ink-300" />
                   v1.0.0
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <Figma size={12} className="text-ink-300" />
+                  <Figma size={14} className="text-ink-300" />
                   Sincronizado com Figma
                 </span>
               </div>
@@ -217,7 +217,7 @@ export function HandoffPage() {
 
             {/* Preview do JSON à direita */}
             <div className="relative hidden md:block">
-              <div className="rounded-xl border border-surface-border bg-[#0A0A10] p-4 font-mono text-[11px] leading-relaxed text-ink-300 shadow-inner">
+              <div className="rounded-xl border border-surface-border bg-[#0A0A0E] p-4 font-mono text-[14px] leading-relaxed text-ink-300 shadow-inner">
                 <p className="text-brand-300">{'{'}</p>
                 <p className="pl-3"><span className="text-sky-300">"name"</span>: <span className="text-amber-200">"BRMania · Tokens"</span>,</p>
                 <p className="pl-3"><span className="text-sky-300">"version"</span>: <span className="text-amber-200">"1.0.0"</span>,</p>
@@ -230,7 +230,7 @@ export function HandoffPage() {
                 aria-hidden
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -right-3 -top-3 rounded-lg border border-brand-500/30 bg-surface-raised/90 px-2.5 py-1 text-[10px] font-semibold text-brand-300 backdrop-blur"
+                className="absolute -right-3 -top-3 rounded-lg border border-brand-500/30 bg-surface-raised/90 px-2.5 py-1 text-[14px] font-semibold text-brand-300 backdrop-blur"
               >
                 .json
               </motion.div>
@@ -241,8 +241,8 @@ export function HandoffPage() {
         {/* Cards individuais */}
         <div className="mb-4 flex items-end justify-between">
           <div>
-            <h3 className="font-display text-lg font-bold text-ink-100">Downloads individuais</h3>
-            <p className="text-[13px] text-ink-400">Escolha só o que você precisa.</p>
+            <h3 className="font-display text-xl font-bold text-ink-100">Downloads individuais</h3>
+            <p className="text-[14px] text-ink-300">Escolha só o que você precisa.</p>
           </div>
         </div>
 
@@ -276,18 +276,18 @@ export function HandoffPage() {
                     >
                       <DSIcon name={r.iconSlug} size={22} className={r.accent} />
                     </motion.div>
-                    <span className="absolute right-4 top-4 rounded-md bg-black/35 px-2 py-0.5 font-mono text-[10px] text-ink-100 backdrop-blur">
+                    <span className="absolute right-4 top-4 rounded-md bg-black/35 px-2 py-0.5 font-mono text-[14px] text-ink-100 backdrop-blur">
                       {fmtSize(size)}
                     </span>
                   </div>
 
                   <div className="p-5">
-                    <h4 className="font-display text-base font-bold text-ink-50">{r.title}</h4>
-                    <p className="text-[12px] text-ink-400">{r.subtitle}</p>
+                    <h4 className="font-display text-lg font-bold text-ink-50">{r.title}</h4>
+                    <p className="text-[14px] text-ink-300">{r.subtitle}</p>
 
                     <ul className="mt-3 space-y-1.5">
                       {r.bullets.map((b) => (
-                        <li key={b} className="flex items-center gap-2 text-[12px] text-ink-300">
+                        <li key={b} className="flex items-center gap-2 text-[14px] text-ink-300">
                           <span className={cn('h-1.5 w-1.5 rounded-full', r.accent.replace('text-', 'bg-'))} />
                           {b}
                         </li>
@@ -300,16 +300,16 @@ export function HandoffPage() {
                         onClick={() => handleDownload(r.resource)}
                         disabled={isBusy}
                         className={cn(
-                          'group inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-lg border border-surface-border bg-surface-raised/70 px-3 text-[12.5px] font-semibold text-ink-100 transition hover:bg-surface-elevated',
+                          'group inline-flex h-9 flex-1 items-center justify-center gap-2 rounded-lg border border-surface-border bg-surface-raised/70 px-3 text-[14px] font-semibold text-ink-100 transition hover:bg-surface-elevated',
                           isBusy && 'opacity-60',
                         )}
                       >
                         {isBusy ? (
-                          <DSIcon name="loading-01" size={13} className="animate-spin" />
+                          <DSIcon name="loading-01" size={14} className="animate-spin" />
                         ) : isDone ? (
-                          <DSIcon name="check-mark-circle" size={13} className="text-brand-300" />
+                          <DSIcon name="check-mark-circle" size={14} className="text-brand-300" />
                         ) : (
-                          <DSIcon name="download-01" size={13} />
+                          <DSIcon name="download-01" size={14} />
                         )}
                         Baixar
                       </motion.button>
@@ -321,15 +321,15 @@ export function HandoffPage() {
                       <button
                         type="button"
                         onClick={() => handleCopyJson(r.resource)}
-                        className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/70 px-3 text-[12px] font-medium text-ink-300 transition hover:bg-surface-elevated hover:text-ink-100"
+                        className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/70 px-3 text-[14px] font-medium text-ink-300 transition hover:bg-surface-elevated hover:text-ink-100"
                         aria-label={`Copiar JSON de ${r.title}`}
                       >
-                        {isCopied ? <DSIcon name="check-mark-circle" size={13} className="text-brand-300" /> : <DSIcon name="task-check" size={13} />}
+                        {isCopied ? <DSIcon name="check-mark-circle" size={14} className="text-brand-300" /> : <DSIcon name="task-check" size={14} />}
                         Copiar
                       </button>
                     </div>
 
-                    <p className="mt-3 truncate font-mono text-[10.5px] text-ink-500">{r.filename}</p>
+                    <p className="mt-3 truncate font-mono text-[14px] text-ink-300">{r.filename}</p>
                   </div>
                 </SpotlightCard>
               </motion.div>
@@ -339,7 +339,7 @@ export function HandoffPage() {
 
         {/* Como usar */}
         <div className="mt-12">
-          <h3 className="mb-4 font-display text-lg font-bold text-ink-100">Como usar</h3>
+          <h3 className="mb-4 font-display text-xl font-bold text-ink-100">Como usar</h3>
           <div className="grid gap-4 md:grid-cols-3">
             <UsageCard
               step="01"
@@ -363,9 +363,9 @@ export function HandoffPage() {
         <div className="mt-12 rounded-xl border border-surface-border bg-surface-raised/40 p-5">
           <div className="flex items-center gap-2">
             <Badge tone="brand" dot size="sm">v1.0.0</Badge>
-            <span className="text-[11.5px] text-ink-400">· Release inicial · Abril 2026</span>
+            <span className="text-[14px] text-ink-300">· Release inicial · Abril 2026</span>
           </div>
-          <p className="mt-2 text-[13px] text-ink-300">
+          <p className="mt-2 text-[14px] text-ink-300">
             Primeira versão estável com todos os fundamentos sincronizados com o Figma. Quebras de contrato serão sinalizadas no campo <code className="font-mono text-brand-300">version</code> do JSON.
           </p>
         </div>
@@ -379,11 +379,11 @@ function UsageCard({ step, title, body }: { step: string; title: string; body: s
     <SpotlightCard className="h-full">
       <div className="p-5">
         <div className="flex items-center gap-2">
-          <span className="font-mono text-[11px] font-semibold text-brand-300">{step}</span>
+          <span className="font-mono text-[14px] font-semibold text-brand-300">{step}</span>
           <span className="h-px flex-1 bg-surface-border" />
         </div>
-        <h4 className="mt-3 font-display text-base font-bold text-ink-50">{title}</h4>
-        <p className="mt-1 text-[12.5px] leading-relaxed text-ink-400">{body}</p>
+        <h4 className="mt-3 font-display text-lg font-bold text-ink-50">{title}</h4>
+        <p className="mt-1 text-[14px] leading-relaxed text-ink-300">{body}</p>
       </div>
     </SpotlightCard>
   )

@@ -20,7 +20,7 @@ export function LayoutShowcase() {
           tags={[{ label: 'primitive', tone: 'info' }, { label: 'DSIcon', tone: 'neutral' }]}
           preview={
             <div className="flex flex-col items-center gap-8">
-              <div className="flex items-end gap-6 text-[#3e9b57]">
+              <div className="flex items-end gap-6 text-[#22C55E]">
                 <DSIcon name="home-01" size={20} />
                 <DSIcon name="home-01" size={24} />
                 <DSIcon name="home-01" size={28} />
@@ -31,10 +31,10 @@ export function LayoutShowcase() {
               <div className="flex items-center gap-4">
                 <DSIcon name="shield" size={24} className="text-[#107d98]" />
                 <DSIcon name="star" size={24} className="text-[#dc3d43]" />
-                <DSIcon name="flash" size={24} className="text-[#3e9b57]" />
+                <DSIcon name="flash" size={24} className="text-[#22C55E]" />
                 <DSIcon name="heart" size={24} className="text-[#ce2c31]" />
               </div>
-              <p className="text-[11.5px] text-[#646464]">
+              <p className="text-[14px] text-[#646464]">
                 Qualquer cor via <code className="font-mono">className</code>. Qualquer tamanho via prop <code className="font-mono">size</code>.
               </p>
             </div>
@@ -50,7 +50,7 @@ const CODE_ICON = `import { DSIcon } from '@/components/brmania'
 
 export function Example() {
   return (
-    <div className="flex items-end gap-4 text-[#3e9b57]">
+    <div className="flex items-end gap-4 text-[#22C55E]">
       <DSIcon name="home-01" size={20} />
       <DSIcon name="home-01" size={24} />
       <DSIcon name="home-01" size={32} />

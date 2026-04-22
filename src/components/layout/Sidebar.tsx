@@ -100,7 +100,7 @@ export function Sidebar({
       <div
         className={cn(
           'group relative flex w-full items-center gap-3 text-left',
-          'transition-[background,color] duration-150',
+          'transition-[background,color] duration-200 ease-out',
           depth === 0 ? 'px-5 py-2.5' : 'pr-5 py-2 pl-11',
           isActive
             ? cn(cfg.softBg, cfg.text)
@@ -113,19 +113,19 @@ export function Sidebar({
           <span className={cn('absolute left-0 top-1/2 -translate-y-1/2 h-6 w-[3px] rounded-r-full', cfg.marker)} />
         )}
         {isBusy ? (
-          <DSIcon name="loading-01" size={depth === 0 ? 16 : 14} className="shrink-0 animate-spin text-brand-300" />
+          <DSIcon name="loading-01" size={depth === 0 ? 18 : 15} className="shrink-0 animate-spin text-brand-300" />
         ) : isDone ? (
-          <DSIcon name="check-mark-circle" size={depth === 0 ? 16 : 14} className="shrink-0 text-brand-300" />
+          <DSIcon name="check-mark-circle" size={depth === 0 ? 18 : 15} className="shrink-0 text-brand-300" />
         ) : (
-          <DSIcon name={it.icon} size={depth === 0 ? 16 : 14} className={cn('shrink-0', isParentOfActive && !isActive && cfg.text)} />
+          <DSIcon name={it.icon} size={depth === 0 ? 18 : 15} className={cn('shrink-0', isParentOfActive && !isActive && cfg.text)} />
         )}
-        <span className={cn('flex-1 truncate font-medium', depth === 0 ? 'text-[13px]' : 'text-[12.5px]')}>
+        <span className={cn('flex-1 truncate font-medium', depth === 0 ? 'text-[14px]' : 'text-[14px]')}>
           {it.label}
         </span>
         {it.count !== undefined && !hasChildren && (
           <span className={cn(
-            'rounded-md px-1.5 py-0.5 text-[10px] font-semibold tabular-nums',
-            isActive ? cn(cfg.softBg, cfg.text) : 'bg-surface-elevated text-ink-400',
+            'rounded-md px-1.5 py-0.5 text-[14px] font-semibold tabular-nums',
+            isActive ? cn(cfg.softBg, cfg.text) : 'bg-surface-elevated text-ink-300',
           )}>
             {it.count}
           </span>
@@ -134,11 +134,11 @@ export function Sidebar({
         {hasChildren && (
           <DSIcon
             name="direction-right"
-            size={13}
-            className={cn('shrink-0 text-ink-500 transition-transform duration-200', isOpen && 'rotate-90')}
+            size={14}
+            className={cn('shrink-0 text-ink-300 transition-transform duration-200 ease-out', isOpen && 'rotate-90')}
           />
         )}
-        {isExternal && <DSIcon name="link" size={11} className="text-ink-500 group-hover:text-ink-300" />}
+        {isExternal && <DSIcon name="link" size={14} className="text-ink-300 group-hover:text-ink-300 transition-colors duration-200" />}
       </div>
     )
 
@@ -214,22 +214,22 @@ export function Sidebar({
     <aside
       // key=section força a re-animação quando troca de seção
       key={section}
-      className="flex h-full w-[260px] shrink-0 flex-col border-r border-surface-border bg-surface-raised/40 backdrop-blur"
+      className="flex h-full w-[260px] shrink-0 flex-col border-r border-surface-border/80 bg-surface-raised/30 backdrop-blur-sm"
     >
       {/* Section header */}
       <div className="px-5 pt-5 pb-4 border-b border-surface-border/60 animate-slide-in-left">
         <div className="flex items-center gap-2.5">
           <div className={cn(
-            'h-8 w-8 rounded-lg bg-gradient-to-br grid place-items-center shadow-inner',
+            'h-9 w-9 rounded-lg bg-gradient-to-br grid place-items-center shadow-inner',
             cfg.accent,
           )}>
-            <DSIcon name={cfg.icon} size={15} className="text-white" />
+            <DSIcon name={cfg.icon} size={18} className="text-white" />
           </div>
           <div className="min-w-0">
-            <p className="font-display text-[13.5px] font-bold leading-tight text-ink-50 truncate">
+            <p className="font-display text-[15px] font-bold leading-tight text-ink-50 truncate">
               {cfg.label}
             </p>
-            <p className="text-[11px] text-ink-400 leading-tight truncate">
+            <p className="text-[12px] text-ink-400 leading-tight truncate">
               {cfg.description}
             </p>
           </div>
@@ -240,14 +240,14 @@ export function Sidebar({
       <nav className="flex-1 overflow-y-auto py-4 animate-slide-in-left">
         {filterGroups.length === 0 && (
           <div className="px-5 py-6 text-center">
-            <p className="text-sm text-ink-400">Nada encontrado</p>
-            <p className="text-[11px] text-ink-500">Tente outro termo.</p>
+            <p className="text-[15px] text-ink-200">Nada encontrado</p>
+            <p className="text-[14px] text-ink-300">Tente outro termo.</p>
           </div>
         )}
 
         {filterGroups.map((group, gi) => (
           <div key={group.title} className={cn('pb-4', gi < filterGroups.length - 1 && 'mb-2 border-b border-surface-border/60')}>
-            <p className="px-5 pt-1 pb-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-500">
+            <p className="px-5 pt-1 pb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-400">
               {group.title}
             </p>
             <ul className="flex flex-col gap-1.5">
@@ -263,19 +263,19 @@ export function Sidebar({
           href={PROJECT.deployUrl}
           target="_blank"
           rel="noreferrer"
-          className="block rounded-lg border border-surface-border bg-surface/60 p-3 transition hover:border-brand-500/40 hover:bg-surface/80"
+          className="block rounded-lg border border-surface-border/70 bg-surface/50 p-3 transition hover:border-brand-500/30 hover:bg-surface/70"
         >
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
             </span>
-            <p className="text-[11.5px] font-medium text-ink-200">Deploy live</p>
-            <span className="ml-auto rounded-md bg-brand-500/15 px-1.5 py-0.5 font-mono text-[10px] text-brand-300">
+            <p className="text-[12px] font-medium text-ink-200">Deploy live</p>
+            <span className="ml-auto rounded-md bg-brand-500/15 px-1.5 py-0.5 font-mono text-[11px] text-brand-300">
               v{PROJECT.version}
             </span>
           </div>
-          <p className="mt-1 truncate font-mono text-[10.5px] leading-relaxed text-ink-400">
+          <p className="mt-1 truncate font-mono text-[11px] leading-relaxed text-ink-400">
             {PROJECT.deployUrl.replace('https://', '')}
           </p>
         </a>

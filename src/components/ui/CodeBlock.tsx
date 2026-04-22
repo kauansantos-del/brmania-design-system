@@ -19,14 +19,14 @@ export function CodeBlock({
           <span className="h-2.5 w-2.5 rounded-full bg-rose-400/70" />
           <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
           <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
-          <span className="ml-2 font-mono text-[11px] uppercase tracking-wider text-ink-400">
+          <span className="ml-2 font-mono text-[14px] uppercase tracking-wider text-ink-300">
             {language}
           </span>
         </div>
         <CopyButton value={code} label="Código copiado" tooltip="Copiar código" />
       </div>
       <pre
-        className="font-mono text-[12.5px] leading-relaxed text-ink-200 overflow-auto px-4 py-3"
+        className="font-mono text-[14px] leading-relaxed text-ink-100 overflow-auto px-4 py-3"
         style={{ maxHeight }}
       >
         <code>{code}</code>

@@ -86,16 +86,15 @@ function CheckboxDemo({
 function generateCode({
   direction, defaultChecked, disabled, label,
 }: { direction: string; defaultChecked: boolean; disabled: boolean; label: string }) {
-  const props: string[] = [`label="${label || 'Lembrar conta'}"`]
-  if (direction !== 'left')      props.push(`direction="${direction}"`)
-  if (defaultChecked)            props.push('defaultChecked')
-  if (disabled)                  props.push('disabled')
   return `import { Checkbox } from '@/components/brmania'
 
 export function Example() {
   return (
     <Checkbox
-      ${props.join('\n      ')}
+      label="${label || 'Lembrar conta'}"
+      direction="${direction}"
+      defaultChecked={${!!defaultChecked}}
+      disabled={${!!disabled}}
     />
   )
 }`

@@ -46,7 +46,7 @@ export function AcoesShowcase() {
               <ButtonText variant="secondary">Criar conta</ButtonText>
               <ButtonText variant="red">Remover</ButtonText>
               <ButtonText variant="codigo">Enviar código</ButtonText>
-              <ButtonText variant="primary" icon={<DSIcon name="arrow-right" size={16} />}>Saiba mais</ButtonText>
+              <ButtonText variant="primary" icon={<DSIcon name="arrow-right" size={18} />}>Saiba mais</ButtonText>
             </div>
           }
           code={CODE_BUTTON_TEXT}
@@ -101,7 +101,7 @@ export function Example() {
       <ButtonText variant="secondary">Criar conta</ButtonText>
       <ButtonText variant="red">Remover</ButtonText>
       <ButtonText variant="codigo">Enviar código</ButtonText>
-      <ButtonText variant="primary" icon={<DSIcon name="arrow-right" size={16} />}>
+      <ButtonText variant="primary" icon={<DSIcon name="arrow-right" size={18} />}>
         Saiba mais
       </ButtonText>
     </div>

@@ -53,7 +53,7 @@ export function Tooltip({
           role="tooltip"
           className={cn(
             'pointer-events-none absolute z-50 whitespace-nowrap rounded-md border border-surface-border',
-            'bg-ink-900/95 backdrop-blur px-2.5 py-1.5 text-xs font-medium text-ink-100 shadow-xl',
+            'bg-ink-900/95 backdrop-blur px-3 py-2 text-[14px] font-medium text-ink-100 shadow-xl',
             'animate-fade-in',
             pos[side],
             className,

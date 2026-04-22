@@ -28,8 +28,8 @@ export function CardBody({ className, children }: { className?: string; children
   return <div className={cn('px-5 pb-5', className)}>{children}</div>
 }
 export function CardTitle({ className, children }: { className?: string; children: ReactNode }) {
-  return <h3 className={cn('font-display text-base font-semibold text-ink-100', className)}>{children}</h3>
+  return <h3 className={cn('font-display text-lg font-semibold text-ink-100', className)}>{children}</h3>
 }
 export function CardDescription({ className, children }: { className?: string; children: ReactNode }) {
-  return <p className={cn('text-sm text-ink-300', className)}>{children}</p>
+  return <p className={cn('text-[15px] text-ink-200', className)}>{children}</p>
 }

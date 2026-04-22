@@ -32,17 +32,17 @@ export function ShowcaseCard({
       <div className="mb-4 flex items-start justify-between gap-4">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <h2 className="font-display text-xl font-bold text-ink-50">{name}</h2>
+            <h2 className="font-display text-2xl font-bold text-ink-50">{name}</h2>
             <Badge tone={statusTone as any} dot>
               {status === 'stable' ? 'Estável' : status === 'beta' ? 'Beta' : 'Alpha'}
             </Badge>
           </div>
-          <p className="mt-1 text-[13.5px] text-ink-300 max-w-2xl">{description}</p>
+          <p className="mt-1 text-[14px] text-ink-300 max-w-2xl">{description}</p>
         </div>
         {imports && (
           <Tooltip content="Caminho de import do componente" side="left">
-            <code className="hidden md:inline-flex items-center gap-1.5 rounded-md border border-surface-border bg-surface-raised px-2.5 py-1.5 font-mono text-[11.5px] text-ink-300">
-              <DSIcon name="information-circle" size={12} />
+            <code className="hidden md:inline-flex items-center gap-1.5 rounded-md border border-surface-border bg-surface-raised px-2.5 py-1.5 font-mono text-[14px] text-ink-300">
+              <DSIcon name="information-circle" size={14} />
               {imports}
             </code>
           </Tooltip>
@@ -53,16 +53,16 @@ export function ShowcaseCard({
         {/* Tabs header */}
         <div className="flex items-center justify-between border-b border-surface-border bg-surface/50 px-3 py-2">
           <div className="flex items-center gap-1">
-            <TabButton active={tab === 'preview'} onClick={() => setTab('preview')} icon={<DSIcon name="view" size={13} />}>
+            <TabButton active={tab === 'preview'} onClick={() => setTab('preview')} icon={<DSIcon name="view" size={14} />}>
               Preview
             </TabButton>
-            <TabButton active={tab === 'code'} onClick={() => setTab('code')} icon={<DSIcon name="file-01" size={13} />}>
+            <TabButton active={tab === 'code'} onClick={() => setTab('code')} icon={<DSIcon name="file-01" size={14} />}>
               Código
             </TabButton>
           </div>
           <a
             href={`#${id}`}
-            className="text-[11px] text-ink-500 hover:text-ink-300 transition"
+            className="text-[14px] text-ink-300 hover:text-ink-300 transition"
           >
             #{id}
           </a>
@@ -87,12 +87,12 @@ export function ShowcaseCard({
       {propsDoc && propsDoc.length > 0 && (
         <div className="mt-5 overflow-hidden rounded-xl border border-surface-border">
           <div className="border-b border-surface-border bg-surface-raised px-4 py-2.5">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-ink-400">Props</p>
+            <p className="text-[14px] font-semibold uppercase tracking-wider text-ink-300">Props</p>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-[13px]">
+            <table className="w-full text-[14px]">
               <thead>
-                <tr className="border-b border-surface-border bg-surface/50 text-left text-ink-400">
+                <tr className="border-b border-surface-border bg-surface/50 text-left text-ink-300">
                   <th className="px-4 py-2 font-medium">Nome</th>
                   <th className="px-4 py-2 font-medium">Tipo</th>
                   <th className="px-4 py-2 font-medium">Default</th>
@@ -102,13 +102,13 @@ export function ShowcaseCard({
               <tbody>
                 {propsDoc.map((p) => (
                   <tr key={p.name} className="border-b border-surface-border last:border-0 hover:bg-surface/40">
-                    <td className="px-4 py-2.5 font-mono text-[12.5px] text-ink-100">{p.name}</td>
+                    <td className="px-4 py-2.5 font-mono text-[14px] text-ink-100">{p.name}</td>
                     <td className="px-4 py-2.5">
-                      <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[12px] text-brand-300">
+                      <code className="rounded bg-surface px-1.5 py-0.5 font-mono text-[14px] text-brand-300">
                         {p.type}
                       </code>
                     </td>
-                    <td className="px-4 py-2.5 font-mono text-[12px] text-ink-400">
+                    <td className="px-4 py-2.5 font-mono text-[14px] text-ink-300">
                       {p.default ?? '—'}
                     </td>
                     <td className="px-4 py-2.5 text-ink-300">{p.description}</td>
@@ -139,8 +139,8 @@ function TabButton({
       type="button"
       onClick={onClick}
       className={cn(
-        'flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[12px] font-medium transition',
-        active ? 'bg-surface-elevated text-ink-50' : 'text-ink-400 hover:text-ink-200',
+        'flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[14px] font-medium transition',
+        active ? 'bg-surface-elevated text-ink-50' : 'text-ink-300 hover:text-ink-200',
       )}
     >
       {icon}

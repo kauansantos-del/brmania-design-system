@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { cn } from '@/lib/cn'
 
-/** Meteors decorativos (Aceternity). Puros CSS/SVG — sem runtime cost. */
+/** Meteors decorativos (Aceternity). Puros CSS — sem runtime cost. */
 export function Meteors({ number = 20, className }: { number?: number; className?: string }) {
   const meteors = useMemo(
     () =>

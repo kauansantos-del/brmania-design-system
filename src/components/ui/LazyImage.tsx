@@ -39,7 +39,7 @@ export function LazyImage({
     <div
       className={cn(
         'relative overflow-hidden',
-        !loaded && 'bg-[linear-gradient(110deg,#151520_0%,#1D1D28_50%,#151520_100%)] bg-[length:200%_100%] animate-shimmer',
+        !loaded && 'bg-[linear-gradient(110deg,#111116_0%,#19191F_50%,#111116_100%)] bg-[length:200%_100%] animate-shimmer',
         className,
       )}
     >

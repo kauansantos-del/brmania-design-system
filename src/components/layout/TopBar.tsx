@@ -19,7 +19,7 @@ export function TopBar({
 }) {
 
   return (
-    <header className="sticky top-0 z-40 border-b border-surface-border bg-surface/75 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-surface-border/80 bg-surface/80 backdrop-blur-xl backdrop-saturate-150">
       <div className="flex h-16 items-center gap-8 px-8">
         {/* Brand */}
         <div className="flex items-center gap-3 shrink-0 w-[260px] pr-4 border-r border-surface-border/60">
@@ -29,28 +29,28 @@ export function TopBar({
             className="h-7 w-auto select-none"
             draggable={false}
           />
-          <div className="flex items-center gap-2 min-w-0">
-            <div className="min-w-0 leading-tight">
-              <p className="text-[10.5px] font-medium tracking-wider uppercase text-ink-400">
+          <div className="flex flex-col min-w-0 leading-none">
+            <div className="flex items-center gap-1.5">
+              <span className="text-[11px] font-semibold tracking-[0.08em] uppercase text-ink-300">
                 Design System
-              </p>
+              </span>
+              <Tooltip content={`v${PROJECT.version} — ${PROJECT.release}`} side="bottom">
+                <a
+                  href={`${PROJECT.githubUrl}/releases/tag/v${PROJECT.version}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="transition hover:brightness-110"
+                  aria-label={`Versão ${PROJECT.version}`}
+                >
+                  <Badge tone="brand" size="sm">v{PROJECT.version.split('.').slice(0, 2).join('.')}</Badge>
+                </a>
+              </Tooltip>
             </div>
-            <Tooltip content={`v${PROJECT.version} — ${PROJECT.release} · ver release no GitHub`} side="bottom">
-              <a
-                href={`${PROJECT.githubUrl}/releases/tag/v${PROJECT.version}`}
-                target="_blank"
-                rel="noreferrer"
-                className="transition hover:brightness-110"
-                aria-label={`Versão ${PROJECT.version}`}
-              >
-                <Badge tone="brand" size="sm">v{PROJECT.version.split('.').slice(0, 2).join('.')}</Badge>
-              </a>
-            </Tooltip>
           </div>
         </div>
 
         {/* Section tabs */}
-        <nav className="flex items-center gap-1 rounded-xl border border-surface-border bg-surface-raised/60 p-1 shrink-0">
+        <nav className="flex items-center gap-1 rounded-xl border border-surface-border/70 bg-surface-raised/50 p-1 shrink-0">
           {sectionOrder.map((k) => {
             const cfg = sections[k]
             const iconSlug = cfg.icon
@@ -62,10 +62,10 @@ export function TopBar({
                   onClick={() => onSectionChange(k)}
                   aria-current={active ? 'page' : undefined}
                   className={cn(
-                    'relative flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-[12.5px] font-medium transition',
+                    'relative flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-[14px] font-medium transition',
                     active
                       ? 'text-ink-50'
-                      : 'text-ink-400 hover:text-ink-100',
+                      : 'text-ink-300 hover:text-ink-100',
                   )}
                 >
                   {active && (
@@ -79,7 +79,7 @@ export function TopBar({
                     />
                   )}
                   <span className="relative flex items-center gap-1.5">
-                    <DSIcon name={iconSlug} size={14} className={active ? 'text-white' : ''} />
+                    <DSIcon name={iconSlug} size={15} className={active ? 'text-white' : ''} />
                     <span className={active ? 'text-white' : ''}>{cfg.shortLabel}</span>
                   </span>
                 </button>
@@ -88,20 +88,20 @@ export function TopBar({
           })}
         </nav>
 
-        {/* Search — abre a command palette global */}
+        {/* Search */}
         <div className="flex-1 max-w-xl mx-auto">
           <button
             type="button"
             onClick={() => onOpenPalette('')}
-            className="group flex h-10 w-full items-center gap-2.5 rounded-lg border border-surface-border bg-surface-raised/70 px-3.5 text-left transition hover:border-brand-500/40 hover:bg-surface-elevated focus:outline-none focus:border-brand-500/60 focus:shadow-[0_0_0_3px_rgba(70,167,104,.14)]"
+            className="group flex h-10 w-full items-center gap-2.5 rounded-lg border border-surface-border/70 bg-surface-raised/50 px-3.5 text-left transition hover:border-brand-500/30 hover:bg-surface-elevated/80 focus:outline-none focus:border-brand-500/50 focus:shadow-[0_0_0_3px_rgba(34,197,94,.12)]"
             aria-label="Abrir busca global"
           >
-            <DSIcon name="search-01" size={14} className="text-ink-400 group-hover:text-ink-200" />
-            <span className="flex-1 text-[13px] text-ink-400 group-hover:text-ink-300">
+            <DSIcon name="search-01" size={16} className="text-ink-300 group-hover:text-ink-200" />
+            <span className="flex-1 text-[14px] text-ink-300 group-hover:text-ink-300">
               Buscar componentes, tokens, ícones, docs…
             </span>
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded border border-surface-border bg-surface/60 px-1.5 py-0.5 font-mono text-[10px] text-ink-400">
-              <DSIcon name="smart-key" size={10} /> K
+            <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded border border-surface-border bg-surface/60 px-1.5 py-0.5 font-mono text-[11px] text-ink-400">
+              <DSIcon name="smart-key" size={11} /> K
             </kbd>
           </button>
         </div>
@@ -113,10 +113,10 @@ export function TopBar({
               href={PROJECT.figmaUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/60 px-2.5 text-[12px] font-medium text-ink-200 hover:text-ink-50 hover:bg-surface-elevated transition"
+              className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/60 px-2.5 text-[14px] font-medium text-ink-200 hover:text-ink-50 hover:bg-surface-elevated transition"
               aria-label="Arquivo do Figma"
             >
-              <Figma size={14} className="text-pink-400" />
+              <Figma size={15} className="text-pink-400" />
               <span className="hidden sm:inline">Figma</span>
             </a>
           </Tooltip>
@@ -125,10 +125,10 @@ export function TopBar({
               href={PROJECT.githubUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/60 px-2.5 text-[12px] font-medium text-ink-200 hover:text-ink-50 hover:bg-surface-elevated transition"
+              className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/60 px-2.5 text-[14px] font-medium text-ink-200 hover:text-ink-50 hover:bg-surface-elevated transition"
               aria-label="Repositório no GitHub"
             >
-              <Github size={14} />
+              <Github size={15} />
               <span className="hidden sm:inline">GitHub</span>
             </a>
           </Tooltip>

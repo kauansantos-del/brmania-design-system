@@ -8,7 +8,7 @@ import { cn } from '@/lib/cn'
 export function SpotlightCard({
   children,
   className,
-  spotlightColor = 'rgba(70,167,104,0.22)',
+  spotlightColor = 'rgba(34,197,94,0.18)',
   ...rest
 }: HTMLAttributes<HTMLDivElement> & {
   children: ReactNode
@@ -49,7 +49,7 @@ export function SpotlightCard({
       <div
         className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
-          background: `radial-gradient(250px circle at ${pos.x}px ${pos.y}px, rgba(70,167,104,0.55), transparent 40%)`,
+          background: `radial-gradient(250px circle at ${pos.x}px ${pos.y}px, rgba(34,197,94,0.45), transparent 40%)`,
           WebkitMask:
             'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',
           WebkitMaskComposite: 'xor',

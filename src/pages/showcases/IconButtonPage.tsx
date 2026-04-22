@@ -63,7 +63,7 @@ export function IconButtonPage() {
             <div className="grid w-full max-w-[600px] grid-cols-2 items-center justify-items-center gap-8">
               {VARIANTS.map((v) => (
                 <div key={v} className="flex flex-col items-center gap-3">
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-[#646464]">{v}</p>
+                  <p className="text-[14px] font-semibold uppercase tracking-widest text-[#646464]">{v}</p>
                   <div className="flex items-center gap-3">
                     <IconButton variant={v} aria-label="Voltar"    icon={<DSIcon name="direction-left" size={20} />} />
                     <IconButton variant={v} aria-label="Fechar"    icon={<DSIcon name="multiply-circle" size={20} />} />

@@ -1,22 +1,11 @@
+import { useState } from 'react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Playground, type PropControl } from '@/components/layout/Playground'
-import { MenuItem, DSIcon, type MenuItemVariant } from '@/components/brmania'
-
-const VARIANTS = ['ghost', 'outlined', 'active'] as const
-
-const ICON_SLUGS: Record<string, string> = {
-  home: 'home-01',
-  key:  'smart-key',
-  hook: 'link',
-  hist: 'clock-circle',
-  biz:  'store-01',
-  out:  'logout-01',
-}
-type IconKey = keyof typeof ICON_SLUGS
+import { MenuItem, DSIcon } from '@/components/brmania'
 
 const CONTROLS: PropControl[] = [
-  { kind: 'variant', key: 'variant', label: 'Variant', options: VARIANTS, default: 'ghost' },
-  { kind: 'toggle',  key: 'danger',  label: 'Danger' },
+  { kind: 'toggle', key: 'active',   label: 'Active' },
+  { kind: 'toggle', key: 'danger',   label: 'Danger' },
   {
     kind: 'select', key: 'icon', label: 'Ícone', default: 'home',
     options: [
@@ -28,6 +17,11 @@ const CONTROLS: PropControl[] = [
   { kind: 'text', key: 'label', label: 'Label', default: 'Início' },
 ]
 
+const ICON_SLUGS: Record<string, string> = {
+  home: 'home-01', key: 'smart-key', hook: 'link',
+  hist: 'clock-circle', biz: 'store-01', out: 'logout-01',
+}
+
 export function MenuItemPage() {
   return (
     <div className="pb-24">
@@ -35,59 +29,82 @@ export function MenuItemPage() {
         eyebrow="Componentes · Navegação"
         title="MenuItem"
         titleAccent="— item de sidebar."
-        description="Item padronizado para navegação lateral. 3 visuais (ghost / outlined / active) e modificador `danger` para ações destrutivas."
+        description="Item de navegação lateral. Os estados (default → hover → focus) são CSS puro — passe o mouse para ver o hover com indent de 8 px, e use a prop `active` para marcar o item selecionado."
         meta={[
-          { label: '3 variantes', tone: 'brand' },
+          { label: 'CSS states', tone: 'brand' },
+          { label: '+active', tone: 'success' },
           { label: '+danger', tone: 'warning' },
         ]}
       />
 
       <div className="mx-auto max-w-5xl px-8 py-10">
         <Playground
-          title="Live playground"
-          description="Monte seu item de menu. `active` é o estado selecionado, `ghost` é o repouso, `outlined` é uma variante secundária."
+          title="MenuItem"
+          description="Passe o mouse nos itens para ver o hover. Clique para mudar a seleção."
           tags={[{ label: 'interativo', tone: 'success' }]}
           controls={CONTROLS}
           renderPreview={(s) => {
-            const slug = ICON_SLUGS[(s.icon as IconKey) ?? 'home'] ?? 'home-01'
+            const slug = ICON_SLUGS[(s.icon as string) ?? 'home'] ?? 'home-01'
             return (
-              <div className="w-[240px]">
+              <div className="w-[260px]">
                 <MenuItem
-                  variant={s.variant as MenuItemVariant}
+                  active={!!s.active}
                   danger={!!s.danger}
-                  icon={<DSIcon name={slug} size={16} />}
+                  icon={<DSIcon name={slug} size={20} />}
                   label={String(s.label || 'Início')}
                 />
               </div>
             )
           }}
-          generateCode={(s) => generateCode(s as any)}
-          renderAll={() => (
-            <div className="flex w-full max-w-[760px] items-start justify-center gap-6">
-              {VARIANTS.map((v) => (
-                <div key={v} className="flex w-[220px] flex-col gap-2">
-                  <p className="mb-1 text-[10px] font-semibold uppercase tracking-widest text-[#646464]">{v}</p>
-                  <MenuItem icon={<DSIcon name="home-01" size={16} />}      label="Início"            variant={v} />
-                  <MenuItem icon={<DSIcon name="smart-key" size={16} />}    label="Credenciais"       variant={v} />
-                  <MenuItem icon={<DSIcon name="link" size={16} />}         label="Webhooks"          variant={v} />
-                  <MenuItem icon={<DSIcon name="clock-circle" size={16} />} label="Histórico"         variant={v} />
-                  <MenuItem icon={<DSIcon name="store-01" size={16} />}     label="Empresa e usuários" variant={v} />
-                  <div className="mt-4">
-                    <MenuItem icon={<DSIcon name="logout-01" size={16} />} label="Desconectar" variant={v} danger />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-          generateAllCode={() => `import { MenuItem, DSIcon } from '@/components/brmania'
+          generateCode={(s) => {
+            const slug = ICON_SLUGS[(s.icon as string) ?? 'home'] ?? 'home-01'
+            return `import { MenuItem, DSIcon } from '@/components/brmania'
+
+export function Example() {
+  return (
+    <MenuItem
+      label="${s.label || 'Início'}"
+      icon={<DSIcon name="${slug}" size={20} />}
+      active={${!!s.active}}
+      danger={${!!s.danger}}
+      fullWidth={true}
+    />
+  )
+}`
+          }}
+          renderAll={() => <InteractiveSidebar />}
+          generateAllCode={() => `import { useState } from 'react'
+import { MenuItem, DSIcon } from '@/components/brmania'
+
+const MENU = [
+  { key: 'inicio',      label: 'Início',             icon: 'home-01' },
+  { key: 'credenciais', label: 'Credenciais',        icon: 'smart-key' },
+  { key: 'webhooks',    label: 'Webhooks',           icon: 'link' },
+  { key: 'historico',   label: 'Histórico',          icon: 'clock-circle' },
+  { key: 'empresa',     label: 'Empresa e usuários', icon: 'store-01' },
+]
 
 export function Sidebar() {
+  const [active, setActive] = useState('inicio')
+
   return (
-    <nav className="flex w-[220px] flex-col gap-2">
-      <MenuItem variant="active"   icon={<DSIcon name="home-01" size={16} />}     label="Início" />
-      <MenuItem variant="ghost"    icon={<DSIcon name="smart-key" size={16} />}   label="Credenciais" />
-      <MenuItem variant="outlined" icon={<DSIcon name="link" size={16} />}        label="Webhooks" />
-      <MenuItem variant="ghost" danger icon={<DSIcon name="logout-01" size={16} />} label="Desconectar" />
+    <nav className="flex w-[260px] flex-col gap-1">
+      {MENU.map((item) => (
+        <MenuItem
+          key={item.key}
+          icon={<DSIcon name={item.icon} size={20} />}
+          label={item.label}
+          active={active === item.key}
+          onClick={() => setActive(item.key)}
+        />
+      ))}
+      <div className="mt-4">
+        <MenuItem
+          icon={<DSIcon name="logout-01" size={20} />}
+          label="Desconectar"
+          danger
+        />
+      </div>
     </nav>
   )
 }`}
@@ -97,19 +114,36 @@ export function Sidebar() {
   )
 }
 
-function generateCode({
-  variant, danger, icon, label,
-}: { variant: string; danger: boolean; icon: string; label: string }) {
-  const slug = ICON_SLUGS[icon] ?? 'home-01'
-  const props: string[] = [`variant="${variant}"`]
-  if (danger) props.push('danger')
-  props.push(`icon={<DSIcon name="${slug}" size={16} />}`)
-  props.push(`label="${label || 'Início'}"`)
-  return `import { MenuItem, DSIcon } from '@/components/brmania'
+/** Sidebar interativa — clique muda o active, hover mostra o estado hover */
+function InteractiveSidebar() {
+  const [active, setActive] = useState('inicio')
 
-export function Example() {
+  const items = [
+    { key: 'inicio',      label: 'Início',             icon: 'home-01' },
+    { key: 'credenciais', label: 'Credenciais',        icon: 'smart-key' },
+    { key: 'webhooks',    label: 'Webhooks',           icon: 'link' },
+    { key: 'historico',   label: 'Histórico',          icon: 'clock-circle' },
+    { key: 'empresa',     label: 'Empresa e usuários', icon: 'store-01' },
+  ]
+
   return (
-    <MenuItem ${props.join(' ')} />
+    <nav className="flex w-[280px] flex-col gap-1">
+      {items.map((item) => (
+        <MenuItem
+          key={item.key}
+          icon={<DSIcon name={item.icon} size={20} />}
+          label={item.label}
+          active={active === item.key}
+          onClick={() => setActive(item.key)}
+        />
+      ))}
+      <div className="mt-4">
+        <MenuItem
+          icon={<DSIcon name="logout-01" size={20} />}
+          label="Desconectar"
+          danger
+        />
+      </div>
+    </nav>
   )
-}`
 }

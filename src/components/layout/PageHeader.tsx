@@ -29,7 +29,7 @@ export function PageHeader({
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="min-w-0 animate-slide-up">
             {eyebrow && (
-              <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-surface-border bg-surface-raised/70 backdrop-blur px-3 py-1 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-brand-300">
+              <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-surface-border bg-surface-raised/70 backdrop-blur px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-300">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-400 animate-pulse" />
                 {eyebrow}
               </p>
@@ -44,7 +44,7 @@ export function PageHeader({
               )}
             </h1>
             {description && (
-              <p className="mt-3 max-w-2xl text-[14.5px] leading-relaxed text-ink-300">
+              <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-200">
                 {description}
               </p>
             )}

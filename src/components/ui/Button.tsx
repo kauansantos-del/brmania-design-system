@@ -6,7 +6,7 @@ type Size = 'sm' | 'md' | 'lg' | 'icon'
 
 const variants: Record<Variant, string> = {
   primary:
-    'bg-gradient-to-br from-brand-500 to-brand-700 text-white hover:from-brand-400 hover:to-brand-600 active:from-brand-600 active:to-brand-800 shadow-[0_0_0_1px_rgba(70,167,104,.25),0_8px_24px_-12px_rgba(70,167,104,.65)]',
+    'bg-gradient-to-br from-brand-500 to-brand-700 text-white hover:from-brand-400 hover:to-brand-600 active:from-brand-600 active:to-brand-800 shadow-[0_0_0_1px_rgba(34,197,94,.25),0_8px_24px_-12px_rgba(34,197,94,.50)]',
   secondary:
     'bg-surface-elevated text-ink-100 hover:bg-ink-700 border border-surface-border',
   ghost:
@@ -42,7 +42,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       disabled={disabled || loading}
       className={cn(
         'inline-flex items-center justify-center font-medium whitespace-nowrap select-none',
-        'transition-[background,color,border-color,transform,box-shadow] duration-150',
+        'transition-[background,color,border-color,transform,box-shadow] duration-200 ease-out',
         'disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]',
         variants[variant],
         sizes[size],

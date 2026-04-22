@@ -5,9 +5,9 @@ import { cn } from '@/lib/cn'
 export function GradientText({
   children,
   className,
-  from = '#FFA933',
-  via = '#FF8A00',
-  to = '#FF5E00',
+  from = '#4ADE80',
+  via = '#22C55E',
+  to = '#15803D',
 }: {
   children: ReactNode
   className?: string

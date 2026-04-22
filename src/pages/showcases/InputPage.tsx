@@ -60,7 +60,7 @@ export function InputPage() {
                   placeholder={String(s.placeholder)}
                   helperText={s.helperText ? String(s.helperText) : undefined}
                   error={s.error ? String(s.error) : undefined}
-                  iconLeft={slug ? <DSIcon name={slug} size={16} /> : null}
+                  iconLeft={slug ? <DSIcon name={slug} size={18} /> : null}
                   brl={!!s.brl}
                   tooltip={s.tooltip ? 'Este campo é apenas demonstrativo' : undefined}
                   disabled={!!s.disabled}
@@ -72,7 +72,7 @@ export function InputPage() {
           renderAll={() => (
             <div className="grid w-full max-w-[820px] gap-5 sm:grid-cols-2">
               <Input label="Input padrão" placeholder="Digite algo…" />
-              <Input label="Com ícone" iconLeft={<DSIcon name="mail" size={16} />} placeholder="voce@brmania.com.br" />
+              <Input label="Com ícone" iconLeft={<DSIcon name="mail" size={18} />} placeholder="voce@brmania.com.br" />
               <Input label="Helper" placeholder="Mínimo 8 caracteres" helperText="Precisa ter 8+ caracteres" />
               <Input label="Erro" placeholder="CPF" error="CPF inválido" />
               <Input kind="search" placeholder="Procure seu evento…" />
@@ -89,7 +89,7 @@ export function AllStates() {
   return (
     <div className="grid gap-4">
       <Input label="Input padrão" placeholder="Digite algo…" />
-      <Input label="Com ícone" iconLeft={<DSIcon name="mail" size={16} />} placeholder="voce@brmania.com.br" />
+      <Input label="Com ícone" iconLeft={<DSIcon name="mail" size={18} />} placeholder="voce@brmania.com.br" />
       <Input label="Helper" placeholder="…" helperText="Precisa ter 8+ caracteres" />
       <Input label="Erro" placeholder="CPF" error="CPF inválido" />
       <Input kind="search" placeholder="Procure seu evento…" />
@@ -106,28 +106,22 @@ export function AllStates() {
 }
 
 function generateCode(s: any) {
-  const props: string[] = []
-  if (s.kind && s.kind !== 'input') props.push(`kind="${s.kind}"`)
-  if (s.label) props.push(`label="${s.label}"`)
-  if (s.placeholder) props.push(`placeholder="${s.placeholder}"`)
-  if (s.helperText) props.push(`helperText="${s.helperText}"`)
-  if (s.error) props.push(`error="${s.error}"`)
-
   const slug = ICON_SLUGS[s.iconLeft]
-  if (slug) props.push(`iconLeft={<DSIcon name="${slug}" size={16} />}`)
-  if (s.brl) props.push('brl')
-  if (s.tooltip) props.push('tooltip="Este campo é apenas demonstrativo"')
-  if (s.disabled) props.push('disabled')
-
-  const importLine = slug
-    ? "import { Input, DSIcon } from '@/components/brmania'"
-    : "import { Input } from '@/components/brmania'"
-  return `${importLine}
+  // Sempre mostra todos os atributos no código
+  return `import { Input, DSIcon } from '@/components/brmania'
 
 export function Example() {
   return (
     <Input
-      ${props.join('\n      ')}
+      kind="${s.kind || 'input'}"
+      label="${s.label || ''}"
+      placeholder="${s.placeholder || ''}"
+      helperText="${s.helperText || ''}"
+      error="${s.error || ''}"
+      iconLeft={${slug ? `<DSIcon name="${slug}" size={18} />` : 'undefined'}}
+      brl={${!!s.brl}}
+      tooltip={${s.tooltip ? '"Este campo é apenas demonstrativo"' : 'undefined'}}
+      disabled={${!!s.disabled}}
     />
   )
 }`

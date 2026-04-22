@@ -43,12 +43,12 @@ function InputPreview() {
   return (
     <div className="grid w-full max-w-[880px] gap-6 sm:grid-cols-2">
       <Input label="Nome" placeholder="Fulano da Silva" value={value} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)} />
-      <Input label="E-mail" placeholder="voce@brmania.com.br" iconLeft={<DSIcon name="mail" size={16} />} />
-      <Input label="Senha" type="password" iconLeft={<DSIcon name="lock" size={16} />} helperText="Mínimo 8 caracteres" />
+      <Input label="E-mail" placeholder="voce@brmania.com.br" iconLeft={<DSIcon name="mail" size={18} />} />
+      <Input label="Senha" type="password" iconLeft={<DSIcon name="lock" size={18} />} helperText="Mínimo 8 caracteres" />
       <Input label="CPF" placeholder="000.000.000-00" error="CPF inválido" />
       <Input kind="search" placeholder="Procure seu evento…" />
       <Input label="Valor" placeholder="0,00" brl />
-      <Input label="Tooltip" placeholder="Passe o mouse no ícone" tooltip="Este campo aceita apenas dígitos" iconLeft={<DSIcon name="user" size={16} />} />
+      <Input label="Tooltip" placeholder="Passe o mouse no ícone" tooltip="Este campo aceita apenas dígitos" iconLeft={<DSIcon name="user" size={18} />} />
       <Input label="Desabilitado" placeholder="Não editável" disabled />
       <div className="sm:col-span-2">
         <Input kind="mensagem" label="Mensagem" placeholder="Escreva sua observação…" helperText="Até 500 caracteres." />
@@ -77,10 +77,10 @@ export function Example() {
     <div className="grid gap-4">
       <Input label="E-mail"
              placeholder="voce@brmania.com.br"
-             iconLeft={<DSIcon name="mail" size={16} />} />
+             iconLeft={<DSIcon name="mail" size={18} />} />
 
       <Input label="Senha" type="password"
-             iconLeft={<DSIcon name="lock" size={16} />}
+             iconLeft={<DSIcon name="lock" size={18} />}
              helperText="Mínimo 8 caracteres" />
 
       <Input label="CPF"

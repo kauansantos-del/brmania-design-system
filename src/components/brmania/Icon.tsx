@@ -18,7 +18,7 @@ export interface IconProps extends Omit<SVGProps<SVGSVGElement>, 'children'> {
   size?: number
   /** strokeWidth usado por ícones line-based. */
   strokeWidth?: number
-  /** Cor via className (ex: `text-[#3e9b57]`). Default herda currentColor. */
+  /** Cor via className (ex: `text-[#22C55E]`). Default herda currentColor. */
   className?: string
 }
 

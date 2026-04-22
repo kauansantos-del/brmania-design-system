@@ -49,12 +49,12 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
     <span
       aria-hidden
       className={cn(
-        'relative grid h-5 w-5 shrink-0 place-items-center rounded-[4px] transition-colors duration-150',
+        'relative grid h-5 w-5 shrink-0 place-items-center rounded-[4px] transition-colors duration-200 ease-out',
         effectiveChecked
-          ? 'border-[1.25px] border-[#3e9b57] bg-[#3e9b57]'
+          ? 'border-[1.25px] border-[#22C55E] bg-[#22C55E]'
           : 'border-[1.25px] border-[#d9d9d9] bg-[#fcfcfc]',
         !disabled && !effectiveChecked && 'hover:border-[#cecece] hover:bg-[#e8e8e8]',
-        !disabled && effectiveChecked && 'hover:border-[#2a7e40] hover:bg-[#2a7e40]',
+        !disabled && effectiveChecked && 'hover:border-[#16A34A] hover:bg-[#16A34A]',
         disabled && 'opacity-50',
       )}
     >

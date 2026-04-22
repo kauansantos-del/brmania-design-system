@@ -15,8 +15,8 @@ export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>
 }
 
 const base =
-  'inline-flex items-center justify-center select-none transition-[background-color,border-color,color,transform] duration-150 ' +
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3e9b57]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white ' +
+  'inline-flex items-center justify-center select-none transition-[background-color,border-color,color,transform] duration-200 ease-out ' +
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#22C55E]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white ' +
   'disabled:cursor-not-allowed disabled:opacity-50 active:scale-[0.96]'
 
 const variants: Record<IconButtonVariant, string> = {

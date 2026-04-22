@@ -25,7 +25,7 @@ export function AnimatedBorder({
         className="absolute inset-[-60%] animate-spin-slow"
         style={{
           background:
-            'conic-gradient(from 0deg, transparent 0 65%, #FFA933 70%, #FF5E00 80%, transparent 90% 100%)',
+            'conic-gradient(from 0deg, transparent 0 65%, #4ADE80 70%, #15803D 80%, transparent 90% 100%)',
           animationDuration: `${duration}s`,
         }}
       />

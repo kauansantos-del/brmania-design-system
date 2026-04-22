@@ -103,7 +103,7 @@ function IllUIElement({ hex, fg }: { hex: string; fg: string }) {
           initial={{ scale: 0.92, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.35 }}
-          className="flex h-7 items-center gap-2 rounded-md px-3 text-[10.5px] font-semibold"
+          className="flex h-7 items-center gap-2 rounded-md px-3 text-[14px] font-semibold"
           style={{ background: hex, color: fg }}
         >
           <span className="h-1.5 w-1.5 rounded-full" style={{ background: fg, opacity: 0.6 }} />
@@ -123,7 +123,7 @@ function IllHoveredUI({ hex, fg }: { hex: string; fg: string }) {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.35 }}
-          className="relative flex h-7 items-center gap-2 rounded-md px-3 text-[10.5px] font-semibold shadow-[0_0_0_2px_rgba(255,255,255,0.05)]"
+          className="relative flex h-7 items-center gap-2 rounded-md px-3 text-[14px] font-semibold shadow-[0_0_0_2px_rgba(255,255,255,0.05)]"
           style={{ background: hex, color: fg }}
         >
           Hover
@@ -132,7 +132,7 @@ function IllHoveredUI({ hex, fg }: { hex: string; fg: string }) {
             transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
             className="absolute -bottom-2 -right-2"
           >
-            <DSIcon name="input-cursor-move" size={12} className="text-white/90 drop-shadow" />
+            <DSIcon name="input-cursor-move" size={14} className="text-white/90 drop-shadow" />
           </motion.span>
         </motion.div>
       </div>
@@ -149,7 +149,7 @@ function IllActiveUI({ hex, fg }: { hex: string; fg: string }) {
           initial={{ scale: 0.96, opacity: 0 }}
           animate={{ scale: [0.96, 1.02, 0.98, 1], opacity: 1 }}
           transition={{ duration: 0.55 }}
-          className="flex h-7 items-center gap-2 rounded-md px-3 text-[10.5px] font-semibold ring-1 ring-white/15"
+          className="flex h-7 items-center gap-2 rounded-md px-3 text-[14px] font-semibold ring-1 ring-white/15"
           style={{ background: hex, color: fg }}
         >
           <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
@@ -200,7 +200,7 @@ function IllElementBorder({ hex }: { hex: string }) {
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="flex h-7 w-36 items-center rounded-md bg-[#0F0F14] px-2 text-[10.5px]"
+          className="flex h-7 w-36 items-center rounded-md bg-[#0F0F14] px-2 text-[14px]"
           style={{ border: `1px solid ${hex}` }}
         >
           <span className="text-white/50">Your input…</span>
@@ -219,7 +219,7 @@ function IllFocusRing({ hex }: { hex: string }) {
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="relative flex h-7 w-36 items-center rounded-md bg-[#0F0F14] px-2 text-[10.5px]"
+          className="relative flex h-7 w-36 items-center rounded-md bg-[#0F0F14] px-2 text-[14px]"
           style={{ border: `1px solid ${hex}` }}
         >
           <motion.span
@@ -247,7 +247,7 @@ function IllSolidBg({ hex, fg }: { hex: string; fg: string }) {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.35 }}
-          className="flex h-8 items-center gap-2 rounded-md px-4 text-[11px] font-bold shadow-lg"
+          className="flex h-8 items-center gap-2 rounded-md px-4 text-[14px] font-bold shadow-lg"
           style={{ background: hex, color: fg }}
         >
           Call to Action
@@ -267,7 +267,7 @@ function IllSolidHover({ hex, fg }: { hex: string; fg: string }) {
           initial={{ scale: 0.92, opacity: 0 }}
           animate={{ scale: [1, 1.04, 1], opacity: 1 }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          className="relative flex h-8 items-center gap-2 rounded-md px-4 text-[11px] font-bold"
+          className="relative flex h-8 items-center gap-2 rounded-md px-4 text-[14px] font-bold"
           style={{
             background: hex,
             color: fg,
@@ -276,7 +276,7 @@ function IllSolidHover({ hex, fg }: { hex: string; fg: string }) {
         >
           Hovered CTA
           <span>→</span>
-          <DSIcon name="input-cursor-move" size={12} className="absolute -bottom-2 -right-2 text-white/90 drop-shadow" />
+          <DSIcon name="input-cursor-move" size={14} className="absolute -bottom-2 -right-2 text-white/90 drop-shadow" />
         </motion.button>
       </div>
     </Frame>
@@ -288,12 +288,12 @@ function IllLowContrastText({ hex }: { hex: string }) {
   return (
     <Frame>
       <div className="absolute inset-0 flex flex-col justify-center gap-1 px-4">
-        <p className="text-[10px] font-semibold text-white/90">Título principal</p>
+        <p className="text-[14px] font-semibold text-white/90">Título principal</p>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
-          className="text-[9.5px] leading-snug"
+          className="text-[14px] leading-snug"
           style={{ color: hex }}
         >
           Texto secundário, legendas e metadados usam este tom.
@@ -312,12 +312,12 @@ function IllHighContrastText({ hex }: { hex: string }) {
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="text-[13px] font-extrabold tracking-tight"
+          className="text-[14px] font-extrabold tracking-tight"
           style={{ color: hex }}
         >
           Texto principal
         </motion.p>
-        <p className="text-[9.5px] text-white/40">Para leitura crítica e headings.</p>
+        <p className="text-[14px] text-white/40">Para leitura crítica e headings.</p>
       </div>
     </Frame>
   )

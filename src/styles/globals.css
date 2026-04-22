@@ -2,22 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* ============================================
+   DESIGN SYSTEM TOKENS — Radix 12-step scale
+   Per docs/colors-design-system.md
+   ============================================ */
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --gray-1:  #FCFCFC; --gray-2:  #F0F0F0; --gray-3:  #F0F0F0; --gray-4:  #E8E8E8;
+  --gray-5:  #E0E0E0; --gray-6:  #D9D9D9; --gray-7:  #CECECE; --gray-8:  #BBBBBB;
+  --gray-9:  #8D8D8D; --gray-10: #838383; --gray-11: #646464; --gray-12: #202020;
+
+  --principal-1:  #FBFEFB; --principal-2:  #F5FBF5; --principal-3:  #E9F6E9; --principal-4:  #DAF1DB;
+  --principal-5:  #C9E8CA; --principal-6:  #B2DDB5; --principal-7:  #94CE9A; --principal-8:  #65BA74;
+  --principal-9:  #46A758; --principal-10: #3E9B57; --principal-11: #2A7E40; --principal-12: #203C25;
+
+  --vermelho-1:  #FFFCFC; --vermelho-2:  #FFF7F7; --vermelho-3:  #FEEBEC; --vermelho-4:  #FFDBDC;
+  --vermelho-5:  #FFCDCE; --vermelho-6:  #FDBDBE; --vermelho-7:  #F4A9AA; --vermelho-8:  #EB8E90;
+  --vermelho-9:  #E5484D; --vermelho-10: #DC3D43; --vermelho-11: #CE2C31; --vermelho-12: #641723;
+
+  --amarelo-1:  #FDFDF9; --amarelo-2:  #FFFCE8; --amarelo-3:  #FFFBD1; --amarelo-4:  #FFF8BB;
+  --amarelo-5:  #FEF2A4; --amarelo-6:  #F9E68C; --amarelo-7:  #EFD36C; --amarelo-8:  #EBBC00;
+  --amarelo-9:  #F5D90A; --amarelo-10: #F7CE00; --amarelo-11: #946800; --amarelo-12: #35290F;
+
+  --azul-1:  #FAFDFE; --azul-2:  #F2FAFB; --azul-3:  #DEF7F9; --azul-4:  #CAF1F6;
+  --azul-5:  #B5E9F0; --azul-6:  #9DDDE7; --azul-7:  #7DCEDC; --azul-8:  #3DB9CF;
+  --azul-9:  #00A2C7; --azul-10: #0797B9; --azul-11: #107D98; --azul-12: #0D3C48;
+
+  --violeta-1:  #FDFCFE; --violeta-2:  #FAF8FF; --violeta-3:  #F4F0FE; --violeta-4:  #EBE4FF;
+  --violeta-5:  #E1D9FF; --violeta-6:  #D4CAFE; --violeta-7:  #C2B5F5; --violeta-8:  #AA99EC;
+  --violeta-9:  #6E56CF; --violeta-10: #654DC4; --violeta-11: #6550B9; --violeta-12: #2F265F;
+}
+
+[data-theme="dark"] {
   color-scheme: dark;
 
+  --gray-1:  #111111; --gray-2:  #191919; --gray-3:  #222222; --gray-4:  #2A2A2A;
+  --gray-5:  #313131; --gray-6:  #3A3A3A; --gray-7:  #484848; --gray-8:  #606060;
+  --gray-9:  #6E6E6E; --gray-10: #7B7B7B; --gray-11: #B4B4B4; --gray-12: #EEEEEE;
+
+  --principal-1:  #0E1511; --principal-2:  #141A15; --principal-3:  #1B2A1E; --principal-4:  #1D3A24;
+  --principal-5:  #25482D; --principal-6:  #2D5736; --principal-7:  #366740; --principal-8:  #3E7949;
+  --principal-9:  #46A760; --principal-10: #53B36D; --principal-11: #71D08A; --principal-12: #C2F0CE;
+
+  --vermelho-1:  #191111; --vermelho-2:  #201314; --vermelho-3:  #3B1219; --vermelho-4:  #500F1C;
+  --vermelho-5:  #611623; --vermelho-6:  #72232D; --vermelho-7:  #8C333A; --vermelho-8:  #B54548;
+  --vermelho-9:  #E5484D; --vermelho-10: #EC5D5E; --vermelho-11: #FF9592; --vermelho-12: #FFD1D9;
+
+  --amarelo-1:  #14120B; --amarelo-2:  #1B180F; --amarelo-3:  #2D2305; --amarelo-4:  #362B00;
+  --amarelo-5:  #433500; --amarelo-6:  #524202; --amarelo-7:  #665417; --amarelo-8:  #836A21;
+  --amarelo-9:  #FFC53D; --amarelo-10: #FFFF57; --amarelo-11: #F5E147; --amarelo-12: #F6EEB4;
+
+  --azul-1:  #0B161A; --azul-2:  #101B20; --azul-3:  #082C36; --azul-4:  #003848;
+  --azul-5:  #004558; --azul-6:  #045468; --azul-7:  #12677E; --azul-8:  #11809C;
+  --azul-9:  #00A2C7; --azul-10: #23AFD0; --azul-11: #4CCCE6; --azul-12: #B6ECF7;
+
+  --violeta-1:  #14121F; --violeta-2:  #1B1525; --violeta-3:  #291F43; --violeta-4:  #33255B;
+  --violeta-5:  #3C2E69; --violeta-6:  #473876; --violeta-7:  #56468B; --violeta-8:  #6958AD;
+  --violeta-9:  #6E56CF; --violeta-10: #7D66D9; --violeta-11: #BAA7FF; --violeta-12: #E2DDFE;
+}
+
+/* The showcase site itself runs dark; explicit data-theme can be applied to subtrees */
+:root:not([data-theme]) {
+  color-scheme: dark;
+  /* fallback dark tokens so `var(--gray-12)` etc work outside data-theme blocks */
+  --gray-1:  #111111; --gray-2:  #191919; --gray-3:  #222222; --gray-4:  #2A2A2A;
+  --gray-5:  #313131; --gray-6:  #3A3A3A; --gray-7:  #484848; --gray-8:  #606060;
+  --gray-9:  #6E6E6E; --gray-10: #7B7B7B; --gray-11: #B4B4B4; --gray-12: #EEEEEE;
+  --principal-9:  #46A760; --principal-10: #53B36D; --principal-11: #71D08A; --principal-12: #C2F0CE;
+  --vermelho-9:  #E5484D; --vermelho-11: #FF9592; --vermelho-12: #FFD1D9;
+}
+
+:root {
+
   /* Brand */
-  --brand-400: #53B360;
-  --brand-500: #46A768;
-  --brand-600: #3E7949;
+  --brand-400: #4ADE80;
+  --brand-500: #22C55E;
+  --brand-600: #16A34A;
 
   /* Surfaces */
-  --surface:        #0C0C10;
-  --surface-raised: #121218;
-  --surface-elev:   #1A1A22;
-  --surface-border: #25252E;
+  --surface:          #0A0A0E;
+  --surface-raised:   #111116;
+  --surface-elev:     #19191F;
+  --surface-border:   #23232C;
+  --surface-hover:    #1E1E26;
 
   /* Text */
-  --text-primary:   #EEEEEF;
+  --text-primary:   #F0F0F2;
   --text-secondary: #B4B4BB;
   --text-muted:     #7B7B84;
 
@@ -44,37 +116,43 @@ html, body, #root { height: 100%; }
 * { -webkit-font-smoothing: antialiased; }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #25252E; border-radius: 999px; border: 2px solid #0C0C10; }
-::-webkit-scrollbar-thumb:hover { background: #3A3A42; }
+::-webkit-scrollbar-thumb { background: #23232C; border-radius: 999px; border: 2px solid var(--surface); }
+::-webkit-scrollbar-thumb:hover { background: #33333E; }
 
 /* Selection */
-::selection { background: rgba(70,167,104,.40); color: #fff; }
+::selection { background: rgba(34,197,94,.30); color: #fff; }
 
-/* Focus ring */
+/* Focus ring — skip elements that manage their own outline (e.g. BRMania inputs) */
 :focus-visible {
   outline: 2px solid var(--brand-500);
   outline-offset: 2px;
   border-radius: 6px;
 }
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[class*="outline-none"]:focus-visible {
+  outline: none;
+}
 
 /* Code blocks */
 .code-surface {
-  background: linear-gradient(180deg, #0F0F15 0%, #0A0A10 100%);
+  background: linear-gradient(180deg, #0E0E13 0%, #0A0A0E 100%);
   border: 1px solid var(--surface-border);
 }
 
 /* Checkered pattern for image preview backgrounds */
 .bg-checkered {
   background-image:
-    linear-gradient(45deg, #1A1A22 25%, transparent 25%),
-    linear-gradient(-45deg, #1A1A22 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #1A1A22 75%),
-    linear-gradient(-45deg, transparent 75%, #1A1A22 75%);
+    linear-gradient(45deg, #19191F 25%, transparent 25%),
+    linear-gradient(-45deg, #19191F 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #19191F 75%),
+    linear-gradient(-45deg, transparent 75%, #19191F 75%);
   background-size: 16px 16px;
   background-position: 0 0, 0 8px, 8px -8px, -8px 0;
-  background-color: #0C0C10;
+  background-color: #0A0A0E;
 }
 
 /* Subtle grid bg */
@@ -97,8 +175,8 @@ html, body, #root { height: 100%; }
   width: 2px;
   height: 2px;
   border-radius: 9999px;
-  background: #86D9A4;
-  box-shadow: 0 0 0 1px rgba(134,217,164,0.1);
+  background: #6EE7A0;
+  box-shadow: 0 0 0 1px rgba(110,231,160,0.1);
   animation: meteor 5s linear infinite;
   animation-play-state: running;
 }
@@ -109,7 +187,14 @@ html, body, #root { height: 100%; }
   transform: translateY(-50%);
   width: 60px;
   height: 1px;
-  background: linear-gradient(90deg, #86D9A4, transparent);
+  background: linear-gradient(90deg, #6EE7A0, transparent);
+}
+
+/* Vibra · sidebar active-indicator entrance */
+@keyframes sb-bar-in {
+  0%   { transform: scaleY(0);   opacity: 0; }
+  60%  { transform: scaleY(1.1); opacity: 1; }
+  100% { transform: scaleY(1);   opacity: 1; }
 }
 
 /* Reduced motion */

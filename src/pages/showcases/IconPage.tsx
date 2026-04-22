@@ -17,11 +17,11 @@ type IconKey = keyof typeof ICON_MAP
 
 const COLOR_MAP: Record<string, string> = {
   ink:    '#202020',
-  green:  '#3e9b57',
+  green:  '#22C55E',
   red:    '#dc3d43',
   blue:   '#107d98',
   gray:   '#646464',
-  dark:   '#203c25',
+  dark:   '#15803D',
 }
 
 const CONTROLS: PropControl[] = [
@@ -37,11 +37,11 @@ const CONTROLS: PropControl[] = [
     kind: 'select', key: 'color', label: 'Cor', default: 'ink',
     options: [
       { value: 'ink',   label: 'ink · #202020' },
-      { value: 'green', label: 'principal · #3e9b57' },
+      { value: 'green', label: 'principal · #22C55E' },
       { value: 'red',   label: 'vermelho · #dc3d43' },
       { value: 'blue',  label: 'azul · #107d98' },
       { value: 'gray',  label: 'gray/11 · #646464' },
-      { value: 'dark',  label: 'principal/12 · #203c25' },
+      { value: 'dark',  label: 'principal/12 · #15803D' },
     ],
   },
 ]
@@ -79,7 +79,7 @@ export function IconPage() {
           generateCode={(s) => generateCode(s as any)}
           renderAll={() => (
             <div className="flex flex-col gap-6">
-              <div className="flex items-end gap-6 text-[#3e9b57]">
+              <div className="flex items-end gap-6 text-[#22C55E]">
                 {[16, 20, 24, 28, 32, 40, 48].map((sz) => (
                   <DSIcon key={sz} name="home-01" size={sz} />
                 ))}
@@ -88,7 +88,7 @@ export function IconPage() {
                 {(Object.entries(ICON_MAP) as [IconKey, string][]).map(([k, slug]) => (
                   <div key={k} className="flex flex-col items-center gap-1 rounded-md border border-[#e8e8e8] bg-white p-3">
                     <DSIcon name={slug} size={24} />
-                    <span className="font-mono text-[10px] text-[#646464]">{k}</span>
+                    <span className="font-mono text-[14px] text-[#646464]">{k}</span>
                   </div>
                 ))}
               </div>
@@ -98,8 +98,8 @@ export function IconPage() {
 
 export function AllSizes() {
   return (
-    <div className="flex items-end gap-4 text-[#3e9b57]">
-      <DSIcon name="home-01" size={16} />
+    <div className="flex items-end gap-4 text-[#22C55E]">
+      <DSIcon name="home-01" size={18} />
       <DSIcon name="home-01" size={20} />
       <DSIcon name="home-01" size={24} />
       <DSIcon name="home-01" size={28} />

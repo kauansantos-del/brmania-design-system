@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { ComponentShowcase } from '@/components/layout/ComponentShowcase'
 import { MenuItem, DSIcon } from '@/components/brmania'
@@ -9,54 +10,88 @@ export function NavegacaoShowcase() {
         eyebrow="Componentes · Navegação"
         title="Itens de menu"
         titleAccent="e navegação lateral."
-        description="Item de menu com 3 visuais e um modificador de perigo, cobrindo os estados da sidebar do portal BRMania."
-        meta={[{ label: '1 componente', tone: 'brand' }]}
+        description="Item de menu com estados CSS nativos: default (idle), hover (mouse sobre — indent 8px + borda), focus (selecionado via prop `active`). Modifier `danger` para ações destrutivas."
+        meta={[{ label: '1 componente', tone: 'brand' }, { label: 'CSS states', tone: 'info' }]}
       />
 
       <div className="mx-auto max-w-5xl px-8 py-10">
         <ComponentShowcase
           title="MenuItem"
-          description="Item de navegação da sidebar. Três visuais: ghost (normal), outlined (hover/secundário) e active (selected). Aceita `danger` para ações destrutivas."
-          tags={[{ label: 'sidebar', tone: 'info' }, { label: '3 variantes', tone: 'neutral' }]}
-          preview={
-            <div className="flex w-full max-w-[880px] items-start justify-center gap-10">
-              <MenuColumn title="Ghost" variant="ghost" />
-              <MenuColumn title="Outlined" variant="outlined" />
-              <MenuColumn title="Active" variant="active" />
-            </div>
-          }
-          code={CODE_MENU_ITEM}
+          description="Sidebar interativa — passe o mouse para ver o hover, clique para selecionar. O item 'Desconectar' usa o modifier `danger`."
+          tags={[{ label: 'sidebar', tone: 'info' }, { label: 'interativo', tone: 'success' }]}
+          preview={<InteractiveSidebar />}
+          code={CODE}
         />
       </div>
     </div>
   )
 }
 
-function MenuColumn({ title, variant }: { title: string; variant: 'ghost' | 'outlined' | 'active' }) {
+function InteractiveSidebar() {
+  const [active, setActive] = useState('inicio')
+
+  const items = [
+    { key: 'inicio',      label: 'Início',             icon: 'home-01' },
+    { key: 'credenciais', label: 'Credenciais',        icon: 'smart-key' },
+    { key: 'webhooks',    label: 'Webhooks',           icon: 'link' },
+    { key: 'historico',   label: 'Histórico',          icon: 'clock-circle' },
+    { key: 'empresa',     label: 'Empresa e usuários', icon: 'store-01' },
+  ]
+
   return (
-    <div className="flex w-[220px] flex-col gap-2">
-      <p className="mb-1 text-[10px] font-semibold uppercase tracking-widest text-[#646464]">{title}</p>
-      <MenuItem icon={<DSIcon name="home-01" size={16} />}      label="Início"            variant={variant} />
-      <MenuItem icon={<DSIcon name="smart-key" size={16} />}    label="Credenciais"       variant={variant} />
-      <MenuItem icon={<DSIcon name="link" size={16} />}         label="Webhooks"          variant={variant} />
-      <MenuItem icon={<DSIcon name="clock-circle" size={16} />} label="Histórico"         variant={variant} />
-      <MenuItem icon={<DSIcon name="store-01" size={16} />}     label="Empresa e usuários" variant={variant} />
+    <nav className="flex w-[280px] flex-col gap-1">
+      {items.map((item) => (
+        <MenuItem
+          key={item.key}
+          icon={<DSIcon name={item.icon} size={20} />}
+          label={item.label}
+          active={active === item.key}
+          onClick={() => setActive(item.key)}
+        />
+      ))}
       <div className="mt-4">
-        <MenuItem icon={<DSIcon name="logout-01" size={16} />} label="Desconectar" variant={variant} danger />
+        <MenuItem
+          icon={<DSIcon name="logout-01" size={20} />}
+          label="Desconectar"
+          danger
+        />
       </div>
-    </div>
+    </nav>
   )
 }
 
-const CODE_MENU_ITEM = `import { MenuItem, DSIcon } from '@/components/brmania'
+const CODE = `import { useState } from 'react'
+import { MenuItem, DSIcon } from '@/components/brmania'
+
+const MENU = [
+  { key: 'inicio',      label: 'Início',             icon: 'home-01' },
+  { key: 'credenciais', label: 'Credenciais',        icon: 'smart-key' },
+  { key: 'webhooks',    label: 'Webhooks',           icon: 'link' },
+  { key: 'historico',   label: 'Histórico',          icon: 'clock-circle' },
+  { key: 'empresa',     label: 'Empresa e usuários', icon: 'store-01' },
+]
 
 export function Sidebar() {
+  const [active, setActive] = useState('inicio')
+
   return (
-    <nav className="flex flex-col gap-2 w-[220px]">
-      <MenuItem variant="active"   icon={<DSIcon name="home-01" size={16} />}     label="Início" />
-      <MenuItem variant="ghost"    icon={<DSIcon name="smart-key" size={16} />}   label="Credenciais" />
-      <MenuItem variant="outlined" icon={<DSIcon name="link" size={16} />}        label="Webhooks" />
-      <MenuItem variant="ghost" danger icon={<DSIcon name="logout-01" size={16} />} label="Desconectar" />
+    <nav className="flex w-[260px] flex-col gap-1">
+      {MENU.map((item) => (
+        <MenuItem
+          key={item.key}
+          icon={<DSIcon name={item.icon} size={20} />}
+          label={item.label}
+          active={active === item.key}
+          onClick={() => setActive(item.key)}
+        />
+      ))}
+      <div className="mt-4">
+        <MenuItem
+          icon={<DSIcon name="logout-01" size={20} />}
+          label="Desconectar"
+          danger
+        />
+      </div>
     </nav>
   )
 }`

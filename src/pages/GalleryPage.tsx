@@ -51,9 +51,9 @@ function GalleryImagesPage({ sub, query }: { sub: string; query: string }) {
       <div className="mx-auto max-w-6xl px-8 py-10">
         {filtered.length === 0 ? (
           <div className="rounded-xl border border-dashed border-surface-border p-12 text-center">
-            <DSIcon name="image-01" size={32} className="mx-auto mb-3 text-ink-500" />
-            <p className="text-sm text-ink-300">Nenhuma imagem encontrada.</p>
-            <p className="text-[12px] text-ink-500">Tente outro termo.</p>
+            <DSIcon name="image-01" size={32} className="mx-auto mb-3 text-ink-300" />
+            <p className="text-[15px] text-ink-300">Nenhuma imagem encontrada.</p>
+            <p className="text-[14px] text-ink-300">Tente outro termo.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
@@ -104,8 +104,8 @@ function GalleryCard({
             <LazyImage src={item.src} alt={item.name} className="h-full w-full [&>img]:object-contain [&>img]:p-6 transition-transform duration-500 group-hover:scale-105" />
           </div>
           <div className="pointer-events-none absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition">
-            <span className="inline-flex items-center gap-1 rounded-md border border-white/10 bg-black/50 backdrop-blur px-2 py-1 text-[11px] font-medium text-white">
-              <DSIcon name="maximize-01" size={11} /> Expandir
+            <span className="inline-flex items-center gap-1 rounded-md border border-white/10 bg-black/50 backdrop-blur px-2 py-1 text-[14px] font-medium text-white">
+              <DSIcon name="maximize-01" size={14} /> Expandir
             </span>
           </div>
         </div>
@@ -116,7 +116,7 @@ function GalleryCard({
           <div className="min-w-0">
             <p className="truncate font-display text-[14px] font-semibold text-ink-50">{item.name}</p>
             {item.description && (
-              <p className="mt-0.5 line-clamp-2 text-[11.5px] leading-relaxed text-ink-400">
+              <p className="mt-0.5 line-clamp-2 text-[14px] leading-relaxed text-ink-300">
                 {item.description}
               </p>
             )}
@@ -129,9 +129,9 @@ function GalleryCard({
             {item.tags.slice(0, 3).map((t) => (
               <span
                 key={t}
-                className="inline-flex items-center gap-1 rounded-md border border-surface-border bg-surface/60 px-1.5 py-0.5 font-mono text-[10px] text-ink-400"
+                className="inline-flex items-center gap-1 rounded-md border border-surface-border bg-surface/60 px-1.5 py-0.5 font-mono text-[14px] text-ink-300"
               >
-                <DSIcon name="tag-01" size={9} /> {t}
+                <DSIcon name="tag-01" size={14} /> {t}
               </span>
             ))}
           </div>
@@ -139,19 +139,19 @@ function GalleryCard({
             <Tooltip content="Copiar imagem para o clipboard">
               <button
                 onClick={(e) => { e.stopPropagation(); copyImageAsBlob(item.src) }}
-                className="rounded-md p-1.5 text-ink-400 hover:bg-surface-elevated hover:text-ink-100 transition"
+                className="rounded-md p-1.5 text-ink-300 hover:bg-surface-elevated hover:text-ink-100 transition"
                 aria-label="Copiar imagem"
               >
-                <DSIcon name="copy" size={13} />
+                <DSIcon name="copy" size={14} />
               </button>
             </Tooltip>
             <Tooltip content="Baixar arquivo">
               <button
                 onClick={(e) => { e.stopPropagation(); downloadFile(item.src, item.src.split('/').pop()) }}
-                className="rounded-md p-1.5 text-ink-400 hover:bg-surface-elevated hover:text-ink-100 transition"
+                className="rounded-md p-1.5 text-ink-300 hover:bg-surface-elevated hover:text-ink-100 transition"
                 aria-label="Baixar imagem"
               >
-                <DSIcon name="download-01" size={13} />
+                <DSIcon name="download-01" size={14} />
               </button>
             </Tooltip>
           </div>
@@ -204,8 +204,8 @@ function GalleryModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="min-w-0">
-          <p className="truncate font-display text-sm font-semibold text-ink-50">{item.name}</p>
-          <p className="truncate text-[11.5px] text-ink-400">
+          <p className="truncate font-display text-[15px] font-semibold text-ink-50">{item.name}</p>
+          <p className="truncate text-[14px] text-ink-300">
             {item.category} · <span className="font-mono">{item.src}</span> · {index + 1} de {items.length}
           </p>
         </div>

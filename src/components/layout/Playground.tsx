@@ -1,10 +1,9 @@
 import { useMemo, useState, type ReactNode } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { DSIcon } from '@/components/brmania'
 import { cn } from '@/lib/cn'
 import { Badge } from '@/components/ui/Badge'
 import { CodeBlock } from '@/components/ui/CodeBlock'
-import { SpotlightCard } from '@/components/ui/effects/SpotlightCard'
 
 // ===================================================================
 // Tipos
@@ -19,7 +18,7 @@ export type PropControl<V extends string = string> =
 export type PropState = Record<string, string | boolean>
 
 // ===================================================================
-// Playground (um componente)
+// Playground — layout em scroll: Todos → Editar → Código
 // ===================================================================
 
 export interface PlaygroundProps {
@@ -27,15 +26,10 @@ export interface PlaygroundProps {
   description?: string
   tags?: { label: string; tone?: 'brand' | 'info' | 'neutral' | 'success' | 'warning' }[]
   controls: PropControl[]
-  /** Render live do componente com o state atual. */
   renderPreview: (state: PropState) => ReactNode
-  /** Gera o snippet de código com base no state atual. */
   generateCode: (state: PropState) => string
-  /** (opcional) Quando o "ver todos" está ativo, renderiza a grade de todas as variantes. */
   renderAll?: () => ReactNode
-  /** (opcional) Código para o "ver todos". */
   generateAllCode?: () => string
-  /** Lang para o CodeBlock. */
   language?: string
 }
 
@@ -53,112 +47,139 @@ export function Playground({
   }, [controls])
 
   const [state, setState] = useState<PropState>(initial)
-  const [mode, setMode] = useState<'single' | 'all'>('single')
 
   const set = (key: string, value: string | boolean) =>
     setState((s) => ({ ...s, [key]: value }))
 
-  const code = mode === 'all' && generateAllCode
-    ? generateAllCode()
-    : generateCode(state)
+  // O código SEMPRE reflete o estado atual dos controles
+  const code = generateCode(state)
 
   return (
-    <SpotlightCard className="mb-6 overflow-hidden">
-      {/* Header */}
-      <div className="flex flex-wrap items-start justify-between gap-4 border-b border-surface-border px-5 py-4">
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <h3 className="font-display text-[15px] font-bold text-ink-50">{title}</h3>
-            {tags?.map((t) => (
-              <Badge key={t.label} size="sm" tone={t.tone ?? 'neutral'}>{t.label}</Badge>
+    <div className="space-y-6">
+      {/* ─── SEÇÃO 1 · TODOS ─────────────────────────────────── */}
+      {renderAll && (
+        <Section
+          icon="grid-01"
+          label="Todos"
+          title={title}
+          description={description}
+          tags={tags}
+        >
+          <PreviewArea>
+            {renderAll()}
+          </PreviewArea>
+        </Section>
+      )}
+
+      {/* ─── SEÇÃO 2 · EDITAR ────────────────────────────────── */}
+      <Section
+        icon="focus"
+        label="Editar"
+        title="Propriedades"
+        description="Configure os atributos e veja o componente reagir ao vivo."
+      >
+        {/* Controles */}
+        {controls.length > 0 && (
+          <div className="flex flex-wrap items-end gap-x-5 gap-y-3 border-b border-surface-border bg-surface-raised/20 px-5 py-4">
+            {controls.map((c) => (
+              <PropField key={c.key} control={c} value={state[c.key]} onChange={(v) => set(c.key, v)} />
             ))}
           </div>
-          {description && (
-            <p className="mt-1 text-[12.5px] leading-relaxed text-ink-400">{description}</p>
-          )}
-        </div>
+        )}
 
-        {/* Toggle single/all */}
-        {renderAll && (
-          <div className="inline-flex rounded-lg border border-surface-border bg-surface-raised/70 p-1">
-            <ModeButton active={mode === 'single'} onClick={() => setMode('single')}>
-              <DSIcon name="focus" size={12} /> Um a um
-            </ModeButton>
-            <ModeButton active={mode === 'all'} onClick={() => setMode('all')}>
-              <DSIcon name="grid-01" size={12} /> Ver todos
-            </ModeButton>
-          </div>
+        {/* Preview unitário */}
+        <PreviewArea>
+          <motion.div
+            key={JSON.stringify(state)}
+            initial={{ opacity: 0.6 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.15 }}
+          >
+            {renderPreview(state)}
+          </motion.div>
+        </PreviewArea>
+      </Section>
+
+      {/* ─── SEÇÃO 3 · CÓDIGO ────────────────────────────────── */}
+      <Section
+        icon="file-01"
+        label="Código"
+        title="Snippet"
+        description="Atualiza automaticamente conforme os atributos acima."
+      >
+        <div className="p-4">
+          <CodeBlock code={code} language={language} maxHeight={480} />
+        </div>
+      </Section>
+    </div>
+  )
+}
+
+// ===================================================================
+// Section — card com header sutil
+// ===================================================================
+
+function Section({
+  icon, label, title, description, tags, children,
+}: {
+  icon: string
+  label: string
+  title: string
+  description?: string
+  tags?: { label: string; tone?: 'brand' | 'info' | 'neutral' | 'success' | 'warning' }[]
+  children: ReactNode
+}) {
+  return (
+    <div className="overflow-hidden rounded-xl border border-surface-border bg-surface-raised">
+      {/* Header */}
+      <div className="flex items-center gap-3 border-b border-surface-border px-5 py-3">
+        <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-surface-elevated text-ink-400">
+          <DSIcon name={icon} size={14} />
+        </span>
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-400">{label}</span>
+          <span className="text-ink-600">·</span>
+          <p className="text-[14px] font-semibold text-ink-100 truncate">{title}</p>
+          {tags?.map((t) => (
+            <Badge key={t.label} size="sm" tone={t.tone ?? 'neutral'}>{t.label}</Badge>
+          ))}
+        </div>
+        {description && (
+          <p className="ml-auto text-[12px] text-ink-400 max-w-xs text-right shrink-0">{description}</p>
         )}
       </div>
 
-      {/* Controles (props) */}
-      {mode === 'single' && controls.length > 0 && (
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-b border-surface-border bg-surface-raised/30 px-5 py-3">
-          <div className="flex items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-wider text-ink-500">
-            <DSIcon name="filter-01" size={11} /> Propriedades
-          </div>
-          {controls.map((c) => (
-            <PropField key={c.key} control={c} value={state[c.key]} onChange={(v) => set(c.key, v)} />
-          ))}
-        </div>
-      )}
-
-      {/* Preview */}
-      <div className="relative overflow-hidden">
-        <div
-          aria-hidden
-          className="absolute inset-0"
-          style={{ background: 'linear-gradient(180deg, #fcfcfc 0%, #f5f5f5 100%)' }}
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-[0.35]"
-          style={{
-            backgroundImage:
-              'linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
-          }}
-        />
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={mode}
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -2 }}
-            transition={{ duration: 0.18 }}
-            className="relative z-10 flex flex-wrap items-center justify-center gap-4 p-8 min-h-[200px]"
-          >
-            {mode === 'all' && renderAll ? renderAll() : renderPreview(state)}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Código sempre visível */}
-      <div className="border-t border-surface-border p-4">
-        <CodeBlock code={code} language={language} maxHeight={420} />
-      </div>
-    </SpotlightCard>
-  )
-}
-
-// ===================================================================
-// Subcomponentes
-// ===================================================================
-
-function ModeButton({ active, onClick, children }: { active: boolean; onClick: () => void; children: ReactNode }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        'inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[12px] font-medium transition',
-        active ? 'bg-surface-elevated text-ink-50' : 'text-ink-400 hover:text-ink-200',
-      )}
-    >
       {children}
-    </button>
+    </div>
   )
 }
+
+// ===================================================================
+// PreviewArea — fundo branco com padrão de pontos
+// ===================================================================
+
+function PreviewArea({ children }: { children: ReactNode }) {
+  return (
+    <div className="relative overflow-hidden">
+      <div aria-hidden className="absolute inset-0 bg-white" />
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-40"
+        style={{
+          backgroundImage: 'radial-gradient(circle, #c8c8c8 0.75px, transparent 0.75px)',
+          backgroundSize: '20px 20px',
+        }}
+      />
+      <div className="relative z-10 flex flex-wrap items-center justify-center gap-4 p-10 min-h-[200px]">
+        {children}
+      </div>
+    </div>
+  )
+}
+
+// ===================================================================
+// PropField — controles dos atributos
+// ===================================================================
 
 function PropField({
   control, value, onChange,
@@ -169,8 +190,8 @@ function PropField({
 }) {
   if (control.kind === 'variant') {
     return (
-      <div className="flex flex-col gap-1">
-        <span className="text-[10px] font-medium uppercase tracking-wider text-ink-500">{control.label}</span>
+      <div className="flex flex-col gap-1.5">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-ink-400">{control.label}</span>
         <div className="inline-flex flex-wrap items-center gap-1 rounded-lg border border-surface-border bg-surface-raised/70 p-1">
           {control.options.map((opt) => {
             const active = value === opt
@@ -180,8 +201,10 @@ function PropField({
                 type="button"
                 onClick={() => onChange(opt)}
                 className={cn(
-                  'rounded-md px-2.5 py-1 text-[11.5px] font-medium transition',
-                  active ? 'bg-brand-500/15 text-brand-200 ring-1 ring-brand-500/30' : 'text-ink-400 hover:text-ink-100 hover:bg-surface-elevated',
+                  'rounded-md px-3 py-1.5 text-[14px] font-medium transition-colors duration-200',
+                  active
+                    ? 'bg-brand-500/15 text-brand-200 ring-1 ring-brand-500/30'
+                    : 'text-ink-300 hover:text-ink-100 hover:bg-surface-elevated',
                 )}
               >
                 {opt}
@@ -195,12 +218,12 @@ function PropField({
 
   if (control.kind === 'select') {
     return (
-      <label className="flex flex-col gap-1">
-        <span className="text-[10px] font-medium uppercase tracking-wider text-ink-500">{control.label}</span>
+      <label className="flex flex-col gap-1.5">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-ink-400">{control.label}</span>
         <select
           value={value as string}
           onChange={(e) => onChange(e.currentTarget.value)}
-          className="h-8 rounded-lg border border-surface-border bg-surface-raised/70 px-2 text-[12px] text-ink-100 focus:border-brand-500/60 focus:outline-none"
+          className="h-9 rounded-lg border border-surface-border bg-surface-raised/70 px-2.5 text-[14px] text-ink-100 transition-colors duration-200 focus:border-brand-500/60 focus:outline-none"
         >
           {control.options.map((o) => (
             <option key={o.value} value={o.value}>{o.label}</option>
@@ -213,8 +236,8 @@ function PropField({
   if (control.kind === 'toggle') {
     const on = !!value
     return (
-      <div className="flex flex-col gap-1">
-        <span className="text-[10px] font-medium uppercase tracking-wider text-ink-500">&nbsp;</span>
+      <div className="flex flex-col gap-1.5">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-ink-400">{control.label}</span>
         <button
           type="button"
           role="switch"
@@ -222,7 +245,7 @@ function PropField({
           onClick={() => onChange(!on)}
           title={control.hint}
           className={cn(
-            'group inline-flex h-8 items-center gap-2.5 rounded-lg border px-2.5 text-[11.5px] font-medium transition-colors',
+            'group inline-flex h-9 items-center gap-2.5 rounded-lg border px-3 text-[14px] font-medium transition-colors duration-200',
             on
               ? 'border-brand-500/40 bg-brand-500/10 text-brand-100'
               : 'border-surface-border bg-surface-raised/70 text-ink-300 hover:border-surface-border/80 hover:text-ink-100',
@@ -242,7 +265,7 @@ function PropField({
               )}
             />
           </span>
-          <span className="leading-none">{control.label}</span>
+          <span className="leading-none">{on ? 'Sim' : 'Não'}</span>
         </button>
       </div>
     )
@@ -250,14 +273,14 @@ function PropField({
 
   // text
   return (
-    <label className="flex flex-col gap-1">
-      <span className="text-[10px] font-medium uppercase tracking-wider text-ink-500">{control.label}</span>
+    <label className="flex flex-col gap-1.5">
+      <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-ink-400">{control.label}</span>
       <input
         type="text"
         value={value as string}
         placeholder={control.placeholder}
         onChange={(e) => onChange(e.currentTarget.value)}
-        className="h-8 min-w-[150px] rounded-lg border border-surface-border bg-surface-raised/70 px-2.5 text-[12px] text-ink-100 placeholder:text-ink-500 focus:border-brand-500/60 focus:outline-none"
+        className="h-9 min-w-[160px] rounded-lg border border-surface-border bg-surface-raised/70 px-3 text-[14px] text-ink-100 placeholder:text-ink-300 transition-colors duration-200 focus:border-brand-500/60 focus:outline-none"
       />
     </label>
   )

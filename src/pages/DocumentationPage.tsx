@@ -106,22 +106,22 @@ function ColorsDoc({ query }: { query: string }) {
                 <button
                   onClick={() => setTheme('dark')}
                   className={cn(
-                    'flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[12px] font-medium transition',
-                    theme === 'dark' ? 'bg-surface-elevated text-ink-50' : 'text-ink-400 hover:text-ink-200',
+                    'flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[14px] font-medium transition',
+                    theme === 'dark' ? 'bg-surface-elevated text-ink-50' : 'text-ink-300 hover:text-ink-200',
                   )}
                 >
-                  <DSIcon name="half-moon" size={13} /> Dark
+                  <DSIcon name="half-moon" size={14} /> Dark
                 </button>
               </Tooltip>
               <Tooltip content="Tema claro">
                 <button
                   onClick={() => setTheme('light')}
                   className={cn(
-                    'flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[12px] font-medium transition',
-                    theme === 'light' ? 'bg-surface-elevated text-ink-50' : 'text-ink-400 hover:text-ink-200',
+                    'flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[14px] font-medium transition',
+                    theme === 'light' ? 'bg-surface-elevated text-ink-50' : 'text-ink-300 hover:text-ink-200',
                   )}
                 >
-                  <DSIcon name="sun" size={13} /> Light
+                  <DSIcon name="sun" size={14} /> Light
                 </button>
               </Tooltip>
             </div>
@@ -133,7 +133,7 @@ function ColorsDoc({ query }: { query: string }) {
       <div className="mx-auto max-w-6xl px-8 py-10">
         {loading && <ShimmerGrid />}
         {error && (
-          <div className="rounded-xl border border-rose-500/30 bg-rose-500/5 p-4 text-sm text-rose-300">
+          <div className="rounded-xl border border-rose-500/30 bg-rose-500/5 p-4 text-[15px] text-rose-300">
             Erro ao carregar tokens: {error}
           </div>
         )}
@@ -141,7 +141,7 @@ function ColorsDoc({ query }: { query: string }) {
         {filteredGroups && Object.entries(filteredGroups).map(([group, scales], gi) => (
           <section key={group} className="mb-12 animate-slide-up" style={{ animationDelay: `${gi * 50}ms` }}>
             <div className="mb-4 flex items-center gap-2">
-              <h3 className="font-display text-lg font-bold text-ink-100">{group}</h3>
+              <h3 className="font-display text-xl font-bold text-ink-100">{group}</h3>
               <Badge size="sm">{Object.values(scales).flat().length} tokens</Badge>
             </div>
 
@@ -151,8 +151,8 @@ function ColorsDoc({ query }: { query: string }) {
               {Object.entries(scales).map(([scale, tokens]) => (
                 <div key={scale}>
                   <div className="mb-3 flex items-center gap-2">
-                    <p className="text-sm font-semibold text-ink-200">{scale}</p>
-                    <span className="text-[11px] text-ink-500">{tokens.length} variações · escala Radix 1–12</span>
+                    <p className="text-[15px] font-semibold text-ink-200">{scale}</p>
+                    <span className="text-[14px] text-ink-300">{tokens.length} variações · escala Radix 1–12</span>
                   </div>
                   <ScaleRow tokens={tokens} />
                 </div>
@@ -163,7 +163,7 @@ function ColorsDoc({ query }: { query: string }) {
 
         {filteredGroups && Object.keys(filteredGroups).length === 0 && !loading && (
           <div className="rounded-xl border border-dashed border-surface-border p-10 text-center">
-            <p className="text-sm text-ink-400">Nenhum token encontrado para "{query}"</p>
+            <p className="text-[15px] text-ink-300">Nenhum token encontrado para "{query}"</p>
           </div>
         )}
 
@@ -210,18 +210,18 @@ function TokensJsonSection({
     <section className="mt-16 border-t border-surface-border pt-10">
       <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="mb-1 inline-flex items-center gap-2 rounded-full border border-surface-border bg-surface-raised/70 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-300">
+          <p className="mb-1 inline-flex items-center gap-2 rounded-full border border-surface-border bg-surface-raised/70 px-2.5 py-0.5 text-[14px] font-semibold uppercase tracking-[0.18em] text-brand-300">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-400" />
             Handoff
           </p>
-          <h3 className="font-display text-xl font-bold text-ink-50">{title}</h3>
-          <p className="mt-1 max-w-xl text-[13px] leading-relaxed text-ink-400">{description}</p>
+          <h3 className="font-display text-2xl font-bold text-ink-50">{title}</h3>
+          <p className="mt-1 max-w-xl text-[14px] leading-relaxed text-ink-300">{description}</p>
         </div>
         <DownloadJsonButton resource={resource} />
       </div>
 
       {err && (
-        <div className="rounded-xl border border-rose-500/30 bg-rose-500/5 p-4 text-sm text-rose-300">
+        <div className="rounded-xl border border-rose-500/30 bg-rose-500/5 p-4 text-[15px] text-rose-300">
           Erro: {err}
         </div>
       )}
@@ -241,8 +241,8 @@ function RadixLegend() {
   const entries = Object.entries(RADIX_GROUP_META)
   return (
     <div className="mb-5 rounded-xl border border-surface-border bg-surface-raised/40 p-3">
-      <div className="flex items-center gap-2 text-[11px] text-ink-400">
-        <DSIcon name="information-circle" size={12} className="text-ink-300" />
+      <div className="flex items-center gap-2 text-[14px] text-ink-300">
+        <DSIcon name="information-circle" size={14} className="text-ink-300" />
         <span>
           Escala inspirada em{' '}
           <a
@@ -255,7 +255,7 @@ function RadixLegend() {
           </a>{' '}— cada step tem um uso semântico. Passe o mouse em cada cor para ver o papel.
         </span>
       </div>
-      <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[10.5px]">
+      <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[14px]">
         {entries.map(([k, meta]) => (
           <span key={k} className={cn('inline-flex items-center gap-1.5 font-medium', meta.color)}>
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-current" />
@@ -288,8 +288,8 @@ function EmptySwatch({ step }: { step: string }) {
   const info = RADIX_STEPS[step]
   return (
     <div className="rounded-lg border border-dashed border-surface-border/70 bg-surface-raised/20 p-2 text-center">
-      <p className="font-mono text-[11px] font-semibold text-ink-500">{step}</p>
-      <p className="mt-1 text-[9.5px] leading-tight text-ink-500">{info?.title ?? '—'}</p>
+      <p className="font-mono text-[14px] font-semibold text-ink-300">{step}</p>
+      <p className="mt-1 text-[14px] leading-tight text-ink-300">{info?.title ?? '—'}</p>
     </div>
   )
 }
@@ -321,7 +321,7 @@ function SwatchCard({ token, step, index }: { token: ColorToken; step: string; i
           style={{ backgroundColor: token.hex }}
         >
           <div className="flex items-start justify-between">
-            <span className="font-mono text-[13px] font-bold leading-none tabular-nums opacity-95 drop-shadow-sm">
+            <span className="font-mono text-[14px] font-bold leading-none tabular-nums opacity-95 drop-shadow-sm">
               {step}
             </span>
             {groupMeta && (
@@ -360,7 +360,7 @@ function SwatchCard({ token, step, index }: { token: ColorToken; step: string; i
           {/* Cabeçalho do popover */}
           <div className="mb-3 flex items-center gap-2">
             <span
-              className="inline-flex h-6 w-6 items-center justify-center rounded-md font-mono text-[11px] font-bold ring-1 ring-white/10"
+              className="inline-flex h-6 w-6 items-center justify-center rounded-md font-mono text-[14px] font-bold ring-1 ring-white/10"
               style={{
                 background: token.hex,
                 color: contrastOn(token.hex) === 'dark' ? '#0B0B0F' : '#F7F7F8',
@@ -369,11 +369,11 @@ function SwatchCard({ token, step, index }: { token: ColorToken; step: string; i
               {step}
             </span>
             <div className="min-w-0">
-              <p className="text-[12px] font-semibold text-ink-50 leading-tight">
+              <p className="text-[14px] font-semibold text-ink-50 leading-tight">
                 {info?.title ?? 'Swatch'}
               </p>
               {groupMeta && (
-                <p className={cn('text-[10px] font-medium uppercase tracking-wider leading-tight', groupMeta.color)}>
+                <p className={cn('text-[14px] font-medium uppercase tracking-wider leading-tight', groupMeta.color)}>
                   {groupMeta.label}
                 </p>
               )}
@@ -387,16 +387,16 @@ function SwatchCard({ token, step, index }: { token: ColorToken; step: string; i
 
           {/* Explicação */}
           {info && (
-            <p className="text-[11.5px] leading-snug text-ink-300">{info.use}</p>
+            <p className="text-[14px] leading-snug text-ink-300">{info.use}</p>
           )}
 
           {/* Rodapé com hex */}
           <div className="mt-3 border-t border-surface-border/80 pt-2.5">
-            <p className="font-mono text-[11px] text-ink-200 truncate">{token.hex}</p>
-            <p className="font-mono text-[9.5px] text-ink-500 truncate">var({cssVar})</p>
+            <p className="font-mono text-[14px] text-ink-200 truncate">{token.hex}</p>
+            <p className="font-mono text-[14px] text-ink-300 truncate">var({cssVar})</p>
           </div>
 
-          <p className="mt-2 text-center text-[10px] text-ink-500">Clique no swatch para copiar o HEX</p>
+          <p className="mt-2 text-center text-[14px] text-ink-300">Clique no swatch para copiar o HEX</p>
         </div>
       </Popover>
     </motion.div>
@@ -409,7 +409,7 @@ function ShimmerGrid() {
       {Array.from({ length: 24 }).map((_, i) => (
         <div
           key={i}
-          className="aspect-square rounded-lg border border-surface-border bg-[linear-gradient(110deg,#151520_0%,#1D1D28_50%,#151520_100%)] bg-[length:200%_100%] animate-shimmer"
+          className="aspect-square rounded-lg border border-surface-border bg-[linear-gradient(110deg,#111116_0%,#19191F_50%,#111116_100%)] bg-[length:200%_100%] animate-shimmer"
         />
       ))}
     </div>
@@ -459,7 +459,7 @@ function TypographyDoc() {
               <div className="p-5">
                 <div className="mb-3 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
-                    <p className="font-display text-sm font-semibold text-ink-100">{s.name}</p>
+                    <p className="font-display text-[15px] font-semibold text-ink-100">{s.name}</p>
                     <Badge size="sm">{s.size}px · {s.weight}</Badge>
                     <Badge size="sm" tone="neutral">{s.font}</Badge>
                   </div>
@@ -484,7 +484,7 @@ function TypographyDoc() {
         </div>
 
         <div>
-          <h3 className="mb-3 font-display text-base font-semibold text-ink-100">Instalação</h3>
+          <h3 className="mb-3 font-display text-lg font-semibold text-ink-100">Instalação</h3>
           <CodeBlock
             language="html"
             code={`<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -516,9 +516,9 @@ function FontCard({
       >
         {sample}
       </div>
-      <p className="font-display text-base font-bold text-ink-100">{name}</p>
-      <p className="text-[12px] text-ink-400">{role}</p>
-      <p className="mt-2 font-mono text-[11px] text-ink-500">Pesos: {weights}</p>
+      <p className="font-display text-lg font-bold text-ink-100">{name}</p>
+      <p className="text-[14px] text-ink-300">{role}</p>
+      <p className="mt-2 font-mono text-[14px] text-ink-300">Pesos: {weights}</p>
     </SpotlightCard>
   )
 }
@@ -592,10 +592,10 @@ function SpacingRuler({ tokens }: { tokens: SpacingToken[] }) {
       <div className="p-6">
         <div className="mb-5 flex items-center justify-between">
           <div>
-            <h3 className="font-display text-base font-semibold text-ink-100">Régua visual</h3>
-            <p className="text-[12px] text-ink-400">Proporção relativa de cada token.</p>
+            <h3 className="font-display text-lg font-semibold text-ink-100">Régua visual</h3>
+            <p className="text-[14px] text-ink-300">Proporção relativa de cada token.</p>
           </div>
-          <div className="flex items-center gap-1.5 rounded-full border border-surface-border bg-surface-raised/60 px-3 py-1 text-[11px] text-ink-300">
+          <div className="flex items-center gap-1.5 rounded-full border border-surface-border bg-surface-raised/60 px-3 py-1 text-[14px] text-ink-300">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-400" /> Base · 4pt
           </div>
         </div>
@@ -604,18 +604,18 @@ function SpacingRuler({ tokens }: { tokens: SpacingToken[] }) {
           {tokens.map((t, i) => (
             <div key={t.name} className="flex items-center gap-3">
               <div className="w-14 shrink-0">
-                <code className="font-mono text-[12.5px] font-semibold text-ink-100">{t.name}</code>
-                <p className="font-mono text-[10px] text-ink-500 tabular-nums">{t.value}px</p>
+                <code className="font-mono text-[14px] font-semibold text-ink-100">{t.name}</code>
+                <p className="font-mono text-[14px] text-ink-300 tabular-nums">{t.value}px</p>
               </div>
               <div className="relative h-5 flex-1 rounded bg-[linear-gradient(to_right,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[length:8px_100%]">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${(t.value / max) * 100}%` }}
                   transition={{ delay: i * 0.05, duration: 0.6, ease: [0.22, 0.9, 0.28, 1] }}
-                  className="absolute inset-y-0 left-0 rounded bg-gradient-to-r from-brand-600/70 via-brand-500 to-brand-400 shadow-[0_0_20px_-4px_rgba(70,167,104,0.5)]"
+                  className="absolute inset-y-0 left-0 rounded bg-gradient-to-r from-brand-600/70 via-brand-500 to-brand-400 shadow-[0_0_20px_-4px_rgba(34,197,94,0.45)]"
                 />
               </div>
-              <span className="w-16 text-right font-mono text-[10.5px] text-ink-500 tabular-nums">
+              <span className="w-16 text-right font-mono text-[14px] text-ink-300 tabular-nums">
                 {t.value / 16}rem
               </span>
             </div>
@@ -637,7 +637,7 @@ function SpacingCard({ token }: { token: SpacingToken }) {
             <Badge size="sm" tone="brand">{token.value}px</Badge>
             <Badge size="sm">{token.value / 16}rem</Badge>
           </div>
-          <p className="mt-2 text-[12.5px] leading-relaxed text-ink-300">{token.usage}</p>
+          <p className="mt-2 text-[14px] leading-relaxed text-ink-300">{token.usage}</p>
           <div className="mt-4 flex items-center gap-1.5">
             <CopyButton size="sm" value={`${token.value}px`} tooltip="Copiar px" />
             <CopyButton size="sm" value={`${token.value / 16}rem`} tooltip="Copiar rem" />
@@ -646,7 +646,7 @@ function SpacingCard({ token }: { token: SpacingToken }) {
         </div>
 
         {/* Coluna de ilustração */}
-        <div className="relative flex w-full items-center justify-center border-t border-surface-border bg-[#0A0A10] p-5 lg:w-[240px] lg:border-l lg:border-t-0">
+        <div className="relative flex w-full items-center justify-center border-t border-surface-border bg-[#0A0A0E] p-5 lg:w-[240px] lg:border-l lg:border-t-0">
           <SpacingPreview token={token} />
         </div>
       </div>
@@ -673,7 +673,7 @@ function SpacingPreview({ token }: { token: SpacingToken }) {
             className="relative rounded-lg border border-dashed border-brand-500/40 bg-brand-500/5"
             style={{ padding: px }}
           >
-            <div className="rounded bg-surface-elevated px-3 py-1.5 text-[11px] font-medium text-ink-100">
+            <div className="rounded bg-surface-elevated px-3 py-1.5 text-[14px] font-medium text-ink-100">
               Conteúdo
             </div>
             <PaddingLabel px={px} />
@@ -696,7 +696,7 @@ function SpacingPreview({ token }: { token: SpacingToken }) {
           <SectionRow title="Seção A" />
           <div className="relative" style={{ height: Math.min(px, 96) }}>
             <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-brand-500/40" />
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md border border-brand-500/40 bg-brand-500/10 px-2 py-0.5 font-mono text-[10px] text-brand-300">
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md border border-brand-500/40 bg-brand-500/10 px-2 py-0.5 font-mono text-[14px] text-brand-300">
               {px}px
             </div>
           </div>
@@ -714,7 +714,7 @@ function Block() {
 
 function Gap({ px, vertical }: { px: number; vertical?: boolean }) {
   const label = (
-    <div className="flex items-center gap-1 rounded bg-surface-raised/90 px-1.5 py-0.5 font-mono text-[9.5px] text-brand-300 ring-1 ring-brand-500/30">
+    <div className="flex items-center gap-1 rounded bg-surface-raised/90 px-1.5 py-0.5 font-mono text-[14px] text-brand-300 ring-1 ring-brand-500/30">
       {px}px
     </div>
   )
@@ -736,7 +736,7 @@ function Gap({ px, vertical }: { px: number; vertical?: boolean }) {
 
 function PaddingLabel({ px }: { px: number }) {
   return (
-    <span className="absolute -top-2 left-1/2 -translate-x-1/2 rounded bg-surface-raised/90 px-1.5 font-mono text-[9.5px] text-brand-300 ring-1 ring-brand-500/30">
+    <span className="absolute -top-2 left-1/2 -translate-x-1/2 rounded bg-surface-raised/90 px-1.5 font-mono text-[14px] text-brand-300 ring-1 ring-brand-500/30">
       padding · {px}px
     </span>
   )
@@ -755,7 +755,7 @@ function StackRow() {
 function SectionRow({ title }: { title: string }) {
   return (
     <div className="rounded-md border border-surface-border bg-surface-raised px-3 py-2">
-      <p className="text-[10.5px] font-semibold uppercase tracking-wider text-ink-400">{title}</p>
+      <p className="text-[14px] font-semibold uppercase tracking-wider text-ink-300">{title}</p>
       <div className="mt-1 h-1.5 w-20 rounded bg-white/10" />
     </div>
   )

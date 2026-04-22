@@ -127,7 +127,7 @@ export function IconsGalleryPage({ query }: { query: string }) {
 
       <div className="mx-auto max-w-[1400px] px-8 py-8">
         {err && (
-          <div className="rounded-xl border border-rose-500/30 bg-rose-500/5 p-4 text-sm text-rose-300">
+          <div className="rounded-xl border border-rose-500/30 bg-rose-500/5 p-4 text-[15px] text-rose-300">
             Erro ao carregar manifest: {err}
           </div>
         )}
@@ -149,7 +149,7 @@ export function IconsGalleryPage({ query }: { query: string }) {
                     className={cn(
                       'group relative overflow-hidden rounded-xl border p-4 text-left transition',
                       isActive
-                        ? 'border-brand-500/50 bg-brand-500/10 shadow-[0_12px_32px_-18px_rgba(70,167,104,0.6)]'
+                        ? 'border-brand-500/50 bg-brand-500/10 shadow-[0_12px_32px_-18px_rgba(34,197,94,0.6)]'
                         : 'border-surface-border bg-surface-raised/60 hover:bg-surface-elevated',
                     )}
                     aria-pressed={isActive}
@@ -162,10 +162,10 @@ export function IconsGalleryPage({ query }: { query: string }) {
                     )}
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <p className={cn('font-display text-base font-bold', isActive ? 'text-brand-200' : 'text-ink-100')}>
+                        <p className={cn('font-display text-lg font-bold', isActive ? 'text-brand-200' : 'text-ink-100')}>
                           {STYLE_LABEL[s]}
                         </p>
-                        <p className="mt-0.5 text-[12px] text-ink-400">{STYLE_DESC[s]}</p>
+                        <p className="mt-0.5 text-[14px] text-ink-300">{STYLE_DESC[s]}</p>
                       </div>
                       <Badge tone={isActive ? 'brand' : 'neutral'} size="sm">
                         {countPerStyle[s].toLocaleString('pt-BR')}
@@ -203,7 +203,7 @@ export function IconsGalleryPage({ query }: { query: string }) {
                 {/* Barra de busca */}
                 <div className="sticky top-16 z-20 -mx-1 mb-4 rounded-xl border border-surface-border bg-surface/80 px-3 py-2 backdrop-blur-xl">
                   <label className="group flex h-10 items-center gap-2 rounded-lg bg-surface-raised/60 px-3 transition focus-within:bg-surface-elevated">
-                    <DSIcon name="search-01" size={14} className="text-ink-400 group-focus-within:text-ink-200" />
+                    <DSIcon name="search-01" size={14} className="text-ink-300 group-focus-within:text-ink-200" />
                     <input
                       value={localQuery}
                       onChange={(e) => {
@@ -213,25 +213,25 @@ export function IconsGalleryPage({ query }: { query: string }) {
                         if (v.trim() && group !== 'all') setGroup('all')
                       }}
                       placeholder={`Buscar em ${filtered.length.toLocaleString('pt-BR')} ícones…`}
-                      className="flex-1 bg-transparent text-[13px] text-ink-100 placeholder:text-ink-400 focus:outline-none"
+                      className="flex-1 bg-transparent text-[14px] text-ink-100 placeholder:text-ink-300 focus:outline-none"
                     />
                     {localQuery && (
                       <button
                         onClick={() => setLocalQuery('')}
-                        className="rounded-md p-1 text-ink-400 hover:bg-surface-elevated hover:text-ink-100"
+                        className="rounded-md p-1 text-ink-300 hover:bg-surface-elevated hover:text-ink-100"
                         aria-label="Limpar busca"
                       >
-                        <DSIcon name="multiply-circle" size={12} />
+                        <DSIcon name="multiply-circle" size={14} />
                       </button>
                     )}
-                    <kbd className="hidden sm:inline-flex items-center rounded border border-surface-border bg-surface/60 px-1.5 py-0.5 font-mono text-[10px] text-ink-400">
+                    <kbd className="hidden sm:inline-flex items-center rounded border border-surface-border bg-surface/60 px-1.5 py-0.5 font-mono text-[14px] text-ink-300">
                       {filtered.length}
                     </kbd>
                   </label>
 
                   {(localQuery || group !== 'all') && (
-                    <div className="mt-2 flex items-center gap-2 px-1 text-[11.5px] text-ink-400">
-                      <DSIcon name="star" size={12} className="text-brand-300" />
+                    <div className="mt-2 flex items-center gap-2 px-1 text-[14px] text-ink-300">
+                      <DSIcon name="star" size={14} className="text-brand-300" />
                       <span>
                         {filtered.length.toLocaleString('pt-BR')} resultado{filtered.length === 1 ? '' : 's'}
                         {group !== 'all' && <> em <span className="font-semibold text-ink-200">{group}</span></>}
@@ -267,7 +267,7 @@ export function IconsGalleryPage({ query }: { query: string }) {
                 )}
 
                 {filtered.length > PAGE_SIZE && (
-                  <div className="mt-6 flex items-center justify-between gap-4 rounded-xl border border-surface-border bg-surface-raised/40 px-4 py-3 text-[12.5px] text-ink-300">
+                  <div className="mt-6 flex items-center justify-between gap-4 rounded-xl border border-surface-border bg-surface-raised/40 px-4 py-3 text-[14px] text-ink-300">
                     <span>
                       Página <b className="text-ink-100">{page}</b> de {totalPages} ·{' '}
                       mostrando <b className="text-ink-100">{pageItems.length}</b> de{' '}
@@ -278,7 +278,7 @@ export function IconsGalleryPage({ query }: { query: string }) {
                         type="button"
                         onClick={() => setPage((p) => Math.max(1, p - 1))}
                         disabled={page <= 1}
-                        className="rounded-md border border-surface-border bg-surface-raised/70 px-3 py-1.5 text-[12px] text-ink-200 disabled:opacity-40 hover:bg-surface-elevated"
+                        className="rounded-md border border-surface-border bg-surface-raised/70 px-3 py-1.5 text-[14px] text-ink-200 disabled:opacity-40 hover:bg-surface-elevated"
                       >
                         Anterior
                       </button>
@@ -286,7 +286,7 @@ export function IconsGalleryPage({ query }: { query: string }) {
                         type="button"
                         onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                         disabled={page >= totalPages}
-                        className="rounded-md border border-brand-500/40 bg-brand-500/10 px-3 py-1.5 text-[12px] font-semibold text-brand-300 disabled:opacity-40 hover:bg-brand-500/15"
+                        className="rounded-md border border-brand-500/40 bg-brand-500/10 px-3 py-1.5 text-[14px] font-semibold text-brand-300 disabled:opacity-40 hover:bg-brand-500/15"
                       >
                         Próxima
                       </button>
@@ -310,10 +310,10 @@ export function IconsGalleryPage({ query }: { query: string }) {
           >
             <DSIcon name="loading-01" size={18} className="animate-spin text-brand-300" />
             <div className="flex-1 min-w-0">
-              <p className="text-[12.5px] font-semibold text-ink-100">
+              <p className="text-[14px] font-semibold text-ink-100">
                 Gerando {downloading.kind === 'zip' ? 'ZIP' : 'JSON'}…
               </p>
-              <p className="text-[11px] text-ink-400">
+              <p className="text-[14px] text-ink-300">
                 {downloading.done.toLocaleString('pt-BR')} de {downloading.total.toLocaleString('pt-BR')} ícones
               </p>
               <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-surface-border">
@@ -349,8 +349,8 @@ function CategorySidebar({
     <aside className="lg:sticky lg:top-20 lg:self-start">
       <div className="rounded-xl border border-surface-border bg-surface-raised/40 backdrop-blur">
         <div className="flex items-center justify-between px-3 py-2.5 border-b border-surface-border/70">
-          <p className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-ink-500">Categorias</p>
-          <span className="rounded-md bg-surface-raised/70 px-1.5 py-0.5 font-mono text-[10px] text-ink-300">
+          <p className="text-[14px] font-semibold uppercase tracking-[0.16em] text-ink-300">Categorias</p>
+          <span className="rounded-md bg-surface-raised/70 px-1.5 py-0.5 font-mono text-[14px] text-ink-300">
             {groups.length}
           </span>
         </div>
@@ -358,7 +358,7 @@ function CategorySidebar({
         <ul className="max-h-[calc(100vh-220px)] overflow-y-auto p-1.5">
           <CategoryItem
             label="Todas"
-            icon={<DSIcon name="grid-01" size={13} />}
+            icon={<DSIcon name="grid-01" size={14} />}
             count={totalStyle}
             active={current === 'all'}
             onClick={() => onChange('all')}
@@ -394,7 +394,7 @@ function CategoryItem({
         type="button"
         onClick={onClick}
         className={cn(
-          'group flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-[12.5px] transition',
+          'group flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-[14px] transition',
           active
             ? 'bg-brand-500/15 text-brand-200'
             : 'text-ink-300 hover:bg-surface-elevated hover:text-ink-100',
@@ -406,12 +406,12 @@ function CategoryItem({
             className="h-1.5 w-1.5 rounded-full bg-brand-400"
           />
         )}
-        {!active && icon && <span className="text-ink-500 group-hover:text-ink-300">{icon}</span>}
+        {!active && icon && <span className="text-ink-300 group-hover:text-ink-300">{icon}</span>}
         {!active && !icon && <span className="h-1.5 w-1.5 rounded-full bg-surface-border group-hover:bg-ink-500" />}
         <span className="flex-1 truncate font-medium capitalize">{label}</span>
         <span className={cn(
-          'rounded-md px-1.5 py-0.5 font-mono text-[10px] tabular-nums',
-          active ? 'bg-brand-500/20 text-brand-300' : 'bg-surface-raised/70 text-ink-500',
+          'rounded-md px-1.5 py-0.5 font-mono text-[14px] tabular-nums',
+          active ? 'bg-brand-500/20 text-brand-300' : 'bg-surface-raised/70 text-ink-300',
         )}>
           {count.toLocaleString('pt-BR')}
         </span>
@@ -439,7 +439,7 @@ function DownloadMenu({
         onClick={() => setOpen(!open)}
         disabled={busy}
         className={cn(
-          'inline-flex h-10 items-center gap-2 rounded-lg bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 px-4 text-[13px] font-bold text-white shadow-[0_12px_32px_-14px_rgba(70,167,104,.7)] transition hover:brightness-110',
+          'inline-flex h-10 items-center gap-2 rounded-lg bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 px-4 text-[14px] font-bold text-white shadow-[0_12px_32px_-14px_rgba(34,197,94,.7)] transition hover:brightness-110',
           busy && 'opacity-70',
         )}
       >
@@ -466,12 +466,12 @@ function DownloadMenu({
               className="absolute right-0 top-full z-50 mt-2 w-[340px] overflow-hidden rounded-xl border border-surface-border bg-surface-raised/95 shadow-2xl backdrop-blur-xl"
             >
               <div className="border-b border-surface-border px-4 py-3">
-                <p className="font-display text-sm font-bold text-ink-50">Central de download</p>
-                <p className="text-[11.5px] text-ink-400">Tudo categorizado e pronto para consumir.</p>
+                <p className="font-display text-[15px] font-bold text-ink-50">Central de download</p>
+                <p className="text-[14px] text-ink-300">Tudo categorizado e pronto para consumir.</p>
               </div>
 
               <div className="p-2">
-                <p className="px-2 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-wider text-ink-500">
+                <p className="px-2 pb-1 pt-2 text-[14px] font-semibold uppercase tracking-wider text-ink-300">
                   Bundle completo ({totalCount.toLocaleString('pt-BR')})
                 </p>
                 <DownloadRow
@@ -488,7 +488,7 @@ function DownloadMenu({
                   onClick={() => onPick('json', 'all')}
                 />
 
-                <p className="px-2 pb-1 pt-3 text-[10px] font-semibold uppercase tracking-wider text-ink-500">
+                <p className="px-2 pb-1 pt-3 text-[14px] font-semibold uppercase tracking-wider text-ink-300">
                   Só estilo atual — {STYLE_LABEL[style]} ({styleCount.toLocaleString('pt-BR')})
                 </p>
                 <DownloadRow
@@ -537,12 +537,12 @@ function DownloadRow({
         {icon}
       </span>
       <div className="min-w-0 flex-1">
-        <p className={cn('text-[12.5px] font-semibold', highlight ? 'text-brand-200' : 'text-ink-100')}>
+        <p className={cn('text-[14px] font-semibold', highlight ? 'text-brand-200' : 'text-ink-100')}>
           {title}
         </p>
-        <p className="font-mono text-[10.5px] text-ink-500 truncate">{subtitle}</p>
+        <p className="font-mono text-[14px] text-ink-300 truncate">{subtitle}</p>
       </div>
-      <DSIcon name="download-01" size={12} className="mt-1 text-ink-500 group-hover:text-ink-200" />
+      <DSIcon name="download-01" size={14} className="mt-1 text-ink-300 group-hover:text-ink-200" />
     </button>
   )
 }
@@ -563,7 +563,7 @@ function IconTile({ item, index, onOpen }: { item: IconItem; index: number; onOp
       aria-label={item.name}
     >
       <IconImg item={item} className="h-full w-full transition-transform duration-300 group-hover/tile:scale-110" />
-      <span className="pointer-events-none absolute inset-x-1 bottom-1 truncate rounded-sm bg-black/60 px-1 py-0.5 text-center font-mono text-[9px] text-ink-100 opacity-0 backdrop-blur transition group-hover/tile:opacity-100">
+      <span className="pointer-events-none absolute inset-x-1 bottom-1 truncate rounded-sm bg-black/60 px-1 py-0.5 text-center font-mono text-[14px] text-ink-100 opacity-0 backdrop-blur transition group-hover/tile:opacity-100">
         {item.slug}
       </span>
     </motion.button>
@@ -660,13 +660,13 @@ function IconModal({ item, onClose }: { item: IconItem; onClose: () => void }) {
         <div className="flex items-center justify-between border-b border-surface-border px-5 py-3">
           <div className="min-w-0">
             <p className="truncate font-display text-[14px] font-semibold text-ink-50">{item.name}</p>
-            <p className="truncate text-[11.5px] text-ink-400">
+            <p className="truncate text-[14px] text-ink-300">
               {STYLE_LABEL[item.style]} · {item.group} · <span className="font-mono">{item.file}</span>
             </p>
           </div>
           <button
             onClick={onClose}
-            className="rounded-md p-1.5 text-ink-400 hover:bg-surface-elevated hover:text-ink-100"
+            className="rounded-md p-1.5 text-ink-300 hover:bg-surface-elevated hover:text-ink-100"
             aria-label="Fechar"
           >
             <DSIcon name="multiply-circle" size={16} />
@@ -674,7 +674,7 @@ function IconModal({ item, onClose }: { item: IconItem; onClose: () => void }) {
         </div>
 
         <div className="grid gap-0 md:grid-cols-[1fr_1fr]">
-          <div className="relative flex items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(70,167,104,0.12),transparent_60%)] p-8">
+          <div className="relative flex items-center justify-center bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.12),transparent_60%)] p-8">
             <div className="absolute inset-0 bg-grid opacity-40" />
             <div className="relative flex h-40 w-40 items-center justify-center rounded-2xl border border-surface-border bg-surface-raised/70 shadow-xl">
               <IconImg item={item} className="h-20 w-20" />
@@ -683,17 +683,17 @@ function IconModal({ item, onClose }: { item: IconItem; onClose: () => void }) {
 
           <div className="flex flex-col gap-3 border-t border-surface-border p-5 md:border-l md:border-t-0">
             <div>
-              <p className="text-[10.5px] font-semibold uppercase tracking-wider text-ink-500">Slug</p>
-              <code className="font-mono text-[12.5px] text-ink-100">{item.slug}</code>
+              <p className="text-[14px] font-semibold uppercase tracking-wider text-ink-300">Slug</p>
+              <code className="font-mono text-[14px] text-ink-100">{item.slug}</code>
             </div>
             <div>
-              <p className="text-[10.5px] font-semibold uppercase tracking-wider text-ink-500">Tags</p>
+              <p className="text-[14px] font-semibold uppercase tracking-wider text-ink-300">Tags</p>
               <div className="mt-1 flex flex-wrap gap-1.5">
                 {item.tags.length > 0 ? item.tags.map((t) => (
-                  <span key={t} className="rounded-md border border-surface-border bg-surface-raised/70 px-1.5 py-0.5 font-mono text-[10.5px] text-ink-300">
+                  <span key={t} className="rounded-md border border-surface-border bg-surface-raised/70 px-1.5 py-0.5 font-mono text-[14px] text-ink-300">
                     {t}
                   </span>
-                )) : <span className="text-[11.5px] text-ink-500">—</span>}
+                )) : <span className="text-[14px] text-ink-300">—</span>}
               </div>
             </div>
 
@@ -701,22 +701,22 @@ function IconModal({ item, onClose }: { item: IconItem; onClose: () => void }) {
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={download}
-                className="inline-flex h-9 items-center gap-2 rounded-lg bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 px-3 text-[12.5px] font-bold text-white shadow-[0_10px_28px_-12px_rgba(70,167,104,.7)] transition hover:brightness-110"
+                className="inline-flex h-9 items-center gap-2 rounded-lg bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700 px-3 text-[14px] font-bold text-white shadow-[0_10px_28px_-12px_rgba(34,197,94,.7)] transition hover:brightness-110"
               >
-                <DSIcon name="download-01" size={13} /> Baixar SVG
+                <DSIcon name="download-01" size={14} /> Baixar SVG
               </motion.button>
               <button
                 onClick={copySvg}
-                className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/70 px-3 text-[12px] text-ink-200 hover:bg-surface-elevated"
+                className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/70 px-3 text-[14px] text-ink-200 hover:bg-surface-elevated"
               >
-                {copied === 'svg' ? <DSIcon name="check-mark-circle" size={13} className="text-brand-300" /> : <DSIcon name="copy" size={13} />}
+                {copied === 'svg' ? <DSIcon name="check-mark-circle" size={14} className="text-brand-300" /> : <DSIcon name="copy" size={14} />}
                 Copiar SVG
               </button>
               <button
                 onClick={copyJsx}
-                className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/70 px-3 text-[12px] text-ink-200 hover:bg-surface-elevated"
+                className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-surface-border bg-surface-raised/70 px-3 text-[14px] text-ink-200 hover:bg-surface-elevated"
               >
-                {copied === 'jsx' ? <DSIcon name="check-mark-circle" size={13} className="text-brand-300" /> : <DSIcon name="copy" size={13} />}
+                {copied === 'jsx' ? <DSIcon name="check-mark-circle" size={14} className="text-brand-300" /> : <DSIcon name="copy" size={14} />}
                 Copiar JSX
               </button>
             </div>
@@ -733,7 +733,7 @@ function ShimmerGrid() {
       {Array.from({ length: 40 }).map((_, i) => (
         <div
           key={i}
-          className="aspect-square rounded-lg border border-surface-border bg-[linear-gradient(110deg,#121218_0%,#1A1A22_50%,#121218_100%)] bg-[length:200%_100%] animate-shimmer"
+          className="aspect-square rounded-lg border border-surface-border bg-[linear-gradient(110deg,#111116_0%,#19191F_50%,#111116_100%)] bg-[length:200%_100%] animate-shimmer"
         />
       ))}
     </div>
@@ -743,9 +743,9 @@ function ShimmerGrid() {
 function EmptyState() {
   return (
     <div className="rounded-xl border border-dashed border-surface-border p-12 text-center">
-      <DSIcon name="package-01" size={28} className="mx-auto mb-3 text-ink-500" />
-      <p className="text-sm text-ink-300">Nenhum ícone encontrado.</p>
-      <p className="text-[12px] text-ink-500">Tente outro termo ou limpe os filtros.</p>
+      <DSIcon name="package-01" size={28} className="mx-auto mb-3 text-ink-300" />
+      <p className="text-[15px] text-ink-300">Nenhum ícone encontrado.</p>
+      <p className="text-[14px] text-ink-300">Tente outro termo ou limpe os filtros.</p>
     </div>
   )
 }

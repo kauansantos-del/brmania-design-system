@@ -18,13 +18,13 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const base =
   'inline-flex items-center justify-center gap-2 rounded-lg px-8 py-5 font-["Sora"] text-[16px] font-semibold leading-[1.1] whitespace-nowrap select-none ' +
-  'transition-[background-color,border-color,color,box-shadow,transform] duration-150 active:scale-[0.99] ' +
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3e9b57] focus-visible:ring-offset-2 focus-visible:ring-offset-white ' +
+  'transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-out active:scale-[0.98] ' +
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#22C55E] focus-visible:ring-offset-2 focus-visible:ring-offset-white ' +
   'disabled:cursor-not-allowed'
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    'bg-[#3e9b57] text-[#fbfefb] hover:bg-[#2a7e40] active:bg-[#203c25]',
+    'bg-[#22C55E] text-[#fbfefb] hover:bg-[#16A34A] active:bg-[#15803D]',
   secondary:
     'bg-[#fcfcfc] border-[1.5px] border-[#d9d9d9] text-[#202020] ' +
     'hover:bg-[#f0f0f0] hover:border-[#cecece] ' +

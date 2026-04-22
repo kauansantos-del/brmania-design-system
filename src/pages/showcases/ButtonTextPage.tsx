@@ -33,7 +33,7 @@ export function ButtonTextPage() {
           renderPreview={(s) => (
             <ButtonText
               variant={s.variant as ButtonTextVariant}
-              icon={s.icon ? <DSIcon name="arrow-right" size={16} /> : undefined}
+              icon={s.icon ? <DSIcon name="arrow-right" size={18} /> : undefined}
             >
               {String(s.text || 'Criar conta')}
             </ButtonText>
@@ -62,15 +62,14 @@ ${VARIANTS.map((v) => `      <ButtonText variant="${v}">${v === 'codigo' ? 'Envi
 }
 
 function generateCode({ variant, icon, text }: { variant: string; icon: boolean; text: string }) {
-  const importLine = icon
-    ? "import { ButtonText, DSIcon } from '@/components/brmania'"
-    : "import { ButtonText } from '@/components/brmania'"
-  const iconProp = icon ? ' icon={<DSIcon name="arrow-right" size={16} />}' : ''
-  return `${importLine}
+  return `import { ButtonText, DSIcon } from '@/components/brmania'
 
 export function Example() {
   return (
-    <ButtonText variant="${variant}"${iconProp}>
+    <ButtonText
+      variant="${variant}"
+      icon={${icon ? '<DSIcon name="arrow-right" size={18} />' : 'undefined'}}
+    >
       ${text || 'Criar conta'}
     </ButtonText>
   )

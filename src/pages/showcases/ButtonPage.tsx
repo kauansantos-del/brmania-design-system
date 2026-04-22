@@ -66,18 +66,15 @@ ${VARIANTS.map((v) => `      <Button variant="${v}">Label</Button>`).join('\n')}
 function generateCode({
   variant, iconLeft, iconRight, text,
 }: { variant: string; iconLeft: boolean; iconRight: boolean; text: string }) {
-  const props: string[] = [`variant="${variant}"`]
-  if (iconLeft)  props.push('iconLeft={<DSIcon name="home-01" size={18} />}')
-  if (iconRight) props.push('iconRight={<DSIcon name="arrow-right" size={18} />}')
-  const needsDSIcon = iconLeft || iconRight
-  const importLine = needsDSIcon
-    ? "import { Button, DSIcon } from '@/components/brmania'"
-    : "import { Button } from '@/components/brmania'"
-  return `${importLine}
+  return `import { Button, DSIcon } from '@/components/brmania'
 
 export function Example() {
   return (
-    <Button ${props.join(' ')}>
+    <Button
+      variant="${variant}"
+      iconLeft={${iconLeft ? '<DSIcon name="home-01" size={18} />' : 'undefined'}}
+      iconRight={${iconRight ? '<DSIcon name="arrow-right" size={18} />' : 'undefined'}}
+    >
       ${text || 'Label'}
     </Button>
   )

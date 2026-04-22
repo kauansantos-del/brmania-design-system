@@ -54,7 +54,7 @@ export function DownloadJsonButton({
       whileTap={{ scale: 0.97 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       className={cn(
-        'inline-flex h-9 items-center gap-2 rounded-lg border px-3 text-[12.5px] font-semibold transition',
+        'inline-flex h-9 items-center gap-2 rounded-lg border px-3 text-[14px] font-semibold transition',
         toneCls,
         className,
       )}
@@ -67,7 +67,7 @@ export function DownloadJsonButton({
       ) : (
         <DSIcon name="download-01" size={14} />
       )}
-      <span className="font-mono text-[11.5px] tabular-nums">{LABELS[resource]}</span>
+      <span className="font-mono text-[14px] tabular-nums">{LABELS[resource]}</span>
     </motion.button>
   )
 }

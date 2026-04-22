@@ -383,7 +383,7 @@ export function CommandPalette({
             exit={{ opacity: 0, scale: 0.97, y: -8 }}
             transition={{ duration: 0.22, ease: [0.22, 0.9, 0.28, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-[640px] overflow-hidden rounded-2xl border border-surface-border bg-ink-900/95 shadow-2xl backdrop-blur-xl ring-1 ring-white/5"
+            className="relative w-full max-w-[640px] overflow-hidden rounded-2xl border border-surface-border/80 bg-ink-900/95 shadow-2xl backdrop-blur-xl ring-1 ring-white/5"
           >
             {/* Input */}
             <div className="relative flex items-center gap-3 border-b border-surface-border/80 px-4">
@@ -393,13 +393,13 @@ export function CommandPalette({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Buscar no design system — componentes, tokens, ícones, docs…"
-                className="h-14 flex-1 bg-transparent text-[14px] text-ink-50 placeholder:text-ink-500 focus:outline-none"
+                className="h-14 flex-1 bg-transparent text-[14px] text-ink-50 placeholder:text-ink-300 focus:outline-none"
                 aria-label="Busca"
               />
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-md border border-surface-border/70 bg-surface-raised/80 px-2 py-0.5 font-mono text-[10px] text-ink-400 hover:text-ink-200"
+                className="rounded-md border border-surface-border/70 bg-surface-raised/80 px-2 py-0.5 font-mono text-[14px] text-ink-300 hover:text-ink-200"
               >
                 ESC
               </button>
@@ -412,7 +412,7 @@ export function CommandPalette({
               ) : (
                 groups.map(([cat, items]) => (
                   <div key={cat} className="mb-2">
-                    <p className="px-3 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-500">
+                    <p className="px-3 pb-1 pt-2 text-[14px] font-semibold uppercase tracking-[0.14em] text-ink-300">
                       {cat}
                     </p>
                     <ul>
@@ -434,20 +434,20 @@ export function CommandPalette({
                               <ResultGlyph r={r} active={active} />
                               <div className="min-w-0 flex-1">
                                 <p className={cn(
-                                  'truncate text-[13px] font-medium',
+                                  'truncate text-[14px] font-medium',
                                   active ? 'text-brand-100' : 'text-ink-100',
                                 )}>
                                   {r.title}
                                 </p>
                                 {r.subtitle && (
-                                  <p className="truncate text-[11.5px] text-ink-400">{r.subtitle}</p>
+                                  <p className="truncate text-[14px] text-ink-300">{r.subtitle}</p>
                                 )}
                               </div>
                               <div className="flex items-center gap-1">
-                                {r.kind === 'external' && <DSIcon name="link" size={12} className="text-ink-500" />}
+                                {r.kind === 'external' && <DSIcon name="link" size={14} className="text-ink-300" />}
                                 {active && (
-                                  <span className="inline-flex items-center gap-1 rounded-md border border-brand-500/30 bg-brand-500/10 px-1.5 py-0.5 font-mono text-[10px] text-brand-300">
-                                    <DSIcon name="arrow-left" size={10} /> Enter
+                                  <span className="inline-flex items-center gap-1 rounded-md border border-brand-500/30 bg-brand-500/10 px-1.5 py-0.5 font-mono text-[14px] text-brand-300">
+                                    <DSIcon name="arrow-left" size={14} /> Enter
                                   </span>
                                 )}
                               </div>
@@ -462,14 +462,14 @@ export function CommandPalette({
             </div>
 
             {/* Footer / legend */}
-            <div className="flex items-center justify-between gap-3 border-t border-surface-border/80 px-4 py-2 text-[11px] text-ink-400">
+            <div className="flex items-center justify-between gap-3 border-t border-surface-border/80 px-4 py-2 text-[14px] text-ink-300">
               <div className="flex items-center gap-3">
-                <Legend icon={<DSIcon name="arrow-up" size={10} />} label="navegar" />
-                <Legend icon={<DSIcon name="arrow-down" size={10} />} label="navegar" />
-                <Legend icon={<DSIcon name="arrow-left" size={10} />} label="abrir" />
+                <Legend icon={<DSIcon name="arrow-up" size={14} />} label="navegar" />
+                <Legend icon={<DSIcon name="arrow-down" size={14} />} label="navegar" />
+                <Legend icon={<DSIcon name="arrow-left" size={14} />} label="abrir" />
               </div>
-              <div className="flex items-center gap-1.5 text-ink-500">
-                <DSIcon name="smart-key" size={11} /> <span>K para abrir de qualquer lugar</span>
+              <div className="flex items-center gap-1.5 text-ink-300">
+                <DSIcon name="smart-key" size={14} /> <span>K para abrir de qualquer lugar</span>
               </div>
             </div>
           </motion.div>
@@ -488,7 +488,7 @@ function ResultGlyph({ r, active }: { r: PaletteResult; active: boolean }) {
         style={{ background: r.hex }}
         aria-hidden
       >
-        <DSIcon name="paint-board" size={12} className="text-white/60" />
+        <DSIcon name="paint-board" size={14} className="text-white/60" />
       </span>
     )
   }
@@ -505,10 +505,10 @@ function ResultGlyph({ r, active }: { r: PaletteResult; active: boolean }) {
 function Legend({ icon, label }: { icon: ReactNode; label: string }) {
   return (
     <span className="inline-flex items-center gap-1">
-      <kbd className="inline-flex h-4 min-w-[1rem] items-center justify-center rounded border border-surface-border bg-surface/60 px-1 font-mono text-[10px] text-ink-300">
+      <kbd className="inline-flex h-4 min-w-[1rem] items-center justify-center rounded border border-surface-border bg-surface/60 px-1 font-mono text-[14px] text-ink-300">
         {icon}
       </kbd>
-      <span className="text-ink-500">{label}</span>
+      <span className="text-ink-300">{label}</span>
     </span>
   )
 }
@@ -517,10 +517,10 @@ function EmptyState({ query }: { query: string }) {
   return (
     <div className="px-4 py-10 text-center">
       <div className="mx-auto mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-surface-raised/70 ring-1 ring-surface-border">
-        <DSIcon name="package-01" size={18} className="text-ink-400" />
+        <DSIcon name="package-01" size={18} className="text-ink-300" />
       </div>
-      <p className="text-[13px] font-semibold text-ink-100">Nada encontrado</p>
-      <p className="mt-1 text-[12px] text-ink-400">
+      <p className="text-[14px] font-semibold text-ink-100">Nada encontrado</p>
+      <p className="mt-1 text-[14px] text-ink-300">
         Não achamos nada para <span className="font-mono text-ink-200">"{query}"</span>. Tente buscar por tokens, ícones, componentes ou "handoff".
       </p>
     </div>
