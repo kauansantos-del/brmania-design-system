@@ -12,12 +12,12 @@ import { DSIcon } from './DSIcon'
 
 export type ToastTone = 'success' | 'danger' | 'info' | 'download' | 'pending'
 
-const TONE: Record<ToastTone, { icon: string; iconStyle: 'outline' | 'solid'; iconClass: string }> = {
-  success:  { icon: 'tick',        iconStyle: 'solid',   iconClass: 'text-[#2a7e40]' },
-  danger:   { icon: 'warning',     iconStyle: 'solid',   iconClass: 'text-[#e5484d]' },
-  info:     { icon: 'information', iconStyle: 'solid',   iconClass: 'text-[#c08c00]' },
-  download: { icon: 'download',    iconStyle: 'solid',   iconClass: 'text-[#0891b2]' },
-  pending:  { icon: 'loading',     iconStyle: 'outline', iconClass: 'text-[#60655f]' },
+const TONE: Record<ToastTone, { icon: string; iconClass: string }> = {
+  success:  { icon: 'check-circle',    iconClass: 'text-[#2a7e40]' },
+  danger:   { icon: 'warning-error',   iconClass: 'text-[#e5484d]' },
+  info:     { icon: 'information',     iconClass: 'text-[#c08c00]' },
+  download: { icon: 'folder-download', iconClass: 'text-[#0891b2]' },
+  pending:  { icon: 'loading',         iconClass: 'text-[#60655f]' },
 }
 
 export interface ActionToastProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
@@ -47,30 +47,32 @@ export const ActionToast = forwardRef<HTMLDivElement, ActionToastProps>(
         )}
         {...rest}
       >
-        {/* Ícone 28px direto, sem círculo de fundo */}
-        <span
-          aria-hidden
-          className={cn('inline-flex size-7 shrink-0 items-center justify-center', t.iconClass)}
-        >
-          {customIcon ?? <DSIcon name={t.icon} style={t.iconStyle} size={28} />}
-        </span>
-
-        <span className="flex min-w-0 flex-1 flex-col gap-2">
-          <span className="text-[16px] font-semibold font-['Sora'] leading-[1.1] text-[#1a211c]">
-            {title}
+        {/* Esquerda: ícone (28px bulk) + texto, gap 8px entre eles */}
+        <span className="flex flex-1 min-w-0 items-center gap-2">
+          <span
+            aria-hidden
+            className={cn('inline-flex size-7 shrink-0 items-center justify-center', t.iconClass)}
+          >
+            {customIcon ?? <DSIcon name={t.icon} style="bulk" size={28} />}
           </span>
-          {description && (
-            <span className="text-[14px] font-['Inter'] leading-[1.3] text-[#60655f]">
-              {description}
+
+          <span className="flex min-w-0 flex-1 flex-col gap-1">
+            <span className="text-[16px] font-semibold font-['Sora'] leading-[1.1] text-[#1a211c]">
+              {title}
             </span>
-          )}
+            {description && (
+              <span className="text-[14px] font-normal font-['Inter'] leading-[1.3] text-[#60655f]">
+                {description}
+              </span>
+            )}
+          </span>
         </span>
 
         {actionLabel && (
           <button
             type="button"
             onClick={onAction}
-            className="shrink-0 font-['Raleway'] text-[14px] font-semibold leading-[1.3] text-[#ce2c31] transition-opacity duration-150 hover:opacity-70 focus:outline-none focus-visible:underline"
+            className="shrink-0 font-['Inter'] text-[14px] font-semibold leading-[1.3] text-[#ce2c31] transition-opacity duration-150 hover:opacity-70 focus:outline-none focus-visible:underline"
           >
             {actionLabel}
           </button>

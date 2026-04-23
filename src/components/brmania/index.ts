@@ -3,16 +3,21 @@ export { ButtonText, type ButtonTextProps, type ButtonTextVariant } from './Butt
 export { IconButton, type IconButtonProps, type IconButtonVariant } from './IconButton'
 export { Checkbox, type CheckboxProps } from './Checkbox'
 export { Input, type InputProps, type InputKind } from './Input'
-export { MenuItem, type MenuItemProps } from './MenuItem'
+// Atom: item de navegação lateral
+export { NavItem, type NavItemProps, MenuItem, type MenuItemProps } from './MenuItem'
 export { Icon, type IconProps } from './Icon'
 export { DSIcon, type DSIconProps, type DSIconStyle } from './DSIcon'
-export { SidebarButton, type SidebarButtonProps, type SidebarButtonType, SIDEBAR_BUTTON_PRESETS } from './SidebarButton'
+// Molecule: botão de sidebar com presets do portal
+export {
+  SidebarItem, type SidebarItemProps, type SidebarItemType, SIDEBAR_ITEM_PRESETS,
+  SidebarButton, type SidebarButtonProps, type SidebarButtonType, SIDEBAR_BUTTON_PRESETS,
+} from './SidebarButton'
 
 // ─── Novos componentes (Figma batch #2) ─────────────────────────────
 export { EnvironmentToggle, type EnvironmentToggleProps, type Environment } from './EnvironmentToggle'
 export { InfoTooltip, type InfoTooltipProps, type TooltipPlacement, type TooltipAlign } from './InfoTooltip'
 export { Switch, type SwitchProps, type SwitchLabelPlacement } from './Switch'
-export { StepTask, type StepTaskProps, type StepTaskStatus } from './StepTask'
+export { StepTask, type StepTaskProps } from './StepTask'
 export { ExportCard, type ExportCardProps, type ExportFormat, EXPORT_FORMATS } from './ExportCard'
 export { RoleCard, type RoleCardProps, type UserRole, USER_ROLES } from './RoleCard'
 export { FeatureCard, type FeatureCardProps, type FeatureCardPreset, FEATURE_CARD_PRESETS } from './FeatureCard'

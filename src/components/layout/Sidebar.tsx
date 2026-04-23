@@ -5,7 +5,7 @@ import { cn } from '@/lib/cn'
 import { Badge } from '@/components/ui/Badge'
 import { Tooltip } from '@/components/ui/Tooltip'
 import { DSIcon } from '@/components/brmania'
-import { sections, type SectionKey, type NavLeaf } from '@/data/navigation'
+import { sections, sectionOrder, type SectionConfig, type SectionKey, type NavLeaf } from '@/data/navigation'
 import { downloadResource } from '@/lib/downloads'
 import { PROJECT } from '@/data/project'
 
@@ -33,6 +33,9 @@ export function Sidebar({
   // Expansão dos submenus (persistida em memória — reabre automaticamente o que contém o ativo)
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
 
+  // Expansão dos grupos de topo (Início, Átomos, Moléculas) — vêm fechados
+  const [groupsExpanded, setGroupsExpanded] = useState<Record<string, boolean>>({})
+
   // Quando a rota ativa está dentro de um submenu, garante que esteja aberto
   useEffect(() => {
     const next: Record<string, boolean> = { ...expanded }
@@ -44,8 +47,32 @@ export function Sidebar({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sub, section])
 
+  // Abre automaticamente o grupo de topo que contém a rota ativa
+  useEffect(() => {
+    const next: Record<string, boolean> = { ...groupsExpanded }
+    let changed = false
+    cfg.groups.forEach((g) => {
+      const flatItems = [
+        ...g.items,
+        ...(g.subgroups?.flatMap((sg) => sg.items) ?? []),
+      ]
+      const hasActive = flatItems.some(
+        (it) => it.key === sub || containsActiveChild(it, sub),
+      )
+      if (hasActive && !next[g.title]) {
+        next[g.title] = true
+        changed = true
+      }
+    })
+    if (changed) setGroupsExpanded(next)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sub, section])
+
   const toggleExpanded = (key: string) =>
     setExpanded((e) => ({ ...e, [key]: !e[key] }))
+
+  const toggleGroup = (title: string) =>
+    setGroupsExpanded((g) => ({ ...g, [title]: !g[title] }))
 
   const handleDownload = async (itemKey: string, resource: 'colors' | 'typography' | 'spacing' | 'all') => {
     if (downloading) return
@@ -71,8 +98,14 @@ export function Sidebar({
   }
 
   const filterGroups = cfg.groups
-    .map((g) => ({ ...g, items: g.items.filter(matchItem) }))
-    .filter((g) => g.items.length > 0)
+    .map((g) => {
+      const items = g.items.filter(matchItem)
+      const subgroups = g.subgroups
+        ?.map((sg) => ({ ...sg, items: sg.items.filter(matchItem) }))
+        .filter((sg) => sg.items.length > 0)
+      return { ...g, items, subgroups }
+    })
+    .filter((g) => g.items.length > 0 || (g.subgroups && g.subgroups.length > 0))
 
   // Em modo busca, abre automaticamente submenus com match
   useEffect(() => {
@@ -82,6 +115,15 @@ export function Sidebar({
       if (it.children && it.children.some(matchItem)) open[it.key] = true
     }))
     if (Object.keys(open).length) setExpanded((e) => ({ ...e, ...open }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q])
+
+  // Em modo busca, abre também os grupos de topo que sobreviveram ao filtro
+  useEffect(() => {
+    if (!q) return
+    const open: Record<string, boolean> = {}
+    filterGroups.forEach((g) => { open[g.title] = true })
+    if (Object.keys(open).length) setGroupsExpanded((g) => ({ ...g, ...open }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [q])
 
@@ -101,7 +143,7 @@ export function Sidebar({
         className={cn(
           'group relative flex w-full items-center gap-3 text-left',
           'transition-[background,color] duration-200 ease-out',
-          depth === 0 ? 'px-5 py-2.5' : 'pr-5 py-2 pl-11',
+          depth === 0 ? 'px-5 py-2.5' : 'pr-5 py-2 pl-4',
           isActive
             ? cn(cfg.softBg, cfg.text)
             : isParentOfActive
@@ -217,24 +259,7 @@ export function Sidebar({
       className="flex h-full w-[260px] shrink-0 flex-col border-r border-surface-border/80 bg-surface-raised/30 backdrop-blur-sm"
     >
       {/* Section header */}
-      <div className="px-5 pt-5 pb-4 border-b border-surface-border/60 animate-slide-in-left">
-        <div className="flex items-center gap-2.5">
-          <div className={cn(
-            'h-9 w-9 rounded-lg bg-gradient-to-br grid place-items-center shadow-inner',
-            cfg.accent,
-          )}>
-            <DSIcon name={cfg.icon} size={18} className="text-white" />
-          </div>
-          <div className="min-w-0">
-            <p className="font-display text-[15px] font-bold leading-tight text-ink-50 truncate">
-              {cfg.label}
-            </p>
-            <p className="text-[12px] text-ink-400 leading-tight truncate">
-              {cfg.description}
-            </p>
-          </div>
-        </div>
-      </div>
+      <SectionHeader cfg={cfg} section={section} />
 
       {/* Groups */}
       <nav className="flex-1 overflow-y-auto py-4 animate-slide-in-left">
@@ -245,16 +270,73 @@ export function Sidebar({
           </div>
         )}
 
-        {filterGroups.map((group, gi) => (
-          <div key={group.title} className={cn('pb-4', gi < filterGroups.length - 1 && 'mb-2 border-b border-surface-border/60')}>
-            <p className="px-5 pt-1 pb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-400">
-              {group.title}
-            </p>
-            <ul className="flex flex-col gap-1.5">
-              {group.items.map((it, i) => renderItem(it, i, 0))}
-            </ul>
-          </div>
-        ))}
+        {filterGroups.map((group, gi) => {
+          const groupCount = group.subgroups
+            ? group.subgroups.reduce((n, sg) => n + sg.items.length, 0)
+            : group.items.length
+          const isOpen = groupsExpanded[group.title] ?? false
+          return (
+            <div key={group.title} className={cn('pb-3', gi < filterGroups.length - 1 && 'mb-2 border-b border-surface-border/60')}>
+              <button
+                type="button"
+                onClick={() => toggleGroup(group.title)}
+                aria-expanded={isOpen}
+                className={cn(
+                  'group/g flex w-full items-center gap-2 px-5 pt-2 pb-2.5',
+                  'text-[11px] font-semibold uppercase tracking-[0.14em]',
+                  'text-ink-400 transition-colors duration-150 hover:text-ink-200',
+                )}
+              >
+                <DSIcon
+                  name="direction-right"
+                  size={11}
+                  className={cn(
+                    'shrink-0 text-ink-500 transition-transform duration-200 ease-out',
+                    isOpen && 'rotate-90 text-ink-300',
+                  )}
+                />
+                <span className="flex-1 text-left">{group.title}</span>
+                <span className="rounded-md bg-surface-elevated/60 px-1.5 py-0.5 font-mono text-[10px] tabular-nums text-ink-400 tracking-normal normal-case">
+                  {groupCount}
+                </span>
+              </button>
+
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    key="group-body"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.22, ease: [0.22, 0.9, 0.28, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pt-1 pb-1">
+                      {group.subgroups && group.subgroups.length > 0 ? (
+                        <div className="flex flex-col gap-3">
+                          {group.subgroups.map((sg, si) => (
+                            <div key={sg.title} className={cn(si === 0 ? 'mt-0' : 'mt-1')}>
+                              <p className="px-5 pb-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-ink-500/80">
+                                {sg.title}
+                              </p>
+                              <ul className="flex flex-col gap-1.5">
+                                {sg.items.map((it, i) => renderItem(it, i, 0))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <ul className="flex flex-col gap-1.5">
+                          {group.items.map((it, i) => renderItem(it, i, 0))}
+                        </ul>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )
+        })}
       </nav>
 
       {/* Footer */}
@@ -283,3 +365,111 @@ export function Sidebar({
     </aside>
   )
 }
+
+function SectionHeader({
+  cfg,
+  section,
+}: {
+  cfg: SectionConfig
+  section: SectionKey
+}) {
+  const sectionIdx = sectionOrder.indexOf(section) + 1
+  const sectionTotal = sectionOrder.length
+
+  const totalItems = cfg.groups.reduce((sum, g) => sum + g.items.length, 0)
+  const subgroupCount = cfg.groups.reduce(
+    (n, g) => n + (g.subgroups?.length ?? 0),
+    0,
+  )
+
+  return (
+    <div className="relative overflow-hidden border-b border-surface-border/60 animate-slide-in-left">
+      {/* Ambient glow canto superior */}
+      <div
+        aria-hidden
+        className={cn(
+          'pointer-events-none absolute -right-10 -top-16 h-40 w-40 rounded-full bg-gradient-to-br blur-3xl opacity-30',
+          cfg.accent,
+        )}
+      />
+      {/* Linha de divisor em gradiente */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-surface-border to-transparent"
+      />
+
+      <div className="relative px-5 pt-4 pb-5">
+        {/* Eyebrow */}
+        <div className="mb-3.5 flex items-center justify-between">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-ink-500">
+            Seção
+          </p>
+          <p className="font-mono text-[10px] tabular-nums text-ink-500">
+            {String(sectionIdx).padStart(2, '0')} / {String(sectionTotal).padStart(2, '0')}
+          </p>
+        </div>
+
+        <div className="flex items-start gap-3">
+          {/* Icon box com highlight glassy */}
+          <div
+            className={cn(
+              'relative h-11 w-11 shrink-0 rounded-xl bg-gradient-to-br grid place-items-center',
+              cfg.accent,
+              cfg.ring,
+            )}
+          >
+            <DSIcon name={cfg.icon} size={20} className="relative z-10 text-white" />
+            {/* Inner ring */}
+            <div aria-hidden className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-white/25" />
+            {/* Top highlight */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-2 top-0.5 h-1/2 rounded-t-lg bg-gradient-to-b from-white/25 to-transparent"
+            />
+          </div>
+
+          <div className="min-w-0 flex-1 pt-0.5">
+            <p className="font-display text-[17px] font-extrabold leading-tight text-ink-50">
+              {cfg.label}
+            </p>
+            <p className="mt-1 text-[12px] leading-[1.45] text-ink-400 line-clamp-2">
+              {cfg.description}
+            </p>
+          </div>
+        </div>
+
+        {/* Stats strip */}
+        <div className="mt-4 flex items-center gap-3 text-[10px]">
+          <span className="flex items-center gap-1.5 text-ink-400">
+            <span className="relative flex h-1.5 w-1.5">
+              <span
+                className={cn(
+                  'absolute inline-flex h-full w-full animate-ping rounded-full opacity-60',
+                  cfg.marker,
+                )}
+              />
+              <span className={cn('relative inline-flex h-1.5 w-1.5 rounded-full', cfg.marker)} />
+            </span>
+            <span className="font-mono tabular-nums text-ink-200">
+              {String(totalItems).padStart(2, '0')}
+            </span>
+            <span className="uppercase tracking-[0.14em]">itens</span>
+          </span>
+
+          {subgroupCount > 0 && (
+            <>
+              <span aria-hidden className="h-3 w-px bg-surface-border/70" />
+              <span className="flex items-center gap-1.5 text-ink-400">
+                <span className="font-mono tabular-nums text-ink-200">
+                  {String(subgroupCount).padStart(2, '0')}
+                </span>
+                <span className="uppercase tracking-[0.14em]">subgrupos</span>
+              </span>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+

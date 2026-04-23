@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Playground, type PropControl } from '@/components/layout/Playground'
-import { MenuItem, DSIcon } from '@/components/brmania'
+import { NavItem, DSIcon } from '@/components/brmania'
 
 const CONTROLS: PropControl[] = [
   { kind: 'toggle', key: 'active',   label: 'Active' },
@@ -22,12 +22,12 @@ const ICON_SLUGS: Record<string, string> = {
   hist: 'clock-circle', biz: 'store-01', out: 'logout-01',
 }
 
-export function MenuItemPage() {
+export function NavItemPage() {
   return (
     <div className="pb-24">
       <PageHeader
         eyebrow="Componentes · Navegação"
-        title="MenuItem"
+        title="NavItem"
         titleAccent="— item de sidebar."
         description="Item de navegação lateral. Os estados (default → hover → focus) são CSS puro — passe o mouse para ver o hover com indent de 8 px, e use a prop `active` para marcar o item selecionado."
         meta={[
@@ -39,7 +39,7 @@ export function MenuItemPage() {
 
       <div className="mx-auto max-w-5xl px-8 py-10">
         <Playground
-          title="MenuItem"
+          title="NavItem"
           description="Passe o mouse nos itens para ver o hover. Clique para mudar a seleção."
           tags={[{ label: 'interativo', tone: 'success' }]}
           controls={CONTROLS}
@@ -47,7 +47,7 @@ export function MenuItemPage() {
             const slug = ICON_SLUGS[(s.icon as string) ?? 'home'] ?? 'home-01'
             return (
               <div className="w-[260px]">
-                <MenuItem
+                <NavItem
                   active={!!s.active}
                   danger={!!s.danger}
                   icon={<DSIcon name={slug} size={20} />}
@@ -58,11 +58,11 @@ export function MenuItemPage() {
           }}
           generateCode={(s) => {
             const slug = ICON_SLUGS[(s.icon as string) ?? 'home'] ?? 'home-01'
-            return `import { MenuItem, DSIcon } from '@/components/brmania'
+            return `import { NavItem, DSIcon } from '@/components/brmania'
 
 export function Example() {
   return (
-    <MenuItem
+    <NavItem
       label="${s.label || 'Início'}"
       icon={<DSIcon name="${slug}" size={20} />}
       active={${!!s.active}}
@@ -74,7 +74,7 @@ export function Example() {
           }}
           renderAll={() => <InteractiveSidebar />}
           generateAllCode={() => `import { useState } from 'react'
-import { MenuItem, DSIcon } from '@/components/brmania'
+import { NavItem, DSIcon } from '@/components/brmania'
 
 const MENU = [
   { key: 'inicio',      label: 'Início',             icon: 'home-01' },
@@ -90,7 +90,7 @@ export function Sidebar() {
   return (
     <nav className="flex w-[260px] flex-col gap-1">
       {MENU.map((item) => (
-        <MenuItem
+        <NavItem
           key={item.key}
           icon={<DSIcon name={item.icon} size={20} />}
           label={item.label}
@@ -99,7 +99,7 @@ export function Sidebar() {
         />
       ))}
       <div className="mt-4">
-        <MenuItem
+        <NavItem
           icon={<DSIcon name="logout-01" size={20} />}
           label="Desconectar"
           danger
@@ -129,7 +129,7 @@ function InteractiveSidebar() {
   return (
     <nav className="flex w-[280px] flex-col gap-1">
       {items.map((item) => (
-        <MenuItem
+        <NavItem
           key={item.key}
           icon={<DSIcon name={item.icon} size={20} />}
           label={item.label}
@@ -138,7 +138,7 @@ function InteractiveSidebar() {
         />
       ))}
       <div className="mt-4">
-        <MenuItem
+        <NavItem
           icon={<DSIcon name="logout-01" size={20} />}
           label="Desconectar"
           danger

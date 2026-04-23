@@ -1,6 +1,6 @@
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Playground, type PropControl } from '@/components/layout/Playground'
-import { SidebarButton, type SidebarButtonType, SIDEBAR_BUTTON_PRESETS } from '@/components/brmania'
+import { SidebarItem, type SidebarItemType, SIDEBAR_ITEM_PRESETS } from '@/components/brmania'
 
 const CONTROLS: PropControl[] = [
   {
@@ -24,28 +24,28 @@ export function SidebarButtonPage() {
     <div className="pb-24">
       <PageHeader
         eyebrow="Componentes · Navegação"
-        title="SidebarButton"
+        title="SidebarItem"
         titleAccent="— 6 presets × 3 estados."
-        description="Botão de navegação lateral sincronizado com o Figma (nó 38:1345). 6 tipos pré-configurados com ícone e label; 3 estados: default, hover (CSS) e selecionado (CSS :focus)."
+        description="Molecule que compõe NavItem com os 6 presets de navegação do portal (Figma 38:1345). 3 estados: default, hover (CSS) e selecionado (CSS :focus ou prop active)."
         meta={[
-          { label: '6 presets', tone: 'brand' },
-          { label: '3 estados', tone: 'info' },
+          { label: 'Molecule: NavItem', tone: 'brand' },
+          { label: '6 presets', tone: 'info' },
           { label: 'Figma 38:1345', tone: 'neutral' },
         ]}
       />
 
       <div className="mx-auto max-w-5xl px-8 py-10">
         <Playground
-          title="SidebarButton"
+          title="SidebarItem"
           description="Passe o mouse para ver o hover. Clique para ver o estado selecionado (CSS :focus nativo)."
           tags={[{ label: 'interativo', tone: 'success' }]}
           controls={CONTROLS}
           renderPreview={(s) => (
             <div className="w-[210px]">
-              <SidebarButton type={s.type as SidebarButtonType} />
+              <SidebarItem type={s.type as SidebarItemType} />
             </div>
           )}
-          generateCode={(s) => `<SidebarButton type="${s.type}" />`}
+          generateCode={(s) => `<SidebarItem type="${s.type}" />`}
           renderAll={() => <SidebarPreview />}
           generateAllCode={() => ALL_CODE}
         />
@@ -54,36 +54,36 @@ export function SidebarButtonPage() {
   )
 }
 
-const NAV_TYPES = Object.keys(SIDEBAR_BUTTON_PRESETS).filter(
+const NAV_TYPES = Object.keys(SIDEBAR_ITEM_PRESETS).filter(
   (t) => t !== 'desconectar',
-) as Exclude<SidebarButtonType, 'desconectar'>[]
+) as Exclude<SidebarItemType, 'desconectar'>[]
 
 function SidebarPreview() {
   return (
     <nav className="flex flex-col gap-1 w-[210px]" aria-label="Navegação lateral">
       {NAV_TYPES.map((t) => (
-        <SidebarButton key={t} type={t} />
+        <SidebarItem key={t} type={t} />
       ))}
       <div className="mt-3 border-t border-[#e0e0e0] pt-3">
-        <SidebarButton type="desconectar" />
+        <SidebarItem type="desconectar" />
       </div>
     </nav>
   )
 }
 
-const ALL_CODE = `import { SidebarButton } from '@/components/brmania'
+const ALL_CODE = `import { SidebarItem } from '@/components/brmania'
 
 export function AppSidebar() {
   return (
     <nav className="flex flex-col gap-1 w-[210px]">
-      <SidebarButton type="inicio" />
-      <SidebarButton type="credenciais" />
-      <SidebarButton type="webhooks" />
-      <SidebarButton type="historico" />
-      <SidebarButton type="configuracoes" />
+      <SidebarItem type="inicio" />
+      <SidebarItem type="credenciais" />
+      <SidebarItem type="webhooks" />
+      <SidebarItem type="historico" />
+      <SidebarItem type="configuracoes" />
 
       <div className="mt-3 border-t border-gray-200 pt-3">
-        <SidebarButton type="desconectar" />
+        <SidebarItem type="desconectar" />
       </div>
     </nav>
   )

@@ -2,23 +2,27 @@ import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
 import { cn } from '@/lib/cn'
 
 /**
- * MenuItem · BRMania Design System
+ * NavItem · BRMania Design System
+ * Atom: item de navegação lateral reutilizável.
  *
- * Mesma animação do SidebarButton:
  *   Default  → repouso (texto cinza, sem fundo)
  *   Hover    → fundo cinza + indent +8px
  *   Selected → barra verde esquerda + fundo verde + texto escuro
  *
  * Selected via prop `active` (controlado) OU via CSS :focus (não controlado).
+ * Compose este átomo para construir moléculas como SidebarItem.
  */
 
-export interface MenuItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
+export interface NavItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
   icon?: ReactNode
   label: string
   active?: boolean
   danger?: boolean
   fullWidth?: boolean
 }
+
+/** @deprecated Use NavItemProps */
+export type MenuItemProps = NavItemProps
 
 const BASE =
   'group relative inline-flex h-10 items-center gap-2 rounded-lg ' +
@@ -43,8 +47,8 @@ const DANGER_IDLE =
 const DANGER_SELECTED =
   'bg-[#ffdbdc] pl-5 pr-3 text-[#641723] hover:bg-[#ffd0d2]'
 
-export const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
-  function MenuItem(
+export const NavItem = forwardRef<HTMLButtonElement, NavItemProps>(
+  function NavItem(
     { icon, label, active = false, danger = false, fullWidth = true, className, ...rest },
     ref,
   ) {
@@ -81,3 +85,6 @@ export const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
     )
   },
 )
+
+/** @deprecated Use NavItem */
+export const MenuItem = NavItem

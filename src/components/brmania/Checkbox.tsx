@@ -39,7 +39,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
   }
 
   const info = (
-    <span className="inline-flex items-center gap-1 font-['Inter'] text-[16px] leading-[1.3] text-[#202020]">
+    <span className="inline-flex items-center gap-1 font-['Inter'] text-[16px] leading-[1.3] text-[#1a211c]">
       {icon && <span className="inline-flex shrink-0 items-center">{icon}</span>}
       {label}
     </span>
@@ -52,10 +52,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
         'relative grid h-5 w-5 shrink-0 place-items-center rounded-[4px] transition-colors duration-200 ease-out',
         effectiveChecked
           ? 'border-[1.25px] border-[#22C55E] bg-[#22C55E]'
-          : 'border-[1.25px] border-[#d9d9d9] bg-[#fcfcfc]',
-        !disabled && !effectiveChecked && 'hover:border-[#cecece] hover:bg-[#e8e8e8]',
+          : 'border-[1.25px] border-[#d7dad8] bg-[#fcfcfc]',
+        !disabled && !effectiveChecked && 'hover:border-[#cbcfcc] hover:bg-[#e6e9e7]',
         !disabled && effectiveChecked && 'hover:border-[#16A34A] hover:bg-[#16A34A]',
-        disabled && 'opacity-50',
       )}
     >
       <svg

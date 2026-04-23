@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { PageHeader } from '@/components/layout/PageHeader'
 import { ComponentShowcase } from '@/components/layout/ComponentShowcase'
-import { MenuItem, DSIcon } from '@/components/brmania'
+import { NavItem, DSIcon } from '@/components/brmania'
 
 export function NavegacaoShowcase() {
   return (
@@ -16,7 +16,7 @@ export function NavegacaoShowcase() {
 
       <div className="mx-auto max-w-5xl px-8 py-10">
         <ComponentShowcase
-          title="MenuItem"
+          title="NavItem"
           description="Sidebar interativa — passe o mouse para ver o hover, clique para selecionar. O item 'Desconectar' usa o modifier `danger`."
           tags={[{ label: 'sidebar', tone: 'info' }, { label: 'interativo', tone: 'success' }]}
           preview={<InteractiveSidebar />}
@@ -41,7 +41,7 @@ function InteractiveSidebar() {
   return (
     <nav className="flex w-[280px] flex-col gap-1">
       {items.map((item) => (
-        <MenuItem
+        <NavItem
           key={item.key}
           icon={<DSIcon name={item.icon} size={20} />}
           label={item.label}
@@ -50,7 +50,7 @@ function InteractiveSidebar() {
         />
       ))}
       <div className="mt-4">
-        <MenuItem
+        <NavItem
           icon={<DSIcon name="logout-01" size={20} />}
           label="Desconectar"
           danger
@@ -61,7 +61,7 @@ function InteractiveSidebar() {
 }
 
 const CODE = `import { useState } from 'react'
-import { MenuItem, DSIcon } from '@/components/brmania'
+import { NavItem, DSIcon } from '@/components/brmania'
 
 const MENU = [
   { key: 'inicio',      label: 'Início',             icon: 'home-01' },
@@ -77,7 +77,7 @@ export function Sidebar() {
   return (
     <nav className="flex w-[260px] flex-col gap-1">
       {MENU.map((item) => (
-        <MenuItem
+        <NavItem
           key={item.key}
           icon={<DSIcon name={item.icon} size={20} />}
           label={item.label}
@@ -86,7 +86,7 @@ export function Sidebar() {
         />
       ))}
       <div className="mt-4">
-        <MenuItem
+        <NavItem
           icon={<DSIcon name="logout-01" size={20} />}
           label="Desconectar"
           danger

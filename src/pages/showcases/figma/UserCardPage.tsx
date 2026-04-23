@@ -1,6 +1,6 @@
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Playground, type PropControl } from '@/components/layout/Playground'
-import { UserCard, SidebarButton, SIDEBAR_BUTTON_PRESETS, type SidebarButtonType } from '@/components/brmania'
+import { UserCard, SidebarItem, SIDEBAR_ITEM_PRESETS, type SidebarItemType } from '@/components/brmania'
 
 const CONTROLS: PropControl[] = [
   { kind: 'text', key: 'name',         label: 'Nome',         default: 'Carlos Henrique' },
@@ -8,9 +8,9 @@ const CONTROLS: PropControl[] = [
   { kind: 'text', key: 'avatarUrl',    label: 'Avatar URL',   default: '' },
 ]
 
-const NAV_TYPES = Object.keys(SIDEBAR_BUTTON_PRESETS).filter(
+const NAV_TYPES = Object.keys(SIDEBAR_ITEM_PRESETS).filter(
   (t) => t !== 'desconectar',
-) as Exclude<SidebarButtonType, 'desconectar'>[]
+) as Exclude<SidebarItemType, 'desconectar'>[]
 
 export function UserCardPage() {
   return (
@@ -47,11 +47,11 @@ export function UserCardPage() {
           renderAll={() => <SidebarTemplate />}
           generateAllCode={() => `// Template: sidebar completa
 <nav className="flex h-full flex-col gap-1 w-[210px] p-4">
-  {NAV_TYPES.map((t) => <SidebarButton key={t} type={t} />)}
+  {NAV_TYPES.map((t) => <SidebarItem key={t} type={t} />)}
 
   <div className="mt-auto border-t border-[#e0e0e0] pt-3 space-y-2">
     <UserCard name="Carlos Henrique" organization="Heineken" />
-    <SidebarButton type="desconectar" />
+    <SidebarItem type="desconectar" />
   </div>
 </nav>`}
         />
@@ -67,11 +67,11 @@ function SidebarTemplate() {
       className="flex h-[560px] w-[210px] flex-col gap-1 rounded-2xl border border-[#e6e9e7] bg-white p-4"
     >
       {NAV_TYPES.map((t) => (
-        <SidebarButton key={t} type={t} />
+        <SidebarItem key={t} type={t} />
       ))}
       <div className="mt-auto space-y-2 border-t border-[#e6e9e7] pt-3">
         <UserCard name="Carlos Henrique" organization="Heineken" />
-        <SidebarButton type="desconectar" />
+        <SidebarItem type="desconectar" />
       </div>
     </nav>
   )

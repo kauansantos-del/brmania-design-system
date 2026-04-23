@@ -99,13 +99,17 @@ export const RoleCard = forwardRef<HTMLButtonElement, RoleCardProps>(
           <span
             aria-hidden
             className={cn(
-              'inline-flex size-6 items-center justify-center rounded-[4px] border transition-colors duration-200',
+              'relative grid size-5 shrink-0 place-items-center rounded-[4px] border-[1.25px] transition-colors duration-200',
               selected
-                ? 'bg-[#3e9b57] border-[#3e9b57] text-white'
-                : 'bg-white border-[#d7dad8] group-hover:bg-[#e6e9e7] group-hover:border-[#cbcfcc]',
+                ? 'bg-[#22C55E] border-[#22C55E]'
+                : 'bg-[#fcfcfc] border-[#d7dad8] group-hover:bg-[#e6e9e7] group-hover:border-[#cbcfcc]',
             )}
           >
-            {selected && <DSIcon name="tick" size={14} className="text-white" />}
+            <svg viewBox="0 0 24 24" fill="none" width={14} height={14} aria-hidden
+              className={cn('text-white transition-opacity duration-150', selected ? 'opacity-100' : 'opacity-0')}
+            >
+              <path d="M5 12.5 10 17.5 19 7.5" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </span>
         </span>
 

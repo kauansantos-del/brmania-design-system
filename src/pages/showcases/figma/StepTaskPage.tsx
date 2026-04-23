@@ -1,26 +1,31 @@
 import { PageHeader } from '@/components/layout/PageHeader'
 import { Playground, type PropControl } from '@/components/layout/Playground'
-import { StepTask, type StepTaskStatus } from '@/components/brmania'
+import { StepTask } from '@/components/brmania'
 
 const CONTROLS: PropControl[] = [
   { kind: 'text', key: 'title',       label: 'Título',    default: 'Gerar credenciais da API' },
   { kind: 'text', key: 'description', label: 'Descrição', default: 'Crie o Client ID e o Client Secret para autenticar chamadas' },
-  {
-    kind: 'select', key: 'status', label: 'Status', default: 'pending',
+  { kind: 'select', key: 'icon', label: 'Ícone', default: 'smart-key',
     options: [
-      { value: 'pending', label: 'Pendente' },
-      { value: 'success', label: 'Concluída' },
-      { value: 'done',    label: 'Resolvida (dark)' },
+      { value: 'rotate-lock',   label: 'Credenciais (rotate-lock)' },
+      { value: 'usb',           label: 'Webhook (usb)' },
+      { value: 'document-text', label: 'Requisição (document-text)' },
+      { value: 'user',       label: 'Membros (user)' },
     ],
+  },
+  {
+    kind: 'toggle', key: 'done', label: 'Concluído', default: false,
   },
 ]
 
 const ALL_STEPS = [
-  { step: 1, title: 'Gerar credenciais da API',   description: 'Crie o Client ID e o Client Secret para autenticar chamadas' },
-  { step: 2, title: 'Cadastrar seu primeiro webhook', description: 'Informe uma URL HTTPS e escolha os eventos que vai receber' },
-  { step: 3, title: 'Enviar uma requisição de teste', description: 'Use o curl da tela de credenciais para validar' },
-  { step: 4, title: 'Convidar membros do time', description: 'Adicione admins e viewers ao portal — opcional' },
+  { step: 1, title: 'Gerar credenciais da API',      description: 'Crie o Client ID e o Client Secret para autenticar chamadas', icon: 'rotate-lock',   done: false },
+  { step: 2, title: 'Cadastrar seu primeiro webhook', description: 'Informe uma URL HTTPS e escolha os eventos que ela recebe',   icon: 'usb',           done: false },
+  { step: 3, title: 'Enviar uma requisição de teste', description: 'Use o curl da tela de credenciais para validar',              icon: 'document-text', done: false },
+  { step: 4, title: 'Convidar membros do time',       description: 'Adicione admins e viewers ao portal — opcional',             icon: 'user',       done: false },
 ]
+
+const ALL_STEPS_PARTIAL = ALL_STEPS.map((s, i) => ({ ...s, done: i < 2 }))
 
 export function StepTaskPage() {
   return (
@@ -29,10 +34,10 @@ export function StepTaskPage() {
         eyebrow="Componentes · Dados"
         title="StepTask"
         titleAccent="— checklist numerado."
-        description="Linha de tarefa de onboarding com status visual (pending/success/done). Figma 96:2909."
+        description="Linha de tarefa de onboarding. done=true substitui o ícone da direita pelo checkmark do Checkbox. Figma 96:2906."
         meta={[
-          { label: '3 estados', tone: 'info' },
-          { label: 'Figma 96:2909', tone: 'neutral' },
+          { label: 'done / pending', tone: 'info' },
+          { label: 'Figma 96:2906', tone: 'neutral' },
         ]}
       />
       <div className="mx-auto max-w-5xl px-8 py-10">
@@ -45,28 +50,29 @@ export function StepTaskPage() {
               step={1}
               title={s.title as string}
               description={s.description as string}
-              status={s.status as StepTaskStatus}
+              icon={s.icon as string}
+              done={s.done as boolean}
             />
           )}
           generateCode={(s) => `<StepTask
   step={1}
   title="${s.title}"
   description="${s.description}"
-  status="${s.status}"
+  icon="${s.icon}"
+  done={${s.done}}
 />`}
           renderAll={() => (
-            <div className="flex w-full flex-col gap-3">
-              {ALL_STEPS.map((st, i) => {
-                const status: StepTaskStatus = i === 0 ? 'success' : i === 3 ? 'done' : 'pending'
-                return <StepTask key={st.step} {...st} status={status} />
-              })}
+            <div className="w-full overflow-hidden rounded-lg border border-[#d7dad8]">
+              {ALL_STEPS_PARTIAL.map((st) => (
+                <StepTask key={st.step} {...st} />
+              ))}
             </div>
           )}
           generateAllCode={() => `const steps = [
-  { step: 1, title: '…', description: '…', status: 'success' },
-  { step: 2, title: '…', description: '…', status: 'pending' },
-  { step: 3, title: '…', description: '…', status: 'pending' },
-  { step: 4, title: '…', description: '…', status: 'done' },
+  { step: 1, title: 'Gerar credenciais da API',       description: '…', icon: 'rotate-lock',   done: true  },
+  { step: 2, title: 'Cadastrar seu primeiro webhook',  description: '…', icon: 'usb',           done: true  },
+  { step: 3, title: 'Enviar uma requisição de teste',  description: '…', icon: 'document-text', done: false },
+  { step: 4, title: 'Convidar membros do time',        description: '…', icon: 'user',       done: false },
 ]
 
 steps.map((s) => <StepTask key={s.step} {...s} />)`}

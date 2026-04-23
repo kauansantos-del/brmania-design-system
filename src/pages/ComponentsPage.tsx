@@ -5,19 +5,14 @@ import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { SpotlightCard } from '@/components/ui/effects/SpotlightCard'
 import { Meteors } from '@/components/ui/effects/Meteors'
-import { AnimatedBorder } from '@/components/ui/effects/AnimatedBorder'
 import { sections, type NavLeaf } from '@/data/navigation'
 import { ButtonPage } from './showcases/ButtonPage'
 import { ButtonTextPage } from './showcases/ButtonTextPage'
 import { IconButtonPage } from './showcases/IconButtonPage'
 import { InputPage } from './showcases/InputPage'
 import { CheckboxPage } from './showcases/CheckboxPage'
-import { MenuItemPage } from './showcases/MenuItemPage'
+import { NavItemPage } from './showcases/MenuItemPage'
 import { IconPage } from './showcases/IconPage'
-import { AcoesShowcase } from './showcases/AcoesShowcase'
-import { FormulariosShowcase } from './showcases/FormulariosShowcase'
-import { NavegacaoShowcase } from './showcases/NavegacaoShowcase'
-import { LayoutShowcase } from './showcases/LayoutShowcase'
 import { SidebarButtonPage } from './showcases/figma/SidebarButtonPage'
 import { EnvironmentTogglePage } from './showcases/figma/EnvironmentTogglePage'
 import { InfoTooltipPage } from './showcases/figma/InfoTooltipPage'
@@ -52,7 +47,7 @@ export function ComponentsPage({ sub, query: _query }: { sub: string; query: str
   if (sub === 'visao-geral' || !current) return <Overview />
 
   // Componentes Figma (Vibra) — design system Radix tokens
-  if (sub === 'sidebar-button')      return <SidebarButtonPage />
+  if (sub === 'sidebar-item' || sub === 'sidebar-button') return <SidebarButtonPage />
   if (sub === 'environment-toggle')  return <EnvironmentTogglePage />
   if (sub === 'info-tooltip')        return <InfoTooltipPage />
   if (sub === 'switch')              return <SwitchPage />
@@ -73,39 +68,106 @@ export function ComponentsPage({ sub, query: _query }: { sub: string; query: str
   if (sub === 'icon-button')  return <IconButtonPage />
   if (sub === 'input')        return <InputPage />
   if (sub === 'checkbox')     return <CheckboxPage />
-  if (sub === 'menu-item')    return <MenuItemPage />
+  if (sub === 'nav-item' || sub === 'menu-item') return <NavItemPage />
   if (sub === 'icon')         return <IconPage />
-
-  // Páginas de categoria (lista todos os componentes da categoria)
-  if (sub === 'acoes')       return <AcoesShowcase />
-  if (sub === 'formularios') return <FormulariosShowcase />
-  if (sub === 'navegacao')   return <NavegacaoShowcase />
-  if (sub === 'layout')      return <LayoutShowcase />
 
   return <CategoryEmpty title={current.label} description={current.description || ''} />
 }
 
-const COMPONENTS = [
-  { key: 'button',      label: 'Button',     icon: 'input-cursor-move', desc: 'CTA principal — 5 variantes',               category: 'Ações' },
-  { key: 'button-text', label: 'ButtonText', icon: 'link',              desc: 'Link / texto — 4 variantes',                 category: 'Ações' },
-  { key: 'icon-button', label: 'IconButton', icon: 'plus-rectangle',    desc: 'Só ícone — filled / ghost',                  category: 'Ações' },
-  { key: 'input',       label: 'Input',      icon: 'text-area',         desc: 'Campo, search e textarea',                   category: 'Formulários' },
-  { key: 'checkbox',    label: 'Checkbox',   icon: 'check-mark-circle', desc: 'Seleção com label',                          category: 'Formulários' },
-  { key: 'menu-item',   label: 'MenuItem',   icon: 'menu-line-horizontal-01', desc: 'Item de sidebar — CSS states',         category: 'Navegação' },
-  { key: 'icon',        label: 'Icon',       icon: 'plus-rectangle',    desc: 'Wrapper de ícones SVG',                      category: 'Layout' },
+type AtomicLevel = 'Átomo' | 'Molécula'
+type ComponentEntry = { key: string; label: string; icon: string; desc: string; level: AtomicLevel }
+type ComponentCluster = { title: string; items: ComponentEntry[] }
+
+const ATOM_CLUSTERS: ComponentCluster[] = [
+  {
+    title: 'Ações',
+    items: [
+      { key: 'button',      label: 'Button',     icon: 'input-cursor-move', desc: 'CTA principal — 5 variantes',      level: 'Átomo' },
+      { key: 'button-text', label: 'ButtonText', icon: 'link',              desc: 'Link / texto — 4 variantes',       level: 'Átomo' },
+      { key: 'icon-button', label: 'IconButton', icon: 'plus-rectangle',    desc: 'Só ícone — filled / ghost',        level: 'Átomo' },
+    ],
+  },
+  {
+    title: 'Formulários',
+    items: [
+      { key: 'input',    label: 'Input',    icon: 'text-area',         desc: 'Campo, search, textarea', level: 'Átomo' },
+      { key: 'checkbox', label: 'Checkbox', icon: 'check-mark-circle', desc: 'Seleção com label',       level: 'Átomo' },
+      { key: 'switch',   label: 'Switch',   icon: 'switch',            desc: 'Toggle on/off',           level: 'Átomo' },
+    ],
+  },
+  {
+    title: 'Navegação',
+    items: [
+      { key: 'nav-item', label: 'NavItem', icon: 'menu-line-horizontal-01', desc: 'Item de sidebar — CSS states', level: 'Átomo' },
+    ],
+  },
+  {
+    title: 'Fundamentos',
+    items: [
+      { key: 'icon', label: 'Icon', icon: 'plus-rectangle', desc: 'Wrapper de ícones SVG', level: 'Átomo' },
+    ],
+  },
 ]
+
+const MOLECULE_CLUSTERS: ComponentCluster[] = [
+  {
+    title: 'Ações',
+    items: [
+      { key: 'environment-toggle', label: 'EnvironmentToggle', icon: 'test-tube', desc: 'Sandbox / Produção', level: 'Molécula' },
+    ],
+  },
+  {
+    title: 'Formulários',
+    items: [
+      { key: 'select-field', label: 'SelectField', icon: 'arrow-down', desc: 'Dropdown com label', level: 'Molécula' },
+    ],
+  },
+  {
+    title: 'Feedback',
+    items: [
+      { key: 'info-tooltip', label: 'InfoTooltip', icon: 'information',  desc: 'Tooltip com ícone info', level: 'Molécula' },
+      { key: 'action-toast', label: 'ActionToast', icon: 'notification', desc: 'Notificação com ação',   level: 'Molécula' },
+    ],
+  },
+  {
+    title: 'Navegação',
+    items: [
+      { key: 'sidebar-item', label: 'SidebarItem', icon: 'menu-line-horizontal', desc: 'Compõe NavItem · 6 presets × 3 estados', level: 'Molécula' },
+      { key: 'tabs',         label: 'Tabs',        icon: 'menu-line-horizontal', desc: 'Tabs com underline',                     level: 'Molécula' },
+      { key: 'pagination',   label: 'Pagination',  icon: 'arrow-right',          desc: 'Paginação numerada',                     level: 'Molécula' },
+    ],
+  },
+  {
+    title: 'Dados',
+    items: [
+      { key: 'user-card',         label: 'UserCard',        icon: 'security',     desc: 'Avatar + nome + organização', level: 'Molécula' },
+      { key: 'step-task',         label: 'StepTask',        icon: 'tick',         desc: 'Linha de checklist',          level: 'Molécula' },
+      { key: 'export-card',       label: 'ExportCard',      icon: 'file-01',      desc: 'Card de formato de export',   level: 'Molécula' },
+      { key: 'role-card',         label: 'RoleCard',        icon: 'security',     desc: 'Card de papel de usuário',    level: 'Molécula' },
+      { key: 'feature-card',      label: 'FeatureCard',     icon: 'star',         desc: 'Card de acesso rápido',       level: 'Molécula' },
+      { key: 'event-option-card', label: 'EventOptionCard', icon: 'notification', desc: 'Opção selecionável',          level: 'Molécula' },
+    ],
+  },
+]
+
+const totalInClusters = (clusters: ComponentCluster[]) =>
+  clusters.reduce((sum, c) => sum + c.items.length, 0)
+
+const ATOMS_COUNT = totalInClusters(ATOM_CLUSTERS)
+const MOLECULES_COUNT = totalInClusters(MOLECULE_CLUSTERS)
+const ALL_COUNT = ATOMS_COUNT + MOLECULES_COUNT
 
 function Overview() {
   return (
     <div className="pb-24">
       <PageHeader
         eyebrow="Biblioteca"
-        title="Uma biblioteca de componentes,"
-        titleAccent="sincronizada com o Figma."
-        description="Cada componente abaixo tem preview interativo, código copiável e props documentadas. Clique em qualquer card para explorar."
+        title="Componentes organizados por"
+        titleAccent="Atomic Design."
+        description="Átomos são as peças básicas — botões, inputs, ícones. Moléculas são compostos de átomos que formam padrões reutilizáveis. Clique em qualquer card para explorar."
         meta={[
           { label: 'React + TypeScript', tone: 'info' },
-          { label: `${COMPONENTS.length} componentes`, tone: 'brand' },
+          { label: `${ALL_COUNT} componentes`, tone: 'brand' },
           { label: 'A11y first', tone: 'success' },
         ]}
         actions={
@@ -121,69 +183,97 @@ function Overview() {
       />
 
       <div className="mx-auto max-w-6xl px-8 py-10">
-        {/* Componentes disponíveis */}
-        <div className="mb-6 flex items-end justify-between">
-          <div>
-            <h3 className="font-display text-xl font-bold text-ink-50">Componentes</h3>
-            <p className="text-[14px] text-ink-300">Clique em qualquer um para ver o preview e código.</p>
-          </div>
-          <Badge dot tone="brand">{COMPONENTS.length} publicados</Badge>
-        </div>
+        <LevelSection
+          tag="Átomos"
+          title="Blocos fundamentais"
+          description="Componentes primitivos — não se dividem em peças menores de UI."
+          count={ATOMS_COUNT}
+          tone="info"
+          clusters={ATOM_CLUSTERS}
+        />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-          {COMPONENTS.map((comp, i) => (
-            <SpotlightCard key={comp.key} className="animate-slide-up cursor-pointer" style={{ animationDelay: `${i * 40}ms` }}>
-              <div className="p-5">
-                <div className="mb-3 flex items-center justify-between">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500/20 to-brand-600/10 border border-brand-500/20">
-                    <DSIcon name={comp.icon} size={20} className="text-brand-400" />
-                  </div>
-                  <Badge size="sm" tone="neutral">{comp.category}</Badge>
-                </div>
-                <p className="font-display text-[16px] font-bold text-ink-50">{comp.label}</p>
-                <p className="mt-1 text-[14px] leading-relaxed text-ink-300">{comp.desc}</p>
-                <div className="mt-4 flex items-center gap-1.5 text-[13px] font-medium text-brand-400">
-                  Ver componente <DSIcon name="arrow-right" size={14} />
-                </div>
-              </div>
-            </SpotlightCard>
-          ))}
-        </div>
+        <div className="h-14" />
 
-        {/* Categorias */}
-        <div className="mb-6 flex items-end justify-between">
-          <div>
-            <h3 className="font-display text-xl font-bold text-ink-50">Categorias</h3>
-            <p className="text-[14px] text-ink-300">Veja todos os componentes agrupados.</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {cfg_categories().map((cat, i) => (
-            <SpotlightCard key={cat.key} className="animate-slide-up" style={{ animationDelay: `${i * 40}ms` }}>
-              <div className="p-5">
-                <div className="mb-3 flex items-center justify-between">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-surface-border bg-surface-raised">
-                    <DSIcon name={cat.icon} size={18} className="text-ink-300" />
-                  </div>
-                  <Badge size="sm" tone="neutral">{cat.count} itens</Badge>
-                </div>
-                <p className="font-display text-[15px] font-bold text-ink-50">{cat.label}</p>
-                <p className="mt-1 text-[14px] leading-relaxed text-ink-300">{cat.description}</p>
-                <div className="mt-4 flex items-center gap-1 text-[13px] font-medium text-ink-400">
-                  Explorar <DSIcon name="arrow-right" size={14} />
-                </div>
-              </div>
-            </SpotlightCard>
-          ))}
-        </div>
+        <LevelSection
+          tag="Moléculas"
+          title="Compostos reutilizáveis"
+          description="Combinações de átomos que formam padrões com propósito específico."
+          count={MOLECULES_COUNT}
+          tone="brand"
+          clusters={MOLECULE_CLUSTERS}
+        />
       </div>
     </div>
   )
 }
 
-function cfg_categories() {
-  return sections.componentes.groups.find((g) => g.title === 'Categorias')?.items ?? []
+function LevelSection({
+  tag,
+  title,
+  description,
+  count,
+  tone,
+  clusters,
+}: {
+  tag: string
+  title: string
+  description: string
+  count: number
+  tone: 'info' | 'brand'
+  clusters: ComponentCluster[]
+}) {
+  let cardIndex = 0
+  return (
+    <section>
+      <div className="mb-7 flex items-end justify-between gap-4">
+        <div>
+          <Badge dot tone={tone}>{tag}</Badge>
+          <h3 className="mt-3 font-display text-xl font-bold text-ink-50">{title}</h3>
+          <p className="text-[14px] text-ink-300">{description}</p>
+        </div>
+        <Badge size="sm" tone="neutral">{count} componentes</Badge>
+      </div>
+
+      <div className="flex flex-col gap-9">
+        {clusters.map((cluster) => (
+          <div key={cluster.title}>
+            <div className="mb-4 flex items-center gap-3">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-300">
+                {cluster.title}
+              </span>
+              <span className="h-px flex-1 bg-gradient-to-r from-surface-border/80 via-surface-border/40 to-transparent" />
+              <span className="text-[11px] font-mono tabular-nums text-ink-400">
+                {String(cluster.items.length).padStart(2, '0')}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {cluster.items.map((comp) => {
+                const delay = cardIndex++ * 40
+                return (
+                  <SpotlightCard key={comp.key} className="animate-slide-up cursor-pointer" style={{ animationDelay: `${delay}ms` }}>
+                    <div className="p-5">
+                      <div className="mb-3 flex items-center justify-between">
+                        <div className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500/20 to-brand-600/10 border border-brand-500/20">
+                          <DSIcon name={comp.icon} size={20} className="text-brand-400" />
+                        </div>
+                        <Badge size="sm" tone={tone}>{comp.level}</Badge>
+                      </div>
+                      <p className="font-display text-[16px] font-bold text-ink-50">{comp.label}</p>
+                      <p className="mt-1 text-[14px] leading-relaxed text-ink-300">{comp.desc}</p>
+                      <div className="mt-4 flex items-center gap-1.5 text-[13px] font-medium text-brand-400">
+                        Ver componente <DSIcon name="arrow-right" size={14} />
+                      </div>
+                    </div>
+                  </SpotlightCard>
+                )
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
 }
 
 function CategoryEmpty({ title, description }: { title: string; description: string }) {

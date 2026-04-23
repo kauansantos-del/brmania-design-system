@@ -17,9 +17,16 @@ export type NavLeaf = {
   nonNavigable?: boolean
 }
 
+export type NavSubgroup = {
+  title: string
+  items: NavLeaf[]
+}
+
 export type NavGroup = {
   title: string
   items: NavLeaf[]
+  /** Opcional: agrupa `items` em subcategorias visuais (mesma lista, só que segmentada). */
+  subgroups?: NavSubgroup[]
 }
 
 export type SectionConfig = {
@@ -60,63 +67,102 @@ export const sections: Record<SectionKey, SectionConfig> = {
         ],
       },
       {
-        title: 'Categorias',
+        title: 'Átomos',
         items: [
+          { key: 'button',      label: 'Button',      icon: 'input-cursor-move',       description: 'CTA principal — 5 variantes' },
+          { key: 'button-text', label: 'ButtonText',  icon: 'link',                    description: 'Link / texto — 4 variantes' },
+          { key: 'icon-button', label: 'IconButton',  icon: 'plus-rectangle',          description: 'Só ícone — filled / ghost' },
+          { key: 'input',       label: 'Input',       icon: 'text-area',               description: 'Campo, search, textarea' },
+          { key: 'checkbox',    label: 'Checkbox',    icon: 'check-mark-circle',       description: 'Seleção com label' },
+          { key: 'switch',      label: 'Switch',      icon: 'switch',                  description: 'Toggle on/off — Figma 108:128526' },
+          { key: 'nav-item',    label: 'NavItem',     icon: 'menu-line-horizontal-01', description: 'Item de sidebar — default / hover / focus' },
+          { key: 'icon',        label: 'Icon',        icon: 'plus-rectangle',          description: 'Wrapper de ícones SVG' },
+        ],
+        subgroups: [
           {
-            key: 'acoes', label: 'Ações', icon: 'package-01', count: 4, description: 'Button, ButtonText, IconButton, EnvironmentToggle',
-            nonNavigable: true,
-            children: [
-              { key: 'button',              label: 'Button',             icon: 'input-cursor-move', description: 'CTA principal — 5 variantes' },
-              { key: 'button-text',         label: 'ButtonText',         icon: 'link',              description: 'Link / texto — 4 variantes' },
-              { key: 'icon-button',         label: 'IconButton',         icon: 'plus-rectangle',    description: 'Só ícone — filled / ghost' },
-              { key: 'environment-toggle',  label: 'EnvironmentToggle',  icon: 'test-tube',         description: 'Sandbox / Produção — Figma 70:1040', badge: { tone: 'brand', text: 'Novo' } },
+            title: 'Ações',
+            items: [
+              { key: 'button',      label: 'Button',      icon: 'input-cursor-move', description: 'CTA principal — 5 variantes' },
+              { key: 'button-text', label: 'ButtonText',  icon: 'link',              description: 'Link / texto — 4 variantes' },
+              { key: 'icon-button', label: 'IconButton',  icon: 'plus-rectangle',    description: 'Só ícone — filled / ghost' },
             ],
           },
           {
-            key: 'formularios', label: 'Formulários', icon: 'edit', count: 4, description: 'Input, Checkbox, Switch, SelectField',
-            nonNavigable: true,
-            children: [
-              { key: 'input',         label: 'Input',        icon: 'text-area',         description: 'Campo, search, textarea' },
-              { key: 'checkbox',      label: 'Checkbox',     icon: 'check-mark-circle', description: 'Seleção com label' },
-              { key: 'switch',        label: 'Switch',       icon: 'switch',            description: 'Toggle on/off — Figma 108:128526', badge: { tone: 'brand', text: 'Novo' } },
-              { key: 'select-field',  label: 'SelectField',  icon: 'arrow-down',        description: 'Dropdown com label — Figma 113:160210', badge: { tone: 'brand', text: 'Novo' } },
+            title: 'Formulários',
+            items: [
+              { key: 'input',    label: 'Input',    icon: 'text-area',         description: 'Campo, search, textarea' },
+              { key: 'checkbox', label: 'Checkbox', icon: 'check-mark-circle', description: 'Seleção com label' },
+              { key: 'switch',   label: 'Switch',   icon: 'switch',            description: 'Toggle on/off — Figma 108:128526' },
             ],
           },
           {
-            key: 'feedback', label: 'Feedback', icon: 'notification', count: 2, description: 'InfoTooltip, ActionToast',
-            nonNavigable: true,
-            children: [
-              { key: 'info-tooltip', label: 'InfoTooltip', icon: 'information',  description: 'Tooltip com ícone info — Figma 96:4771',   badge: { tone: 'brand', text: 'Novo' } },
-              { key: 'action-toast', label: 'ActionToast', icon: 'notification', description: 'Notificação com ação — Figma 176:51949',     badge: { tone: 'brand', text: 'Novo' } },
+            title: 'Navegação',
+            items: [
+              { key: 'nav-item', label: 'NavItem', icon: 'menu-line-horizontal-01', description: 'Item de sidebar — default / hover / focus' },
             ],
           },
           {
-            key: 'dados', label: 'Dados', icon: 'grid-01', count: 5, description: 'ExportCard, RoleCard, FeatureCard, EventOptionCard, StepTask',
-            nonNavigable: true,
-            children: [
-              { key: 'export-card',       label: 'ExportCard',       icon: 'file-01',      description: 'Card de formato de export — Figma 143:13712', badge: { tone: 'brand', text: 'Novo' } },
-              { key: 'role-card',         label: 'RoleCard',         icon: 'security',     description: 'Card de papel de usuário — Figma 143:13712',  badge: { tone: 'brand', text: 'Novo' } },
-              { key: 'feature-card',      label: 'FeatureCard',      icon: 'star',         description: 'Card de acesso rápido — Figma 75:1313',      badge: { tone: 'brand', text: 'Novo' } },
-              { key: 'event-option-card', label: 'EventOptionCard',  icon: 'notification', description: 'Opção selecionável — Figma 111:129416',      badge: { tone: 'brand', text: 'Novo' } },
-              { key: 'step-task',         label: 'StepTask',         icon: 'tick',         description: 'Linha de checklist — Figma 96:2909',          badge: { tone: 'brand', text: 'Novo' } },
-            ],
-          },
-          {
-            key: 'navegacao', label: 'Navegação', icon: 'menu-line-horizontal', count: 5, description: 'MenuItem, SidebarButton, Tabs, Pagination, UserCard',
-            nonNavigable: true,
-            children: [
-              { key: 'menu-item',      label: 'MenuItem',      icon: 'menu-line-horizontal-01', description: 'Item de sidebar — default / hover / focus' },
-              { key: 'sidebar-button', label: 'SidebarButton', icon: 'menu-line-horizontal',    description: '6 presets × 3 estados — Figma 38:1345' },
-              { key: 'tabs',           label: 'Tabs',          icon: 'menu-line-horizontal',    description: 'Tabs com underline — Figma 147:42657',   badge: { tone: 'brand', text: 'Novo' } },
-              { key: 'pagination',     label: 'Pagination',    icon: 'arrow-right',             description: 'Paginação numerada — Figma 115:160887', badge: { tone: 'brand', text: 'Novo' } },
-              { key: 'user-card',      label: 'UserCard',      icon: 'security',                description: 'Avatar + nome + org — Figma 144:24857', badge: { tone: 'brand', text: 'Novo' } },
-            ],
-          },
-          {
-            key: 'layout', label: 'Layout', icon: 'grid-01', count: 1, description: 'Icon',
-            nonNavigable: true,
-            children: [
+            title: 'Fundamentos',
+            items: [
               { key: 'icon', label: 'Icon', icon: 'plus-rectangle', description: 'Wrapper de ícones SVG' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Moléculas',
+        items: [
+          { key: 'environment-toggle', label: 'EnvironmentToggle', icon: 'test-tube',            description: 'Sandbox / Produção — Figma 70:1040' },
+          { key: 'select-field',       label: 'SelectField',       icon: 'arrow-down',           description: 'Dropdown com label — Figma 113:160210' },
+          { key: 'info-tooltip',       label: 'InfoTooltip',       icon: 'information',          description: 'Tooltip com ícone info — Figma 96:4771' },
+          { key: 'action-toast',       label: 'ActionToast',       icon: 'notification',         description: 'Notificação com ação — Figma 176:51949' },
+          { key: 'sidebar-item',       label: 'SidebarItem',       icon: 'menu-line-horizontal', description: '6 presets × 3 estados — Figma 38:1345' },
+          { key: 'tabs',               label: 'Tabs',              icon: 'menu-line-horizontal', description: 'Tabs com underline — Figma 147:42657' },
+          { key: 'pagination',         label: 'Pagination',        icon: 'arrow-right',          description: 'Paginação numerada — Figma 115:160887' },
+          { key: 'user-card',          label: 'UserCard',          icon: 'security',             description: 'Avatar + nome + org — Figma 144:24857' },
+          { key: 'step-task',          label: 'StepTask',          icon: 'tick',                 description: 'Linha de checklist — Figma 96:2909' },
+          { key: 'export-card',        label: 'ExportCard',        icon: 'file-01',              description: 'Card de formato de export — Figma 143:13712' },
+          { key: 'role-card',          label: 'RoleCard',          icon: 'security',             description: 'Card de papel de usuário — Figma 143:13712' },
+          { key: 'feature-card',       label: 'FeatureCard',       icon: 'star',                 description: 'Card de acesso rápido — Figma 75:1313' },
+          { key: 'event-option-card',  label: 'EventOptionCard',   icon: 'notification',         description: 'Opção selecionável — Figma 111:129416' },
+        ],
+        subgroups: [
+          {
+            title: 'Ações',
+            items: [
+              { key: 'environment-toggle', label: 'EnvironmentToggle', icon: 'test-tube', description: 'Sandbox / Produção — Figma 70:1040' },
+            ],
+          },
+          {
+            title: 'Formulários',
+            items: [
+              { key: 'select-field', label: 'SelectField', icon: 'arrow-down', description: 'Dropdown com label — Figma 113:160210' },
+            ],
+          },
+          {
+            title: 'Feedback',
+            items: [
+              { key: 'info-tooltip', label: 'InfoTooltip', icon: 'information',  description: 'Tooltip com ícone info — Figma 96:4771' },
+              { key: 'action-toast', label: 'ActionToast', icon: 'notification', description: 'Notificação com ação — Figma 176:51949' },
+            ],
+          },
+          {
+            title: 'Navegação',
+            items: [
+              { key: 'sidebar-item', label: 'SidebarItem', icon: 'menu-line-horizontal', description: '6 presets × 3 estados — Figma 38:1345' },
+              { key: 'tabs',         label: 'Tabs',        icon: 'menu-line-horizontal', description: 'Tabs com underline — Figma 147:42657' },
+              { key: 'pagination',   label: 'Pagination',  icon: 'arrow-right',          description: 'Paginação numerada — Figma 115:160887' },
+            ],
+          },
+          {
+            title: 'Dados',
+            items: [
+              { key: 'user-card',         label: 'UserCard',        icon: 'security',     description: 'Avatar + nome + org — Figma 144:24857' },
+              { key: 'step-task',         label: 'StepTask',        icon: 'tick',         description: 'Linha de checklist — Figma 96:2909' },
+              { key: 'export-card',       label: 'ExportCard',      icon: 'file-01',      description: 'Card de formato de export — Figma 143:13712' },
+              { key: 'role-card',         label: 'RoleCard',        icon: 'security',     description: 'Card de papel de usuário — Figma 143:13712' },
+              { key: 'feature-card',      label: 'FeatureCard',     icon: 'star',         description: 'Card de acesso rápido — Figma 75:1313' },
+              { key: 'event-option-card', label: 'EventOptionCard', icon: 'notification', description: 'Opção selecionável — Figma 111:129416' },
             ],
           },
         ],
